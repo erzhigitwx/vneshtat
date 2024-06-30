@@ -1,0 +1,1 @@
+export type ActiveOperation = "filter" | "decor" | "route" | "passengers" | "radar" | "add"

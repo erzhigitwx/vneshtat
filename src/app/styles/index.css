@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'TT Norms';
+        font-weight: 400;
+        font-style: normal;
+        src: url('../../assets/fonts/TTNorms-Regular.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'TT Norms';
+        font-weight: 500;
+        font-style: normal;
+        src: url('../../assets/fonts/TTNorms-Medium.ttf') format('truetype');
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-family: "TT Norms", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #121212;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 22px;
+}
+
+h5 {
+    font-size: 20px;
+}
+
+h6 {
+    font-size: 16px;
+}
+
+p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* svg colors */
+.black-fill {
+    fill: #121212;
+
+    > * {
+        fill: #121212;
+    }
+}
+
+.black-stroke {
+    stroke: #121212;
+
+    > * {
+        stroke: #121212;
+    }
+}
+
+.black-stroke-hover:hover {
+    transition: all 0.3s ease;
+    stroke: #121212;
+
+    > * {
+        stroke: #121212;
+    }
+}
+
+.black-fill-hover:hover {
+    transition: all 0.3s ease;
+    fill: #121212;
+
+    > * {
+        fill: #121212;
+    }
+}
+
+.blue-fill {
+    fill: #007bfb;
+
+    > * {
+        fill: #007bfb;
+    }
+}
+
+.blue-stroke {
+    stroke: #007bfb;
+
+    > * {
+        stroke: #007bfb;
+    }
+}
+
+.blue-stroke-hover:hover {
+    transition: all 0.3s ease;
+    stroke: #007bfb;
+
+    > * {
+        stroke: #007bfb;
+    }
+}
+
+.blue-fill-hover:hover {
+    transition: all 0.3s ease;
+    fill: #007bfb;
+
+    > * {
+        fill: #007bfb;
+    }
+}
+
+.white-fill {
+    fill: #fafafa;
+
+    > * {
+        fill: #fafafa;
+    }
+}
+
+.white-stroke {
+    stroke: #fafafa;
+
+    > * {
+        stroke: #fafafa;
+    }
+}
+
+.white-fill-hover:hover {
+    transition: all 0.3s ease;
+    fill: #fafafa;
+
+    > * {
+        fill: #fafafa;
+    }
+}
+
+.white-stroke-hover:hover {
+    transition: all 0.3s ease;
+    stroke: #fafafa;
+
+    > * {
+        stroke: #fafafa;
+    }
+}
+
+.grey-fill {
+    fill: #bdbfc7;
+
+    > * {
+        fill: #bdbfc7;
+    }
+}
+
+.grey-stroke {
+    stroke: #bdbfc7;
+
+    > * {
+        stroke: #bdbfc7;
+    }
+}
+
+.grey-fill-hover:hover {
+    transition: all 0.3s ease;
+    fill: #bdbfc7;
+
+    > * {
+        fill: #bdbfc7;
+    }
+}
+
+.grey-stroke-hover:hover {
+    transition: all 0.3s ease;
+    stroke: #bdbfc7;
+
+    > * {
+        stroke: #bdbfc7;
+    }
+}
+
+
+.scroll {
+    &::-webkit-scrollbar {
+        width: 15px;
+        height: 95%;
+        background-color: #fafafa;
+    }
+
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 100px;
+        width: 5px;
+        background-color: #e5e7ea;
+        border: 6px solid transparent;
+        background-clip: content-box;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e5e7ea;
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        width: 3px;
+        border-radius: 100px;
+        background-clip: content-box;
+        border: 6px solid transparent;
+    }
+}
