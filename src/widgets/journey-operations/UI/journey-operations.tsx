@@ -18,31 +18,31 @@ const JourneyOperations = () => {
 
     return (
         <aside>
-            <div className={"w-[255px] p-5 rounded-primary bg-primary flex flex-col gap-5"}>
+            <div className={"w-[330px] p-5 rounded-primary bg-primary flex flex-col gap-5"}>
                 <div className={"flex flex-row gap-[10px]"}>
                     <button
                         onClick={() => setActiveOperation("route")}
-                        className={`${activeOperation === "route" ? "bg-black" : "bg-section"} p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        className={`${activeOperation === "route" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
                         <RouteImg className={activeOperation === "route" ? "white-fill" : undefined}/>
                     </button>
                     <button
                         onClick={() => setActiveOperation("passengers")}
-                        className={`${activeOperation === "passengers" ? "bg-black" : "bg-section"} p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        className={`${activeOperation === "passengers" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
                         <PassengersImg className={activeOperation === "passengers" ? "white-fill" : undefined}/>
                     </button>
                     <button
                         onClick={() => setActiveOperation("filter")}
-                        className={`${activeOperation === "filter" ? "bg-black" : "bg-section"} p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        className={`${activeOperation === "filter" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
                         <FilterImg className={activeOperation === "filter" ? "white-fill" : undefined}/>
                     </button>
                     <button
                         onClick={() => setActiveOperation("decor")}
-                        className={`${activeOperation === "decor" ? "bg-black" : "bg-section"} p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        className={`${activeOperation === "decor" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
                         <TicketImg className={activeOperation === "decor" ? "white-fill" : undefined}/>
                     </button>
                     <button
                         onClick={() => setActiveOperation("add")}
-                        className={`${activeOperation === "add" ? "bg-black" : "bg-section"} p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        className={`${activeOperation === "add" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
                         <AddImg className={activeOperation === "add" ? "white-fill" : undefined}/>
                     </button>
                 </div>

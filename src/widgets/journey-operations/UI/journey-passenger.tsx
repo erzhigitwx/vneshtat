@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import ArrowTop from "@/assets/icons/arrow-top.svg?react";
 import TrashImg from "@/assets/icons/trash.svg?react";
 import InfoImg from "@/assets/icons/info.svg?react";
@@ -36,7 +36,7 @@ const JourneyPassenger = () => {
             <hr className={"h-[1px] bg-section rounded-[1px] my-2.5"}/>
             <div className={"w-full flex flex-col gap-2.5"}>
                 {passengers.map((passenger) => (
-                    <>
+                    <React.Fragment key={passenger.id}>
                         {passenger.id === activePassenger ? (
                             <div>
                                 <div
@@ -73,7 +73,7 @@ const JourneyPassenger = () => {
                                 </div>
                                 <div
                                     onClick={() => setActivePassenger(passenger.id)}
-                                    className={"w-full bg-secondary max-w-[150px] rounded-primary flex items-center justify-between gap-1 py-2 px-2.5"}>
+                                    className={"w-full bg-secondary min-w-[150px] rounded-primary flex items-center justify-between gap-1 py-2 px-2.5"}>
                                     <h3 className={"text-xs text-medium whitespace-nowrap overflow-hidden text-ellipsis"}>{passenger.surname} {passenger.name}</h3>
                                     <ArrowTop className={"rotate-180"}/>
                                 </div>
@@ -82,7 +82,7 @@ const JourneyPassenger = () => {
                                 </button>
                             </div>
                         )}
-                    </>
+                    </React.Fragment>
                 ))}
             </div>
             <hr className={"h-[1px] bg-section rounded-[1px] my-2.5"}/>

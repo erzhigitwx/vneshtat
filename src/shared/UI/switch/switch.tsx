@@ -1,4 +1,4 @@
-import {SwitchProps} from "@/shared/UI/switch/switch.props";
+import { SwitchProps } from "@/shared/UI/switch/switch.props";
 
 const Switch = ({
                     extraClass,
@@ -8,25 +8,34 @@ const Switch = ({
                     selectedBg = "#fafafa",
                     px = "2.5",
                     py = "1.5",
-                    setter
+                    setter,
                 }: SwitchProps) => {
-    const padding = `px-${px?.slice(0, px?.length)} py-${py?.slice(0, py?.length)}`
+    const padding = `px-${px} py-${py}`;
+
     return (
         <div className={`flex flex-row items-center gap-2.5 bg-section p-1 rounded-primary w-fit ${extraClass}`}>
             <div
                 className={`rounded-secondary cursor-pointer ${padding}`}
-                style={{backgroundColor: isSelected ? selectedBg : "#eceef1"}}
-                onClick={() => setter(true)}>
+                style={{
+                    backgroundColor: isSelected ? selectedBg : "#eceef1",
+                    transition: "background-color 0.3s ease",
+                }}
+                onClick={() => setter(true)}
+            >
                 {firstChild}
             </div>
             <div
                 className={`rounded-secondary cursor-pointer ${padding}`}
-                style={{backgroundColor: !isSelected ? selectedBg : "#eceef1"}}
-                onClick={() => setter(false)}>
+                style={{
+                    backgroundColor: !isSelected ? selectedBg : "#eceef1",
+                    transition: "background-color 0.3s ease",
+                }}
+                onClick={() => setter(false)}
+            >
                 {secondChild}
             </div>
         </div>
-    )
+    );
 };
 
-export {Switch};
+export { Switch };

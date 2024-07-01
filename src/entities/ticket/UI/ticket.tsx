@@ -15,19 +15,19 @@ const Ticket = () => {
 
     return (
         <div className={"flex flex-row items-center gap-5"}>
-            <div className={"flex flex-col gap-2.5 "}>
-                <button className={"rounded-secondary p-2 bg-section"}>
+            <div className={"flex flex-col gap-2.5"}>
+                <button className={"rounded-secondary p-2 flex justify-center bg-section"}>
                     <CopyImg className={"min-h-5 min-w-5"}/>
                 </button>
-                <button className={"rounded-secondary p-2 bg-section"}>
+                <button className={"rounded-secondary p-2 flex justify-center bg-section"}>
                     <HeartImg className={"min-h-5 min-w-5"}/>
                 </button>
-                <button className={"rounded-secondary p-2 bg-section"}>
+                <button className={"rounded-secondary p-2 flex justify-center bg-section"}>
                     <MessageImg className={"min-h-5 min-w-5"}/>
                 </button>
             </div>
-            <div className={"w-full flex flex-col bg-section rounded-[38px] px-6 py-5 gap-5"}>
-                <div className={"flex gap-7"}>
+            <div className={`w-full flex flex-col bg-section rounded-[38px] px-6 ${isOpen ? "py-5" : "pt-5"} gap-5`}>
+                <div className={`flex gap-7`}>
                     <div className={"w-full flex flex-col gap-2.5"}>
                         <div className={"flex items-center gap-2.5"}>
                             <button className={"p-1 bg-[#bdbfc7] rounded-[100%]"}>
@@ -63,7 +63,7 @@ const Ticket = () => {
                         <div className={"flex items-center justify-between"}>
                             <button onClick={() => setIsOpen(prev => !prev)}
                                     className={"py-2.5 px-6 bg-[#dce0e5] rounded-primary"}>
-                                <p className={"text-base"}>{isOpen ? "Закрыть маршрут" : "Показать маршрут"}</p>
+                                <p className={"text-base"}>{isOpen ? "Скрыть маршрут" : "Показать маршрут"}</p>
                             </button>
                             <div className={"flex gap-2.5"}>
                                 <button className={"p-2 bg-primary rounded-secondary"}>
@@ -131,8 +131,11 @@ const Ticket = () => {
                         </div>
                     </div>
                 </div>
-                {isOpen ? <TicketBody/> : null}
-
+                <div
+                    className={`transition-max-height flex flex-col gap-5 duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}
+                >
+                    <TicketBody/>
+                </div>
             </div>
         </div>
     )

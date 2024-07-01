@@ -18,6 +18,15 @@
     }
 }
 
+@layer components {
+    .transition {
+        transition: all 0.3s ease;
+        > * {
+            transition: all 0.3s ease;
+        }
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -28,6 +37,10 @@
     font-size: 16px;
     font-weight: 500;
     color: #121212;
+}
+
+body {
+    background-color: #f5f5f5;
 }
 
 h1 {
@@ -84,7 +97,6 @@ a {
 }
 
 .black-stroke-hover:hover {
-    transition: all 0.3s ease;
     stroke: #121212;
 
     > * {
@@ -93,7 +105,6 @@ a {
 }
 
 .black-fill-hover:hover {
-    transition: all 0.3s ease;
     fill: #121212;
 
     > * {
@@ -118,7 +129,6 @@ a {
 }
 
 .blue-stroke-hover:hover {
-    transition: all 0.3s ease;
     stroke: #007bfb;
 
     > * {
@@ -127,7 +137,6 @@ a {
 }
 
 .blue-fill-hover:hover {
-    transition: all 0.3s ease;
     fill: #007bfb;
 
     > * {
@@ -152,7 +161,6 @@ a {
 }
 
 .white-fill-hover:hover {
-    transition: all 0.3s ease;
     fill: #fafafa;
 
     > * {
@@ -161,7 +169,6 @@ a {
 }
 
 .white-stroke-hover:hover {
-    transition: all 0.3s ease;
     stroke: #fafafa;
 
     > * {
@@ -186,7 +193,6 @@ a {
 }
 
 .grey-fill-hover:hover {
-    transition: all 0.3s ease;
     fill: #bdbfc7;
 
     > * {
@@ -195,7 +201,6 @@ a {
 }
 
 .grey-stroke-hover:hover {
-    transition: all 0.3s ease;
     stroke: #bdbfc7;
 
     > * {
@@ -210,7 +215,6 @@ a {
         height: 95%;
         background-color: #fafafa;
     }
-
 
     &::-webkit-scrollbar-thumb {
         border-radius: 100px;

@@ -13,7 +13,7 @@ const JourneyDropdown = ({isChanged, onErase, title, children}: JourneyDropdownP
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className={"p-3 rounded-[23px] bg-section flex flex-col gap-2.5"}>
+        <div className={`p-3 rounded-[23px] bg-section flex flex-col cursor-pointer`}>
             <div className={"flex flex-row justify-between items-center"} onClick={() => setIsOpen(prev => !prev)}>
                 <div className={"flex flex-row gap-1"}>
                     {isChanged && <span className={"h-[5px] w-[5px] rounded-[100%] bg-red"}/>}
@@ -28,14 +28,14 @@ const JourneyDropdown = ({isChanged, onErase, title, children}: JourneyDropdownP
                     )}
                 </div>
                 <button>
-                    <ArrowImg className={`${!isOpen && "rotate-180"}`}/>
+                    <ArrowImg className={`transform transition-transform duration-300 ${!isOpen ? "rotate-180" : ""}`}/>
                 </button>
             </div>
-            {isOpen ? (
-                <div>
-                    {children}
-                </div>
-            ) : null}
+            <div
+                className={`transition-max-height duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-screen mt-2.5" : "max-h-0 mt-0"}`}
+            >
+                {children}
+            </div>
         </div>
     )
 };

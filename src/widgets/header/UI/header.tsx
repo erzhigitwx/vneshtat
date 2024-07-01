@@ -23,28 +23,28 @@ const Header = () => {
             </div>
             <div className={"flex flex-row items-center gap-6"}>
                 <Link to="/plane">
-                    <PlaneImg className={clsx("blue-fill-hover", location === "/plane" && "blue-fill")}/>
+                    <PlaneImg className={clsx("blue-fill-hover transition", location === "/plane" && "blue-fill")}/>
                 </Link>
                 <Link to="/journey">
-                    <TrainImg className={clsx("blue-fill-hover", location === "/journey" && "blue-fill")}/>
+                    <TrainImg className={clsx("blue-fill-hover transition", location === "/journey" && "blue-fill")}/>
                 </Link>
                 <Link to="/bus">
-                    <BusImg className={clsx("blue-fill-hover", location === "/bus" && "blue-fill")}/>
+                    <BusImg className={clsx("blue-fill-hover transition", location === "/bus" && "blue-fill")}/>
                 </Link>
                 <Link to="/bed">
-                    <BedImg className={clsx("blue-fill-hover", location === "/bed" && "blue-fill")}/>
+                    <BedImg className={clsx("blue-fill-hover transition", location === "/bed" && "blue-fill")}/>
                 </Link>
                 <Link to="/web">
-                    <WebImg className={clsx("blue-fill-hover", location === "/web" && "blue-fill")}/>
+                    <WebImg className={clsx("blue-fill-hover transition", location === "/web" && "blue-fill")}/>
                 </Link>
                 <Link to="/car">
-                    <CarImg className={clsx("blue-fill-hover", location === "/car" && "blue-fill")}/>
+                    <CarImg className={clsx("blue-fill-hover transition", location === "/car" && "blue-fill")}/>
                 </Link>
                 <Link to="/yandex-taxi">
-                    <YandexTaxiImg className={clsx("blue-fill-hover", location === "/yandex-taxi" && "blue-fill")}/>
+                    <YandexTaxiImg className={clsx("blue-fill-hover transition", location === "/yandex-taxi" && "blue-fill")}/>
                 </Link>
                 <Link to="/restaurant">
-                    <RestaurantImg className={clsx("blue-fill-hover", location === "/restaurant" && "blue-fill")}/>
+                    <RestaurantImg className={clsx("blue-fill-hover transition", location === "/restaurant" && "blue-fill")}/>
                 </Link>
             </div>
             <button className={"bg-primary border rounded-primary py-4 px-9"}>

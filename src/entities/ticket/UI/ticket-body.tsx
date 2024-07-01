@@ -57,7 +57,8 @@ const TicketBody = () => {
                 {Array.from({length: 5}).map((_, i) => (
                     <button
                         className={`py-2.5 px-8 bg-[#dce0e5] rounded-primary ${activeWeign === i && "!bg-[#bfbefc]"}`}
-                        onClick={() => setActiveWeign(i)}>
+                        onClick={() => setActiveWeign(i)}
+                        key={i}>
                         {i + 1} вагон
                     </button>
                 ))}

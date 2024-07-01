@@ -1,0 +1,128 @@
+.container {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.slider {
+    position: relative;
+    width: calc(100% - 10px);
+}
+
+.slider__track,
+.slider__range,
+.slider__left-value,
+.slider__right-value {
+    position: absolute;
+}
+
+.slider__track,
+.slider__range {
+    border-radius: 3px;
+    height: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slider__track {
+    background-color: #c0c7d1;
+    width: 100%;
+    z-index: 1;
+}
+
+.slider__range {
+    height: 15px;
+    background-color: #c0c7d1;
+    z-index: 2;
+}
+
+.slider__left-value,
+.slider__right-value {
+    color: #9b9fad;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.slider__left-value {
+    left: 6px;
+}
+
+.slider__right-value {
+    right: -4px;
+}
+
+.thumb,
+.thumb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+    pointer-events: none;
+    position: absolute;
+    height: 0;
+    width: 100%;
+    outline: none;
+}
+
+.thumb--left {
+    z-index: 3;
+}
+
+.thumb--right {
+    z-index: 4;
+}
+
+.thumb-indicator {
+    position: absolute;
+    background-color: #fafafa;
+    width: 2px;
+    height: 8px;
+    z-index: 5;
+}
+
+.thumb::-webkit-slider-thumb {
+    background-color: #c0c7d1;
+    border: none;
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    pointer-events: all;
+    border-radius: 5px;
+    position: relative;
+}
+
+.thumb::-webkit-slider-thumb::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 5px;
+    width: 5px;
+    border-radius: 5px;
+}
+
+.thumb::-moz-range-thumb {
+    background-color: #c0c7d1;
+    border: none;
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    pointer-events: all;
+    position: relative;
+    border-radius: 5px;
+}
+
+.thumb::-moz-range-thumb::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 5px;
+    width: 5px;
+    border-radius: 5px;
+}
