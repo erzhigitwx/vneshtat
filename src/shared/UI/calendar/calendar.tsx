@@ -1,7 +1,6 @@
 import {Dispatch, SetStateAction} from 'react';
 import LibCalendar from 'react-calendar';
 import ArrowLeftImg from '@/assets/icons/arrow-left.svg?react';
-import 'react-calendar/dist/Calendar.css';
 import "./calendar.css";
 
 const Calendar = ({value, setter, ...opt}: {
