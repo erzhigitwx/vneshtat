@@ -9,7 +9,7 @@ import {seatsMock} from "@/shared/utils";
 import "./weign.css";
 
 const Weign = () => {
-    const [seats, setSeats] = useState<Seat[][]>(seatsMock);
+    const [seats] = useState<Seat[][]>(seatsMock);
 
     return (
         <div className={"relative flex flex-col justify-center"}>
@@ -26,7 +26,7 @@ const Weign = () => {
 
 
 const DoubleSeats = ({seats}: { seats: Seat[] }) => {
-    const getSeatByState = (seat) => {
+    const getSeatByState = (seat: Seat) => {
         switch (seat.state) {
             case "cheap":
                 return ChairCheapImg
@@ -44,10 +44,11 @@ const DoubleSeats = ({seats}: { seats: Seat[] }) => {
     return (
         <div className={"flex flex-col items-center justify-center"}>
             {seats.map((seat, i )=> {
-                const Seat = getSeatByState(seat)
+                const SeatComponent = getSeatByState(seat);
+                if (!SeatComponent) return null;
                 return (
                     <div className={"flex justify-center items-center relative"} key={i}>
-                        <Seat className={`${seat.isBooked && "opacity-40"}`}/>
+                        <SeatComponent className={seat.isBooked ? "opacity-40" : ""} />
                         <p className={"absolute text-[6px] text-md text-primary"}>{seat.order}</p>
                     </div>
                 )

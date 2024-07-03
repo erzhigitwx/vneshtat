@@ -13,8 +13,8 @@ const InputDate = ({extraClass, inputValue, setter, calendarOpt, placeholder, ..
                 <div className={"w-full bg-secondary rounded-primary text-sm py-2 px-2.5"}>
                     {inputValue ? (
                         <div className={"flex items-center gap-1"}>
-                            <p className={"text-xs text-black"}>{formatDate(inputValue)}</p>
-                            <p className={"text-xs text-[#787B86]"}>{getDayOfWeek(inputValue)}</p>
+                            <p className={"text-xs text-black"}>{formatDate(inputValue as Date)}</p>
+                            <p className={"text-xs text-[#787B86]"}>{getDayOfWeek(inputValue as Date)}</p>
                         </div>
                     ) : (
                         <p className={"text-xs text-[#787B86]"}>{placeholder}</p>

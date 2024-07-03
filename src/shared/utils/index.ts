@@ -178,7 +178,7 @@ export const seatsMock: Seat[][] = [[{
     state: "free"
 }],]
 
-export const formatDate = (date: Date[] | Date): string => {
+export const formatDate = (date: Date): string => {
     const options: Intl.DateTimeFormatOptions = {
         day: 'numeric',
         month: 'long',
@@ -194,7 +194,7 @@ export const formatDate = (date: Date[] | Date): string => {
     return `${dayOfMonth} ${month}`;
 };
 
-export const getDayOfWeek  = (date: Date[] | Date): string => {
+export const getDayOfWeek  = (date: Date): string => {
     const options: Intl.DateTimeFormatOptions = {
         day: 'numeric',
         month: 'long',
@@ -204,7 +204,5 @@ export const getDayOfWeek  = (date: Date[] | Date): string => {
     const dateFormatter = new Intl.DateTimeFormat('ru-RU', options);
     const formattedDateParts = dateFormatter.formatToParts(date);
 
-    const dayOfWeek = formattedDateParts.find(part => part.type === 'weekday')?.value ?? '';
-
-    return dayOfWeek;
+    return formattedDateParts.find(part => part.type === 'weekday')?.value ?? '';
 }

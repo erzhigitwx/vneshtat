@@ -1,15 +1,16 @@
-import {Dispatch, SetStateAction} from "react";
-import LibCalendar from "react-calendar";
+import {Dispatch, SetStateAction} from 'react';
+import LibCalendar from 'react-calendar';
+import ArrowLeftImg from '@/assets/icons/arrow-left.svg?react';
 import 'react-calendar/dist/Calendar.css';
-import ArrowLeftImg from "@/assets/icons/arrow-left.svg?react";
 import "./calendar.css";
 
 const Calendar = ({value, setter, ...opt}: {
     value: Date | Date[] | null,
     setter: Dispatch<SetStateAction<Date | Date[] | null>>
 }) => {
-    const tileContent = ({_, view}) => {
-        if (view === 'month') {
+    // if provide date[] it will be multiple, but if just date it will be single-selectable
+    const tileContent = (tile: { view: string }) => {
+        if (tile.view === 'month') {
             return <p className="tile-text">5439</p>;
         }
         return null;
@@ -20,26 +21,26 @@ const Calendar = ({value, setter, ...opt}: {
         activeDay: "activeDay",
     };
 
-    const isSameDay = (date1, date2) => {
-        return date1.getFullYear() === date2.getFullYear() &&
-            date1.getMonth() === date2.getMonth() &&
-            date1.getDate() === date2.getDate();
+    const dateAlreadyClicked = (dates: Date[], date: Date): boolean => {
+        return dates.some(d => d.getTime() === date.getTime());
     };
 
-    const dateAlreadyClicked = (dates: Date | Date[] | null, date: Date) => {
-        if (!Array.isArray(dates)) {
-            return false;
-        }
-        return dates.some(d => isSameDay(d, date));
+    const datesExcept = (dates: Date[], date: Date): Date[] => {
+        return dates.filter(d => d.getTime() !== date.getTime());
     };
-    const datesExcept = (dates, date) => dates.filter(d => !isSameDay(d, date));
 
     const onClickDay = (date: Date) => {
-        setter(dateAlreadyClicked(value, date) ? datesExcept(value, date) : [...value, date])
+        const valueArray = Array.isArray(value) ? value : (value ? [value] : []);
+        const newDates = dateAlreadyClicked(valueArray, date)
+            ? datesExcept(valueArray, date)
+            : [...valueArray, date];
+
+        setter(newDates);
     };
 
-    const tileClassName = ({date}) => {
-        const isActive = dateAlreadyClicked(value, date);
+    const tileClassName = ({date}: { date: Date }) => {
+        const valueArray = Array.isArray(value) ? value : (value ? [value] : []);
+        const isActive = dateAlreadyClicked(valueArray, date);
         const classNames = [];
 
         if (isActive) {
@@ -52,14 +53,11 @@ const Calendar = ({value, setter, ...opt}: {
     };
 
     return (
+        // @ts-expect-error not assignable types
         <LibCalendar
             className={"!border-none"}
-            {...(Array.isArray(value) ? {onClickDay: onClickDay, tileClassName: tileClassName} : {
-                value: value,
-                onChange: setter
-            })}
+            {...(Array.isArray(value) ? {onClickDay, tileClassName} : {value, onChange: setter})}
             next2Label={null}
-            next2AriaLabel={null}
             prev2Label={null}
             prevLabel={
                 <button className={"controller-button"}>
