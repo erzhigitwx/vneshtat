@@ -1,4 +1,5 @@
 import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
+import {TicketOption} from "@/entities/ticket/UI/ticket";
 
 export const prices: CheckboxItem[] = [
     {content: "Любой тип поезда", isSelected: true, id: 1},
@@ -41,3 +42,29 @@ export const services: CheckboxItem[] = [
     {content: "Постельное белье", isSelected: false, id: 12},
     {content: "Двухэтажный поезд", isSelected: false, id: 13},
 ]
+
+export const ticketOptionsMock: TicketOption[] = [{
+    id: 1,
+    title: "Сидячие",
+    isSelected: false,
+    count: 345,
+    fromPrice: "000"
+},{
+    id: 2,
+    title: "Плацкарт",
+    isSelected: false,
+    count: 25,
+    fromPrice: "0000"
+},{
+    id: 3,
+    title: "Купе",
+    isSelected: false,
+    count: 0,
+    fromPrice: "00 000"
+},{
+    id: 4,
+    title: "Люкс",
+    isSelected: true,
+    count: 14,
+    fromPrice: "000 000"
+},]

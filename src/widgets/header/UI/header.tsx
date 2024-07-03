@@ -41,13 +41,15 @@ const Header = () => {
                     <CarImg className={clsx("blue-fill-hover transition", location === "/car" && "blue-fill")}/>
                 </Link>
                 <Link to="/yandex-taxi">
-                    <YandexTaxiImg className={clsx("blue-fill-hover transition", location === "/yandex-taxi" && "blue-fill")}/>
+                    <YandexTaxiImg
+                        className={clsx("blue-fill-hover transition", location === "/yandex-taxi" && "blue-fill")}/>
                 </Link>
                 <Link to="/restaurant">
-                    <RestaurantImg className={clsx("blue-fill-hover transition", location === "/restaurant" && "blue-fill")}/>
+                    <RestaurantImg
+                        className={clsx("blue-fill-hover transition", location === "/restaurant" && "blue-fill")}/>
                 </Link>
             </div>
-            <button className={"bg-primary border rounded-primary py-4 px-9"}>
+            <button className={"bg-primary border rounded-primary px-9 h-[45px] flex justify-center items-center"}>
                 <p className={"text-blue text-base"}>Создать поездку</p>
             </button>
         </div>

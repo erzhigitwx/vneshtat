@@ -5,6 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      xl: "1280px",
+      xxl: "1536px",
+      ultra: "2560px"
+    },
     extend: {
       borderRadius: {
         "primary": "13px",

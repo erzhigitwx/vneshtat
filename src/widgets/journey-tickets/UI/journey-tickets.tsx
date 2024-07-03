@@ -25,17 +25,20 @@ const JourneyTickets = () => {
             <div className={"bg-primary px-5 pt-5 rounded-t-[26px]"}>
                 <div className={"flex flex-col gap-4"}>
                     <div className={"flex flex-row items-center gap-2.5"}>
-                        <div className={"flex flex-row items-center py-3 px-2.5 gap-2 rounded-primary bg-secondary"}>
+                        <div
+                            className={"flex flex-row items-center py-3 px-2.5 gap-2 max-h-9 rounded-primary bg-secondary"}>
                             <PassengerImg/>
                             <p className={"text-xs"}>+2</p>
                         </div>
-                        <Input placeholder={"Город отправления"} extraClass={"py-3 px-2.5 rounded-primary w-full"}/>
+                        <Input placeholder={"Город отправления"}
+                               extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"}/>
                         <button>
-                            <RouteImg className={"grey-fill blue-fill-hover min-w-5 min-h-5"}/>
+                            <RouteImg className={"grey-fill black-fill-hover transition min-w-5 min-h-5"}/>
                         </button>
-                        <Input placeholder={"Город прибытия"} extraClass={"py-3 px-2.5 rounded-primary w-full"}/>
-                        <Input placeholder={"Туда"} extraClass={"py-3 px-2.5"}/>
-                        <Input placeholder={"Обратно"} extraClass={"py-3 px-2.5"}/>
+                        <Input placeholder={"Город прибытия"}
+                               extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"}/>
+                        <Input placeholder={"Туда"} extraClass={"py-3 px-2.5 max-h-9"}/>
+                        <Input placeholder={"Обратно"} extraClass={"py-3 px-2.5 max-h-9"}/>
                     </div>
                     <div className={"flex flex-row items-center gap-2.5"}>
                         <Switch
@@ -44,35 +47,38 @@ const JourneyTickets = () => {
                             isSelected={go}
                             setter={setGo}
                             selectedBg={"#121212"}
+                            extraClass={"max-h-9"}
                         />
                         <Switch
                             firstChild={<BurgerImg className={"h-5 w-5"}/>}
                             secondChild={<HeartImg className={"h-5 w-5"}/>}
                             isSelected={byQueue}
                             setter={setByQueue}
+                            extraClass={"max-h-9"}
                         />
                         <Switch
                             firstChild={
                                 <div className={"flex items-center gap-1"}>
-                                    <ChairExistsImg className={"h-5 w-5"}/>
-                                    <SuccessFilledImg className={"h-5 w-5"}/>
+                                    <ChairExistsImg className={`h-5 w-5 ${!isChair && "grey-fill"}`}/>
+                                    <SuccessFilledImg className={`h-5 w-5 ${!isChair && "grey-fill"}`}/>
                                 </div>}
                             secondChild={
                                 <div className={"flex items-center gap-1"}>
-                                    <ChairAwayImg className={"h-5 w-5"}/>
-                                    <SuccessImg className={"h-5 w-5"}/>
+                                    <ChairAwayImg className={`h-5 w-5 ${isChair ? "grey-fill" : "black-fill"}`}/>
+                                    <SuccessImg className={`h-5 w-5 ${isChair ? "grey-fill" : "black-fill"}`}/>
                                 </div>}
                             isSelected={isChair}
                             setter={setIsChair}
+                            extraClass={"max-h-9"}
                         />
-                        <TagFilter tags={tags} setter={setTags}/>
+                        <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"}/>
                     </div>
                 </div>
-                <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] my-4"}/>
+                <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4"}/>
             </div>
             <div className={"bg-primary overflow-hidden rounded-b-[26px]"}>
                 <div
-                    className="flex flex-col gap-4 px-5 pb-5 overflow-y-auto scroll max-h-[calc(100vh-370px)] h-full">
+                    className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] h-full">
                     <Ticket/>
                     <Ticket/>
                     <Ticket/>

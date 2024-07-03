@@ -6,7 +6,7 @@ import {Header} from "@/widgets/header";
 function App() {
     return (
         <div className={"flex flex-row justify-center"}>
-            <div className={"h-screen py-5 flex flex-row gap-7 overflow-hidden max-w-[1440px] w-full"}>
+            <div className={"h-screen py-5 px-24 flex flex-row gap-7 overflow-hidden w-full"}>
                 <Sidebar/>
                 <div className={"w-full flex flex-col gap-5"}>
                     <Header/>

@@ -1,0 +1,59 @@
+import WeignImg from "@/assets/icons/schemas/weign.svg?react";
+import ChairVioletImg from "@/assets/icons/chairs/chair-violet.svg?react";
+import ChairBlueImg from "@/assets/icons/chairs/chair-blue.svg?react";
+import ChairOrangeImg from "@/assets/icons/chairs/chair-orange.svg?react";
+import ChairCheapImg from "@/assets/icons/chairs/chair-cheap.svg?react";
+import {Seat} from "@/shared/types";
+import {useState} from "react";
+import {seatsMock} from "@/shared/utils";
+import "./weign.css";
+
+const Weign = () => {
+    const [seats, setSeats] = useState<Seat[][]>(seatsMock);
+
+    return (
+        <div className={"relative flex flex-col justify-center"}>
+            <WeignImg className={""}/>
+            <div className={"grid-weign absolute"}>
+                {seats.map(couple => (
+                    <DoubleSeats seats={couple}/>
+                ))}
+            </div>
+        </div>
+    )
+};
+
+
+
+const DoubleSeats = ({seats}: { seats: Seat[] }) => {
+    const getSeatByState = (seat) => {
+        switch (seat.state) {
+            case "cheap":
+                return ChairCheapImg
+            case "selected":
+                return ChairOrangeImg
+            case "free":
+                return ChairVioletImg
+            case "irrevocable":
+                return ChairBlueImg
+            default:
+                return null;
+        }
+    }
+
+    return (
+        <div className={"flex flex-col items-center justify-center"}>
+            {seats.map((seat, i )=> {
+                const Seat = getSeatByState(seat)
+                return (
+                    <div className={"flex justify-center items-center relative"} key={i}>
+                        <Seat className={`${seat.isBooked && "opacity-40"}`}/>
+                        <p className={"absolute text-[6px] text-md text-primary"}>{seat.order}</p>
+                    </div>
+                )
+            })}
+        </div>
+    )
+}
+
+export {Weign};

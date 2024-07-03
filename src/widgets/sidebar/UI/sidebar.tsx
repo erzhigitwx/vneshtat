@@ -11,46 +11,46 @@ import {Link} from "react-router-dom";
 
 const Sidebar = () => {
     return (
-        <div className={"flex flex-col gap-5 items-center mt-5"}>
+        <div className={"flex flex-col gap-5 items-center mt-5 min-w-fit ultra:w-full w-fit max-w-[100px]"}>
             <Link to={"/"}>
                 <LogoImg/>
             </Link>
-            <div className={"h-full flex flex-col py-8 px-5 gap-8 bg-primary rounded-primary"}>
-                <div className={"flex flex-col gap-9"}>
+            <div className={"h-full w-full flex flex-col items-center py-8 px-5 mt-3 gap-7 ultra:gap-10 bg-primary rounded-primary"}>
+                <div className={"flex flex-col gap-7 ultra:gap-12"}>
                     <Link to={"/"}>
-                        <HomeImg className={"blue-fill-hover transition"}/>
+                        <HomeImg className={"blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8"}/>
                     </Link>
                     <Link to={"/"}>
-                        <SwapImg className={"blue-fill-hover transition"}/>
+                        <SwapImg className={"blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8"}/>
                     </Link>
                     <Link to={"/"}>
-                        <CopyImg className={"blue-fill-hover transition"}/>
-                    </Link>
-                </div>
-                <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div className={"flex flex-col gap-9"}>
-                    <Link to={"/"}>
-                        <MessageImg className={"blue-fill-hover transition"}/>
-                    </Link>
-                    <Link to={"/"}>
-                        <JobImg className={"blue-fill-hover transition"}/>
+                        <CopyImg className={"blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8"}/>
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div className={"flex flex-col gap-9"}>
+                <div className={"flex flex-col gap-7 ultra:gap-12"}>
                     <Link to={"/"}>
-                        <ScopeImg className={"blue-fill-hover transition"}/>
+                        <MessageImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
                     </Link>
                     <Link to={"/"}>
-                        <FilterImg className={"blue-fill-hover transition"}/>
+                        <JobImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
+                    </Link>
+                </div>
+                <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
+                <div className={"flex flex-col gap-7 ultra:gap-12"}>
+                    <Link to={"/"}>
+                        <ScopeImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
+                    </Link>
+                    <Link to={"/"}>
+                        <FilterImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
                 <div>
-                    <RightImg className={"blue-fill-hover transition"}/>
+                    <RightImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
                 </div>
             </div>
-            <div className={"min-w-14 min-h-14 rounded-[23px] flex justify-center items-center bg-black"}>
+            <div className={"w-full min-h-16 rounded-[23px] flex justify-center items-center bg-black"}>
                 <div className={"bg-section mt-auto mb-auto rounded-[100%] py-1.5 px-2"}>
                     <p className={"text-lg tracking-[-0.1em]"}>ИБ</p>
                 </div>

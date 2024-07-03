@@ -7,26 +7,86 @@ import PawImg from "@/assets/icons/paw.svg?react";
 import BackCannotImg from "@/assets/icons/back-cannot.svg?react";
 import InvalidImg from "@/assets/icons/invalid.svg?react";
 import SuitcaseImg from "@/assets/icons/suitcase.svg?react";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {TicketBody} from "@/entities/ticket/UI/ticket-body";
+import {ticketOptionsMock} from "@/widgets/journey-operations/utils";
+
+interface TicketOptionsProps {
+    options: TicketOption[];
+    setter: Dispatch<SetStateAction<TicketOption[]>>
+}
+
+export interface TicketOption {
+    id: number,
+    title: string,
+    count: number,
+    fromPrice: string
+    isSelected: boolean
+}
+
+const TicketOptions = ({options, setter}: TicketOptionsProps) => {
+    const selectOption = (id: number) => {
+        setter(prevOptions =>
+            prevOptions.map(option =>
+                option.id === id ? {...option, isSelected: !option.isSelected} : option
+            )
+        );
+    };
+
+    return (
+        <div className={"flex flex-col gap-2.5"}>
+            {options.map(item => (
+                <div
+                    className={`py-1 pr-1 pl-2.5 transition ${item.isSelected ? "bg-black" : "bg-primary"} flex items-center justify-between h-9 gap-2.5 rounded-primary`}
+                    onClick={() => selectOption(item.id)}
+                    key={item.id}>
+                    <div className={"w-full flex justify-between items-center gap-5"}>
+                        <p className={`text-xs font-medium ${item.isSelected ? "text-primary" : "text-black"}`}>{item.title}</p>
+                        {item.count ? (
+                            <p className={"text-xs font-medium text-[#787b86]"}>{item.count}</p>
+                        ) : (
+                            <p className={"text-xs font-medium text-[#787b86] mr-2.5"}>Мест нет</p>
+                        )}
+                    </div>
+                    {item.count ? (
+                        <div
+                            className={`rounded-secondary  min-w-[100px] py-2  flex justify-center items-center ${item.isSelected ? "bg-primary" : "bg-black"}`}>
+                            <p className={`text-xs font-medium ${item.isSelected ? "text-black" : "text-primary"}`}>от {item.fromPrice}₽</p>
+                        </div>
+                    ) : null}
+                </div>
+            ))}
+        </div>
+    )
+}
 
 const Ticket = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [delayedText, setDelayedText] = useState("Показать маршрут");
+    const [ticketOptions, setTicketOptions] = useState(ticketOptionsMock)
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDelayedText(isOpen ? "Скрыть маршрут" : "Показать маршрут");
+        }, 200);
+
+        return () => clearTimeout(timeoutId);
+    }, [isOpen]);
 
     return (
-        <div className={"flex flex-row items-center gap-5"}>
-            <div className={"flex flex-col gap-2.5"}>
-                <button className={"rounded-secondary p-2 flex justify-center bg-section"}>
-                    <CopyImg className={"min-h-5 min-w-5"}/>
+        <div className={"flex flex-row gap-5"}>
+            <div className={"flex flex-col gap-2.5 mt-12"}>
+                <button className={"rounded-secondary p-2 flex justify-center bg-secondary"}>
+                    <CopyImg className={"max-h-5 max-w-5"}/>
                 </button>
-                <button className={"rounded-secondary p-2 flex justify-center bg-section"}>
-                    <HeartImg className={"min-h-5 min-w-5"}/>
+                <button className={"rounded-secondary p-2 flex justify-center bg-secondary"}>
+                    <HeartImg className={"max-h-5 max-w-5"}/>
                 </button>
-                <button className={"rounded-secondary p-2 flex justify-center bg-section"}>
-                    <MessageImg className={"min-h-5 min-w-5"}/>
+                <button className={"rounded-secondary p-2 flex justify-center bg-secondary"}>
+                    <MessageImg className={"max-h-5 max-w-5"}/>
                 </button>
             </div>
-            <div className={`w-full flex flex-col bg-section rounded-[38px] px-6 ${isOpen ? "py-5" : "pt-5"} gap-5`}>
+            <div className={`w-full flex flex-col bg-secondary rounded-[38px] px-6 ${isOpen ? "py-5" : "pt-5"} gap-5`}>
                 <div className={`flex gap-7`}>
                     <div className={"w-full flex flex-col gap-2.5"}>
                         <div className={"flex items-center gap-2.5"}>
@@ -63,7 +123,7 @@ const Ticket = () => {
                         <div className={"flex items-center justify-between"}>
                             <button onClick={() => setIsOpen(prev => !prev)}
                                     className={"py-2.5 px-6 bg-[#dce0e5] rounded-primary"}>
-                                <p className={"text-base"}>{isOpen ? "Скрыть маршрут" : "Показать маршрут"}</p>
+                                <p className={"text-base"}>{delayedText}</p>
                             </button>
                             <div className={"flex gap-2.5"}>
                                 <button className={"p-2 bg-primary rounded-secondary"}>
@@ -84,52 +144,7 @@ const Ticket = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={"flex flex-col gap-2.5"}>
-                        <div
-                            className={"py-1 pr-1 pl-2.5 bg-primary flex items-center justify-between gap-2.5 rounded-primary"}>
-                            <div className={"w-full flex justify-between items-center gap-5"}>
-                                <p className={"text-xs font-medium"}>Сидячие</p>
-                                <p className={"text-xs font-medium text-[#787b86]"}>354</p>
-                            </div>
-                            <div
-                                className={"rounded-secondary  min-w-[100px] py-2  flex justify-center items-center bg-black"}>
-                                <p className={"text-xs font-medium text-primary"}>от 000 ₽</p>
-                            </div>
-                        </div>
-                        <div
-                            className={"py-1 pr-1 pl-2.5 bg-primary flex items-center justify-between gap-2.5 rounded-primary"}>
-                            <div className={"w-full flex justify-between items-center gap-5"}>
-                                <p className={"text-xs font-medium"}>Плацкарт</p>
-                                <p className={"text-xs font-medium text-[#787b86]"}>25</p>
-                            </div>
-                            <div
-                                className={"rounded-secondary  min-w-[100px] py-2  flex justify-center items-center bg-black"}>
-                                <p className={"text-xs font-medium text-primary"}>от 0000 ₽</p>
-                            </div>
-                        </div>
-                        <div
-                            className={"py-1 pr-1 pl-2.5 bg-primary flex items-center justify-between gap-2.5 rounded-primary"}>
-                            <div className={"w-full flex justify-between items-center gap-5"}>
-                                <p className={"text-xs font-medium"}>Купе</p>
-                                <p className={"text-xs font-medium text-[#787b86]"}>428</p>
-                            </div>
-                            <div
-                                className={"rounded-secondary  min-w-[100px] py-2  flex justify-center items-center bg-black"}>
-                                <p className={"text-xs font-medium text-primary"}>от 00 000 ₽</p>
-                            </div>
-                        </div>
-                        <div
-                            className={"py-1 pr-1 pl-2.5 bg-primary flex items-center justify-between gap-2.5 rounded-primary"}>
-                            <div className={"w-full flex justify-between items-center gap-5"}>
-                                <p className={"text-xs font-medium"}>Люкс</p>
-                                <p className={"text-xs font-medium text-[#787b86]"}>14</p>
-                            </div>
-                            <div
-                                className={"rounded-secondary min-w-[100px]  py-2 flex justify-center items-center bg-black"}>
-                                <p className={"text-xs font-medium text-primary"}>от 000 000 ₽</p>
-                            </div>
-                        </div>
-                    </div>
+                    <TicketOptions options={ticketOptions} setter={setTicketOptions}/>
                 </div>
                 <div
                     className={`transition-max-height flex flex-col gap-5 duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}

@@ -13,7 +13,7 @@ const Switch = ({
     const padding = `px-${px} py-${py}`;
 
     return (
-        <div className={`flex flex-row items-center gap-2.5 bg-section p-1 rounded-primary w-fit ${extraClass}`}>
+        <div className={`flex flex-row items-center gap-1 bg-secondary p-1 rounded-primary w-fit ${extraClass}`}>
             <div
                 className={`rounded-secondary cursor-pointer ${padding}`}
                 style={{

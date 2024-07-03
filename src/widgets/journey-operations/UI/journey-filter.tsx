@@ -12,7 +12,7 @@ const JourneyFilter = () => {
     const [service, setService] = useState(services)
 
     return (
-        <div className={"w-full max-h-[55vh] overflow-y-auto scroll"}>
+        <div className={"w-full max-h-[calc(100vh-368px)] overflow-y-auto scroll"}>
             <div className={"flex justify-between items-center"}>
                 <h3>Фильтры</h3>
                 <TrashImg/>
@@ -42,22 +42,22 @@ const JourneyFilter = () => {
                     <InputRange min={0} max={885} isTime={true}/>
                 </JourneyDropdown>
                 <JourneyDropdown isChanged={false} title={"Вокзал отправления"} onErase={() => console.log("erase")}>
-                    <Checkbox items={railwayFrom} setter={setRailwayFrom}/>
+                    <Checkbox items={railwayFrom} setter={setRailwayFrom} oneChoise={false}/>
                 </JourneyDropdown>
                 <JourneyDropdown isChanged={false} title={"Вокзал прибытия"} onErase={() => console.log("erase")}>
-                    <Checkbox items={railwayFrom} setter={setRailwayFrom}/>
+                    <Checkbox items={railwayFrom} setter={setRailwayFrom} oneChoise={false}/>
                 </JourneyDropdown>
                 <JourneyDropdown isChanged={true} title={"Тип поезда"} onErase={() => console.log("erase")}>
-                    <Checkbox items={price} setter={setPrice}/>
+                    <Checkbox items={price} setter={setPrice} oneChoise={false}/>
                 </JourneyDropdown>
                 <JourneyDropdown isChanged={true} title={"Наименование"} onErase={() => console.log("erase")}>
-                    <Checkbox items={name} setter={setName}/>
+                    <Checkbox items={name} setter={setName} oneChoise={false}/>
                 </JourneyDropdown>
                 <JourneyDropdown isChanged={true} title={"Услуги"} onErase={() => console.log("erase")}>
                     <Checkbox items={service} setter={setService} oneChoise={false}/>
                 </JourneyDropdown>
                 <JourneyDropdown isChanged={true} title={"Перевозчик"} onErase={() => console.log("erase")}>
-                    <Checkbox items={carrier} setter={setCarrier}/>
+                    <Checkbox items={carrier} setter={setCarrier} oneChoise={false}/>
                 </JourneyDropdown>
             </div>
         </div>

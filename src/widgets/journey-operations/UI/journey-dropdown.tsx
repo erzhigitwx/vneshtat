@@ -13,7 +13,7 @@ const JourneyDropdown = ({isChanged, onErase, title, children}: JourneyDropdownP
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className={`p-3 rounded-[23px] bg-section flex flex-col cursor-pointer`}>
+        <div className={`p-3 rounded-[23px] bg-secondary flex flex-col cursor-pointer`}>
             <div className={"flex flex-row justify-between items-center"} onClick={() => setIsOpen(prev => !prev)}>
                 <div className={"flex flex-row gap-1"}>
                     {isChanged && <span className={"h-[5px] w-[5px] rounded-[100%] bg-red"}/>}

@@ -6,7 +6,7 @@ const TagFilter = ({extraClass, tags, setter, ...rest}: TagFilterProps) => {
     const addTag = (tagToAdd: string) => {
         if (!tags.selectedTags.includes(tagToAdd)) {
             const updatedTags = {
-                tags: tags.tags.filter(tag => tag !== tagToAdd),
+                ...tags,
                 selectedTags: [...tags.selectedTags, tagToAdd]
             };
             setter(updatedTags);
@@ -15,40 +15,37 @@ const TagFilter = ({extraClass, tags, setter, ...rest}: TagFilterProps) => {
 
     const removeTag = (tagToRemove: string) => {
         const updatedTags = {
-            tags: [...tags.tags, tagToRemove],
+            ...tags,
             selectedTags: tags.selectedTags.filter(tag => tag !== tagToRemove)
         };
         setter(updatedTags);
     };
 
     return (
-        <div className={clsx("flex gap-2.5", extraClass)} {...rest}>
-            <div className="flex gap-2.5">
-                {tags.selectedTags.map((tag, index) => (
+        <div className={clsx(`flex gap-2.5`, extraClass)} {...rest}>
+            {tags.tags.map((tag, index) => {
+                const isSelected = tags.selectedTags.includes(tag);
+                return (
                     <div
                         key={index}
-                        className="flex items-center py-2 px-2.5 rounded-primary bg-black cursor-pointer"
-                        onClick={() => removeTag(tag)}
+                        className={clsx(
+                            `flex items-center py-2 ${isSelected ? "px-2.5" : "px-[18px]"} gap-0.5 rounded-primary cursor-pointer]`,
+                            {
+                                "bg-black": isSelected,
+                                "border border-solid border-[#e5e7ea]": !isSelected
+                            }
+                        )}
+                        onClick={() => isSelected ? removeTag(tag) : addTag(tag)}
                     >
-                        <CrossImg className={"w-5 h-5"}/>
-                        <p className={"text-sm text-primary whitespace-nowrap"}>{tag}</p>
+                        {isSelected && <CrossImg className="w-4 h-4"/>}
+                        <p className={clsx("text-sm whitespace-nowrap cursor-pointer", {
+                            "text-primary": isSelected
+                        })}>{tag}</p>
                     </div>
-                ))}
-            </div>
-            <div className="flex gap-2.5">
-                {tags.tags.map((tag, index) => (
-                    <div
-                        key={index}
-                        className={"border border-solid border-[#e5e7ea] py-2 px-2.5 rounded-primary cursor-pointer"}
-                        onClick={() => addTag(tag)}
-                    >
-                        <p className={"text-sm whitespace-nowrap"}>{tag}</p>
-                    </div>
-                ))}
-            </div>
+                );
+            })}
         </div>
     );
 };
 
 export {TagFilter};
-

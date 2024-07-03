@@ -208,6 +208,22 @@ a {
     }
 }
 
+.red-fill {
+    fill: #FF64A3;
+
+    > * {
+        fill: #FF64A3;
+    }
+}
+
+.red-stroke {
+    stroke: #FF64A3;
+
+    > * {
+        stroke: #FF64A3;
+    }
+}
+
 
 .scroll {
     &::-webkit-scrollbar {
