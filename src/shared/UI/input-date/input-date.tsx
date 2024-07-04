@@ -1,11 +1,15 @@
 import {InputDateProps} from "./input-date.props";
 import CalendarImg from "@/assets/icons/calendar.svg?react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Calendar} from "@/shared/UI";
 import {formatDate, getDayOfWeek} from "@/shared/utils";
 
 const InputDate = ({extraClass, inputValue, setter, calendarOpt, placeholder, ...rest}: InputDateProps) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        if(inputValue) setIsOpen(false)
+    }, [inputValue])
 
     return (
         <div className={`flex flex-col min-h-[30px] ${extraClass}`} {...rest}>

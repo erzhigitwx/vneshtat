@@ -178,11 +178,10 @@ export const seatsMock: Seat[][] = [[{
     state: "free"
 }],]
 
-export const formatDate = (date: Date): string => {
+export const formatDate = (date: Date, shortForm: boolean = false): string => {
     const options: Intl.DateTimeFormatOptions = {
         day: 'numeric',
-        month: 'long',
-        weekday: 'long'
+        month: shortForm ? "short" : "long",
     };
 
     const dateFormatter = new Intl.DateTimeFormat('ru-RU', options);
@@ -191,14 +190,12 @@ export const formatDate = (date: Date): string => {
     const dayOfMonth = formattedDateParts.find(part => part.type === 'day')?.value ?? '';
     const month = formattedDateParts.find(part => part.type === 'month')?.value ?? '';
 
-    return `${dayOfMonth} ${month}`;
+    return `${dayOfMonth} ${shortForm ? month.slice(0, month.length - 1) : month}`;
 };
 
-export const getDayOfWeek  = (date: Date): string => {
+export const getDayOfWeek = (date: Date, shortForm: boolean = false): string => {
     const options: Intl.DateTimeFormatOptions = {
-        day: 'numeric',
-        month: 'long',
-        weekday: 'long'
+        weekday: shortForm ? "short" : "long",
     };
 
     const dateFormatter = new Intl.DateTimeFormat('ru-RU', options);
@@ -206,3 +203,14 @@ export const getDayOfWeek  = (date: Date): string => {
 
     return formattedDateParts.find(part => part.type === 'weekday')?.value ?? '';
 }
+
+export const formatTime = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60).toString().padStart(2, '0');
+    const mins = (minutes % 60).toString().padStart(2, '0');
+    return `${hours}:${mins}`;
+};
+
+export const parseTime = (timeString: string): number => {
+    const [hours, minutes] = timeString.split(':').map(part => parseInt(part, 10));
+    return hours * 60 + minutes;
+};

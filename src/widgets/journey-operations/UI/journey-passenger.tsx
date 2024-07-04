@@ -4,6 +4,7 @@ import TrashImg from "@/assets/icons/trash.svg?react";
 import InfoImg from "@/assets/icons/info.svg?react";
 import PlusImg from "@/assets/icons/plus.svg?react";
 import CrossImg from "@/assets/icons/cross.svg?react";
+import CircleImg from "@/assets/icons/red-circle.svg?react";
 
 interface Passenger {
     id: number,
@@ -76,6 +77,8 @@ const JourneyPassenger = () => {
         );
         setPassengers(updatedPassengers);
     };
+
+    const circumference = 2 * Math.PI * 8;
 
     return (
         <div className={"w-full overflow-y-auto scroll"}>
@@ -150,7 +153,7 @@ const JourneyPassenger = () => {
                                             : setActivePassenger(passenger.id)
                                     }
                                     className={
-                                        "w-full bg-secondary min-w-[150px] rounded-primary flex items-center justify-between gap-1 py-2 px-2.5 cursor-pointer"
+                                        "w-full h-7 bg-secondary min-w-[150px] rounded-primary flex items-center justify-between gap-1 py-2 px-2.5 cursor-pointer"
                                     }
                                 >
                                     {passenger.deleteCountdown ? (
@@ -178,11 +181,26 @@ const JourneyPassenger = () => {
                                     )}
                                 </div>
                                 {passenger.deleteCountdown ? (
-                                    <button onClick={() => cancelDelete(passenger.id)}>
-                                        <p className={"text-xs text-[#FF64A3]"}>{passenger.deleteCountdown}</p>
+                                    <button
+                                        onClick={() => cancelDelete(passenger.id)}
+                                        className={
+                                            "min-w-5 min-h-5 relative flex justify-center items-center"
+                                        }
+                                    >
+                                        <p className={"text-xs text-[#FF64A3]"}>
+                                            {passenger.deleteCountdown}
+                                        </p>
+                                        <CircleImg
+                                            className={"absolute min-h-5 min-w-5"}
+                                            style={{
+                                                strokeDasharray: `${circumference}`,
+                                                strokeDashoffset: `${circumference - (circumference * (passenger.deleteCountdown - 1)) / 4}`,
+                                                transition: "stroke-dashoffset 1s linear",
+                                            }}
+                                        />
                                     </button>
                                 ) : (
-                                    <button onClick={() => handleDelete(passenger.id)}>
+                                    <button onClick={() => handleDelete(passenger.id)} className={"min-w-5 min-h-5"}>
                                         <TrashImg className={"black-fill-hover black-stroke-hover transition"}/>
                                     </button>
                                 )}

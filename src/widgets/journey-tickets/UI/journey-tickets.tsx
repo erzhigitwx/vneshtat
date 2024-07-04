@@ -10,8 +10,13 @@ import {Input, Switch, TagFilter} from "@/shared/UI";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
 import {useState} from "react";
 import {Ticket} from "@/entities/ticket";
+import {useSelector} from "react-redux";
+import {formatDate, getDayOfWeek} from "@/shared/utils";
+import {RootState} from "@/app/config/store";
 
 const JourneyTickets = () => {
+    const dateTo = useSelector((state: RootState) => state.filters.dateTo);
+    const dateBack = useSelector((state: RootState) => state.filters.dateBack);
     const [go, setGo] = useState(true);
     const [byQueue, setByQueue] = useState(true);
     const [isChair, setIsChair] = useState(true);
@@ -37,8 +42,18 @@ const JourneyTickets = () => {
                         </button>
                         <Input placeholder={"Город прибытия"}
                                extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"}/>
-                        <Input placeholder={"Туда"} extraClass={"py-3 px-2.5 max-h-9"}/>
-                        <Input placeholder={"Обратно"} extraClass={"py-3 px-2.5 max-h-9"}/>
+                        <Input
+                            placeholder={"Туда"}
+                            extraClass={"py-3 px-2.5 max-h-9"}
+                            value={dateTo ? `${formatDate(dateTo, true)}, ${getDayOfWeek(dateTo, true)}` : ""}
+                            disabled
+                        />
+                        <Input
+                            placeholder={"Обратно"}
+                            extraClass={"py-3 px-2.5 max-h-9"}
+                            value={dateBack ? `${formatDate(dateBack, true)}, ${getDayOfWeek(dateBack, true)}` : ""}
+                            disabled
+                        />
                     </div>
                     <div className={"flex flex-row items-center gap-2.5"}>
                         <Switch

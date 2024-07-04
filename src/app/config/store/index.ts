@@ -1,6 +1,9 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
+import filterStore from "@/widgets/journey-operations/model/filter.store";
 
-const rootReducer = combineReducers({})
+const rootReducer = combineReducers({
+    filters: filterStore
+})
 
 export const store = configureStore({
     reducer: rootReducer,

@@ -10,6 +10,7 @@ import SuitcaseImg from "@/assets/icons/suitcase.svg?react";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {TicketBody} from "@/entities/ticket/UI/ticket-body";
 import {ticketOptionsMock} from "@/widgets/journey-operations/utils";
+import {TicketTimetable} from "@/entities/ticket/UI/ticket-timetable";
 
 interface TicketOptionsProps {
     options: TicketOption[];
@@ -27,9 +28,10 @@ export interface TicketOption {
 const TicketOptions = ({options, setter}: TicketOptionsProps) => {
     const selectOption = (id: number) => {
         setter(prevOptions =>
-            prevOptions.map(option =>
-                option.id === id ? {...option, isSelected: !option.isSelected} : option
-            )
+            prevOptions.map(option => ({
+                ...option,
+                isSelected: option.id === id && !option.isSelected
+            }))
         );
     };
 
@@ -37,7 +39,7 @@ const TicketOptions = ({options, setter}: TicketOptionsProps) => {
         <div className={"flex flex-col gap-2.5"}>
             {options.map(item => (
                 <div
-                    className={`py-1 pr-1 pl-2.5 transition ${item.isSelected ? "bg-black" : "bg-primary"} flex items-center justify-between h-9 gap-2.5 rounded-primary`}
+                    className={`py-1 pr-1 pl-2.5 transition ${item.isSelected ? "bg-black" : "bg-primary"} flex items-center justify-between h-9 gap-2.5 rounded-primary cursor-pointer`}
                     onClick={() => selectOption(item.id)}
                     key={item.id}>
                     <div className={"w-full flex justify-between items-center gap-5"}>
@@ -64,6 +66,15 @@ const Ticket = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [delayedText, setDelayedText] = useState("Показать маршрут");
     const [ticketOptions, setTicketOptions] = useState(ticketOptionsMock)
+    const [activeTicketOption, setActiveTicketOption] = useState<TicketOption | undefined>(ticketOptions.find(item => item.isSelected))
+
+    useEffect(() => {
+        const option = ticketOptions.find(item => item.isSelected);
+        setActiveTicketOption(option);
+        if (option) {
+            setIsOpen(false);
+        }
+    }, [ticketOptions]);
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -74,7 +85,7 @@ const Ticket = () => {
     }, [isOpen]);
 
     return (
-        <div className={"flex flex-row gap-5"}>
+        <div className={`flex flex-row gap-5`}>
             <div className={"flex flex-col gap-2.5 mt-12"}>
                 <button className={"rounded-secondary p-2 flex justify-center bg-secondary"}>
                     <CopyImg className={"max-h-5 max-w-5"}/>
@@ -86,7 +97,8 @@ const Ticket = () => {
                     <MessageImg className={"max-h-5 max-w-5"}/>
                 </button>
             </div>
-            <div className={`w-full flex flex-col bg-secondary rounded-[38px] px-6 ${isOpen ? "py-5" : "pt-5"} gap-5`}>
+            <div
+                className={`w-full flex flex-col bg-secondary rounded-[38px] px-6 ${isOpen || activeTicketOption ? "py-5" : "pt-5"} pb-5`}>
                 <div className={`flex gap-7`}>
                     <div className={"w-full flex flex-col gap-2.5"}>
                         <div className={"flex items-center gap-2.5"}>
@@ -121,24 +133,31 @@ const Ticket = () => {
                         </span>
                         </div>
                         <div className={"flex items-center justify-between"}>
-                            <button onClick={() => setIsOpen(prev => !prev)}
-                                    className={"py-2.5 px-6 bg-[#dce0e5] rounded-primary"}>
-                                <p className={"text-base"}>{delayedText}</p>
+                            <button onClick={() => {
+                                setTicketOptions(ticketOptionsMock);
+                                setIsOpen(prev => !prev);
+                            }} className="py-2.5 px-6 bg-[#dce0e5] rounded-primary">
+                                <p className="text-base">{delayedText}</p>
                             </button>
                             <div className={"flex gap-2.5"}>
-                                <button className={"p-2 bg-primary rounded-secondary"}>
+                                <button
+                                    className={"p-2 w-9 h-9 flex justify-center items-center bg-primary rounded-secondary"}>
                                     <StarImg/>
                                 </button>
-                                <button className={"p-2 bg-primary rounded-secondary"}>
+                                <button
+                                    className={"p-2 w-9 h-9 flex justify-center items-center bg-primary rounded-secondary"}>
                                     <PawImg/>
                                 </button>
-                                <button className={"p-2 bg-primary rounded-secondary"}>
+                                <button
+                                    className={"p-2 w-9 h-9 flex justify-center items-center bg-primary rounded-secondary"}>
                                     <BackCannotImg/>
                                 </button>
-                                <button className={"p-2 bg-primary rounded-secondary"}>
+                                <button
+                                    className={"p-2 w-9 h-9 flex justify-center items-center bg-primary rounded-secondary"}>
                                     <InvalidImg/>
                                 </button>
-                                <button className={"p-2 bg-primary rounded-secondary"}>
+                                <button
+                                    className={"p-2 w-9 h-9 flex justify-center items-center bg-primary rounded-secondary"}>
                                     <SuitcaseImg/>
                                 </button>
                             </div>
@@ -147,9 +166,13 @@ const Ticket = () => {
                     <TicketOptions options={ticketOptions} setter={setTicketOptions}/>
                 </div>
                 <div
-                    className={`transition-max-height flex flex-col gap-5 duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}
+                    className={`transition-max-height flex flex-col gap-5 duration-300 ease-in-out overflow-hidden ${activeTicketOption ? "max-h-screen" : "max-h-0"}`}
                 >
                     <TicketBody/>
+                </div>
+                <div
+                    className={`transition-max-height flex flex-col gap-5 duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}>
+                    <TicketTimetable/>
                 </div>
             </div>
         </div>

@@ -1,11 +1,10 @@
-import {Dispatch, SetStateAction} from 'react';
 import LibCalendar from 'react-calendar';
 import ArrowLeftImg from '@/assets/icons/arrow-left.svg?react';
 import "./calendar.css";
 
 const Calendar = ({value, setter, ...opt}: {
     value: Date | Date[] | null,
-    setter: Dispatch<SetStateAction<Date | Date[] | null>>
+    setter: any
 }) => {
     // if provide date[] it will be multiple, but if just date it will be single-selectable
     const tileContent = (tile: { view: string }) => {
@@ -52,7 +51,6 @@ const Calendar = ({value, setter, ...opt}: {
     };
 
     return (
-        // @ts-expect-error not assignable types
         <LibCalendar
             className={"!border-none"}
             {...(Array.isArray(value) ? {onClickDay, tileClassName} : {value, onChange: setter})}

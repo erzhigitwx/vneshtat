@@ -1,27 +1,21 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import "./input-range.css";
-import {InputRangeProps} from "./input-range.props";
+import { InputRangeProps } from "./input-range.props";
+import { formatTime, parseTime } from "@/shared/utils";
 
 const InputRange: React.FC<InputRangeProps> = ({
-                                                   extraClass, min, max, onChangeValue = () => {
-    }, isTime = false
+                                                   extraClass, min, max, minVal, maxVal, onChangeValue = () => {}, isTime = false
                                                }: InputRangeProps) => {
-    const [minVal, setMinVal] = useState<number>(min);
-    const [maxVal, setMaxVal] = useState<number>(max);
-    const minValRef = useRef<number>(min);
-    const maxValRef = useRef<number>(max);
+    const [left, setLeft] = useState<number>(minVal);
+    const [right, setRight] = useState<number>(maxVal);
+    const minRef = useRef<number>(min);
+    const maxRef = useRef<number>(max);
     const range = useRef<HTMLDivElement | null>(null);
 
     const getPercent = useCallback(
         (value: number) => Math.round(((value - min) / (max - min)) * 100),
         [min, max]
     );
-
-    const formatTime = (minutes: number): string => {
-        const hours = Math.floor(minutes / 60).toString().padStart(2, '0');
-        const mins = (minutes % 60).toString().padStart(2, '0');
-        return `${hours}:${mins}`;
-    };
 
     const getLeftValue = (val: number) => {
         const percent = getPercent(val);
@@ -38,78 +32,66 @@ const InputRange: React.FC<InputRangeProps> = ({
         return leftValue;
     }
 
-    const parseTime = (timeString: string): number => {
-        const [hours, minutes] = timeString.split(':').map(part => parseInt(part, 10));
-        return hours * 60 + minutes;
-    };
+    useEffect(() => {
+        setLeft(minVal);
+        setRight(maxVal);
+    }, [minVal, maxVal]);
 
     useEffect(() => {
-        const minPercent = getPercent(minVal);
-        const maxPercent = getPercent(maxValRef.current);
+        const minPercent = getPercent(left);
+        const maxPercent = getPercent(right);
 
         if (range.current) {
             range.current.style.left = `${minPercent}%`;
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
-    }, [minVal, maxVal, getPercent]);
-
-    useEffect(() => {
-        const minPercent = getPercent(minValRef.current);
-        const maxPercent = getPercent(maxVal);
-
-        if (range.current) {
-            range.current.style.width = `${maxPercent - minPercent}%`;
-        }
-    }, [minVal, maxVal, getPercent]);
+    }, [left, right, getPercent]);
 
     useEffect(() => {
         if (isTime) {
-            onChangeValue && onChangeValue({min: parseTime(formatTime(minVal)), max: parseTime(formatTime(maxVal))});
+            onChangeValue({ min: parseTime(formatTime(left)), max: parseTime(formatTime(right)) });
         } else {
-            onChangeValue && onChangeValue({min: minVal, max: maxVal});
+            onChangeValue({ min: left, max: right });
         }
-    }, [minVal, maxVal, isTime, onChangeValue]);
+    }, [left, right, isTime]);
 
     return (
         <div className={`container ${extraClass}`}>
             <input
                 type="range"
-                min={min}
-                max={max}
-                value={minVal}
+                min={minRef.current}
+                max={maxRef.current}
+                value={left}
                 onChange={(event) => {
-                    const value = Math.min(Number(event.target.value), maxVal - 1);
-                    setMinVal(value);
-                    minValRef.current = value;
+                    const value = Math.min(Number(event.target.value), right - 1);
+                    setLeft(value);
                 }}
                 className="thumb thumb--left"
-                style={{zIndex: minVal > max - 100 ? "5" : "4"}}
+                style={{ zIndex: left > max - 100 ? "5" : "4" }}
             />
-            <div className="thumb-indicator"
-                 style={{left: getLeftValue(minVal)}}/>
+            <div className="thumb-indicator" style={{ left: getLeftValue(left) }} />
 
             <input
                 type="range"
-                min={min}
-                max={max}
-                value={maxVal}
+                min={minRef.current}
+                max={maxRef.current}
+                value={right}
                 onChange={(event) => {
-                    const value = Math.max(Number(event.target.value), minVal + 1);
-                    setMaxVal(value);
-                    maxValRef.current = value;
+                    const value = Math.max(Number(event.target.value), left + 1);
+                    setRight(value);
                 }}
                 className="thumb thumb--right"
             />
-            <div className="thumb-indicator" style={{left: getLeftValue(maxVal)}}/>
+            <div className="thumb-indicator" style={{ left: getLeftValue(right) }} />
 
             <div className="slider">
-                <div className="slider__track"/>
-                <div ref={range as React.MutableRefObject<HTMLDivElement>} className="slider__range"/>
-                <p className="slider__left-value">{isTime ? formatTime(minVal) : minVal}</p>
-                <p className="slider__right-value">{isTime ? formatTime(maxVal) : maxVal}</p>
+                <div className="slider__track" />
+                <div ref={range as React.MutableRefObject<HTMLDivElement>} className="slider__range" />
+                <p className="slider__left-value">{isTime ? formatTime(left) : left}</p>
+                <p className="slider__right-value">{isTime ? formatTime(right) : right}</p>
             </div>
         </div>
     );
 };
 
-export {InputRange};
+export { InputRange };

@@ -7,3 +7,7 @@ export interface Seat {
     isBooked: boolean,
     state: SeatState
 }
+export interface Range {
+    max: number,
+    min: number
+}

@@ -1,9 +1,6 @@
-import {Dispatch, SetStateAction} from "react";
-
 export interface CheckboxProps {
     items: CheckboxItem[]
-    setter: Dispatch<SetStateAction<CheckboxItem[]>>
-    oneChoise?: boolean
+    onChange: any
 }
 
 export interface CheckboxItem {

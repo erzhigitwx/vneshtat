@@ -1,5 +1,9 @@
 import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
 import {TicketOption} from "@/entities/ticket/UI/ticket";
+import {Range} from "@/shared/types";
+
+export const priceRanges: Range = {min: 13000, max: 130000}
+export const timeOnWayRanges: Range = {min: 0, max: 885}
 
 export const prices: CheckboxItem[] = [
     {content: "Любой тип поезда", isSelected: true, id: 1},
@@ -8,8 +12,8 @@ export const prices: CheckboxItem[] = [
     {content: "Двухэтажный", isSelected: false, id: 4},
 ]
 
-export const names: CheckboxItem[] = [
-    {content: "Без наименования", isSelected: true, id: 1},
+export const weignTypes: CheckboxItem[] = [
+    {content: "Все поезда", isSelected: true, id: 1},
     {content: "Ласточка", isSelected: false, id: 2},
     {content: "Сапсан", isSelected: false, id: 3},
     {content: "Красная Стрела", isSelected: false, id: 4},
@@ -64,7 +68,7 @@ export const ticketOptionsMock: TicketOption[] = [{
 },{
     id: 4,
     title: "Люкс",
-    isSelected: true,
+    isSelected: false,
     count: 14,
     fromPrice: "000 000"
 },]

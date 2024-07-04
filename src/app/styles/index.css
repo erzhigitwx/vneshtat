@@ -224,6 +224,20 @@ a {
     }
 }
 
+@keyframes countdown {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+.animate-countdown {
+    transform-origin: left;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
 
 .scroll {
     &::-webkit-scrollbar {
