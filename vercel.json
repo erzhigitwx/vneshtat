@@ -10,6 +10,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/flight",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/bus",
+      "destination": "/index.html"
+    },
+    {
       "source": "/:catchAll*",
       "destination": "/index.html"
     }
