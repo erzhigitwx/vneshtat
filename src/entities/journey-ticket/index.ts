@@ -1,0 +1,1 @@
+export { JourneyTicket } from "./UI/journey-ticket";

@@ -1,4 +1,5 @@
 import {InputHTMLAttributes} from "react";
+import {Range} from "@/shared/types";
 
 export interface InputRangeProps extends InputHTMLAttributes<HTMLInputElement> {
     extraClass?: string
@@ -7,5 +8,5 @@ export interface InputRangeProps extends InputHTMLAttributes<HTMLInputElement> {
     minVal: number,
     maxVal: number,
     isTime?: boolean
-    onChangeValue?: ({min, max}: {min: number, max: number}) => void
+    onChangeValue?: ({min, max}: Range) => void
 }

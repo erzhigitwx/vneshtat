@@ -1,5 +1,5 @@
-import {JourneyTickets} from "@/widgets/journey-tickets";
-import {JourneyOperations} from "@/widgets/journey-operations";
+import {JourneyTickets} from "@/widgets/journey/journey-tickets";
+import {JourneyOperations} from "@/widgets/journey/journey-operations";
 
 const Journey = () => {
     return (

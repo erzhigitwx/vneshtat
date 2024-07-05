@@ -1,4 +1,5 @@
 import {Seat} from "@/shared/types";
+import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
 
 export const seatsMock: Seat[][] = [[{
     order: 45,
@@ -213,4 +214,29 @@ export const formatTime = (minutes: number): string => {
 export const parseTime = (timeString: string): number => {
     const [hours, minutes] = timeString.split(':').map(part => parseInt(part, 10));
     return hours * 60 + minutes;
+};
+
+export const checkIfChanged = (original: any, current: any) => {
+    return JSON.stringify(original) !== JSON.stringify(current);
+};
+
+export const changeCheckbox = (items: CheckboxItem[], id: number, oneChoise: boolean) => {
+    const updatedItems = items.map((item: CheckboxItem) => {
+        if (oneChoise) {
+            return {
+                ...item,
+                isSelected: item.id === id
+            };
+        } else {
+            if (item.id === id) {
+                return {
+                    ...item,
+                    isSelected: !item.isSelected
+                };
+            }
+            return item;
+        }
+    });
+
+    return updatedItems;
 };

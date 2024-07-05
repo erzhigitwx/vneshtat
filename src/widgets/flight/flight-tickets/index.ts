@@ -1,0 +1,1 @@
+export { FlightTickets } from "./UI/flight-tickets";

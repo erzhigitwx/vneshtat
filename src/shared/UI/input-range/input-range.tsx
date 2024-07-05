@@ -49,9 +49,9 @@ const InputRange: React.FC<InputRangeProps> = ({
 
     useEffect(() => {
         if (isTime) {
-            onChangeValue({ min: parseTime(formatTime(left)), max: parseTime(formatTime(right)) });
+            onChangeValue && onChangeValue({ min: parseTime(formatTime(left)), max: parseTime(formatTime(right)) });
         } else {
-            onChangeValue({ min: left, max: right });
+            onChangeValue && onChangeValue({ min: left, max: right });
         }
     }, [left, right, isTime]);
 

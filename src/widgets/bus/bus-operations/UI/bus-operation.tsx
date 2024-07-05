@@ -1,0 +1,51 @@
+import {useState} from "react";
+import {ActiveOperation} from "@/shared/types";
+import RouteImg from "@/assets/icons/route.svg?react";
+import PassengersImg from "@/assets/icons/users.svg?react";
+import TicketImg from "@/assets/icons/ticket.svg?react";
+import {BusRoute} from "@/widgets/bus/bus-operations/UI/bus-route";
+import {BusPassenger} from "@/widgets/bus/bus-operations/UI/bus-passenger";
+import {BusDecor} from "@/widgets/bus/bus-operations/UI/bus-decor";
+
+const BusOperation = () => {
+    const [activeOperation, setActiveOperation] = useState<ActiveOperation>("route");
+
+    return (
+        <aside>
+            <div className={"w-[330px] p-5 rounded-primary bg-primary flex flex-col gap-5"}>
+                <div className={"flex flex-row gap-[10px]"}>
+                    <button
+                        onClick={() => setActiveOperation("route")}
+                        className={`${activeOperation === "route" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        <RouteImg className={activeOperation === "route" ? "white-fill" : undefined}/>
+                    </button>
+                    <button
+                        onClick={() => setActiveOperation("passengers")}
+                        className={`${activeOperation === "passengers" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        <PassengersImg className={activeOperation === "passengers" ? "white-fill" : undefined}/>
+                    </button>
+                    <button
+                        onClick={() => setActiveOperation("decor")}
+                        className={`${activeOperation === "decor" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
+                        <TicketImg className={activeOperation === "decor" ? "white-fill" : undefined}/>
+                    </button>
+                </div>
+                {activeOperation === "route" && <BusRoute/>}
+                {activeOperation === "passengers" && <BusPassenger/>}
+                {activeOperation === "decor" && <BusDecor/>}
+            </div>
+            {activeOperation === "passengers" && (
+                <button className={"w-full flex justify-center items-center py-4 rounded-[18px] bg-black mt-4"}>
+                    <h1 className={"text-lg text-[#fff]"}>Поиск!</h1>
+                </button>
+            )}
+            {activeOperation === "route" && (
+                <button className={"w-full flex justify-center items-center py-4 rounded-[18px] bg-black mt-4"}>
+                    <h1 className={"text-lg text-[#fff]"}>Выбрать пассажиров</h1>
+                </button>
+            )}
+        </aside>
+    )
+};
+
+export {BusOperation};

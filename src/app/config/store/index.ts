@@ -1,8 +1,12 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
-import filterStore from "@/widgets/journey-operations/model/filter.store";
+import journeyStore from "@/widgets/journey/journey-operations/model/journey.store";
+import flightStore from "@/widgets/flight/flight-operations/model/flight.store";
+import busStore from "@/widgets/bus/bus-operations/model/bus.store";
 
 const rootReducer = combineReducers({
-    filters: filterStore
+    journey: journeyStore,
+    flight: flightStore,
+    bus: busStore
 })
 
 export const store = configureStore({

@@ -22,8 +22,8 @@ const Header = () => {
                 <p className={"text-base text-"}>Все поездки</p>
             </div>
             <div className={"flex flex-row items-center gap-6"}>
-                <Link to="/plane">
-                    <PlaneImg className={clsx("blue-fill-hover transition", location === "/plane" && "blue-fill")}/>
+                <Link to="/flight">
+                    <PlaneImg className={clsx("blue-fill-hover transition", location === "/flight" && "blue-fill")}/>
                 </Link>
                 <Link to="/journey">
                     <TrainImg className={clsx("blue-fill-hover transition", location === "/journey" && "blue-fill")}/>

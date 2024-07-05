@@ -11,3 +11,12 @@ export interface Range {
     max: number,
     min: number
 }
+
+export interface Passenger {
+    id: number,
+    name: string,
+    surname: string,
+    password: string,
+    internationalPw: string,
+    deleteCountdown: null | number
+}
