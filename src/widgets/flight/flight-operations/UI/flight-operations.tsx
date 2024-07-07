@@ -52,6 +52,11 @@ const FlightOperations = () => {
                 {activeOperation === "decor" && <FlightDecor/>}
                 {activeOperation === "add" && <FlightAdd/>}
             </div>
+            {activeOperation === "route" && (
+                <button className={"w-full flex justify-center items-center py-4 rounded-[18px] bg-black mt-4"}>
+                    <h1 className={"text-lg text-[#fff]"}>Выбрать пассажиров</h1>
+                </button>
+            )}
             {activeOperation === "passengers" && (
                 <button className={"w-full flex justify-center items-center py-4 rounded-[18px] bg-black mt-4"}>
                     <h1 className={"text-lg text-[#fff]"}>Поиск!</h1>

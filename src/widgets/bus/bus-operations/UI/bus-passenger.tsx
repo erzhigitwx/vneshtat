@@ -77,7 +77,7 @@ const BusPassenger = () => {
             <div className={"flex justify-between items-center"}>
                 <h3>Пассажиры</h3>
             </div>
-            <hr className={"h-[1px] bg-section rounded-[1px] my-2.5"}/>
+            <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"}/>
             <div className={"w-full flex flex-col gap-2.5"}>
                 {passengers.map((passenger) => (
                     <React.Fragment key={passenger.id}>
@@ -201,7 +201,7 @@ const BusPassenger = () => {
                     </React.Fragment>
                 ))}
             </div>
-            <hr className={"h-[1px] bg-section rounded-[1px] my-2.5"}/>
+            <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"}/>
             <button
                 className={"w-full border border-solid border-[#e5e7ea] rounded-[23px] flex justify-between items-center py-4 px-4"}
             >

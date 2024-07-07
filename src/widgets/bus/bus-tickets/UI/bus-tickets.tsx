@@ -5,10 +5,11 @@ import {useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import {Input} from "@/shared/UI";
 import {formatDate, getDayOfWeek} from "@/shared/utils";
+import {BusTicket} from "@/entities/bus-ticket";
 
 const BusTickets = () => {
     const journeyDate = useSelector((state: RootState) => state.bus.journeyDate);
-    const tickets = 0;
+    const tickets = 1;
 
     return (
         <div className={"w-full flex flex-col"}>
@@ -36,17 +37,17 @@ const BusTickets = () => {
                     </div>
                     <div className={"flex gap-2.5"}>
                         <div
-                            className={"flex flex-col gap-1 px-4 py-2 rounded-primary bg-secondary cursor-pointer h-[50px]"}>
+                            className={"flex flex-col gap-1 px-4 py-2 rounded-primary bg-secondary cursor-pointer"}>
                             <h6 className={"text-sm text-md"}>Москва — Санкт-Петербург</h6>
                             <p className={"text-[10px] text-[#9B9FAD]"}>17.01.2023 - 20.01.2023</p>
                         </div>
                         <div
-                            className={"flex flex-col gap-1 px-4 py-2 rounded-primary bg-secondary cursor-pointer h-[50px]"}>
+                            className={"flex flex-col gap-1 px-4 py-2 rounded-primary bg-secondary cursor-pointer"}>
                             <h6 className={"text-sm text-md"}>Москва — Самара</h6>
                             <p className={"text-[10px] text-[#9B9FAD]"}>18.02.2023 - 21.02.2023</p>
                         </div>
                         <div
-                            className={"flex items-center gap-2.5 px-4 py-2 rounded-primary bg-secondary cursor-pointer h-[50px]"}>
+                            className={"flex items-center gap-2.5 px-4 py-2 rounded-primary bg-secondary cursor-pointer"}>
                             <CopyImg/>
                             <h6 className={"text-sm text-md"}>Выбрать из шаблонов</h6>
                         </div>
@@ -54,13 +55,22 @@ const BusTickets = () => {
                 </div>
                 <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4"}/>
             </div>
-            {tickets ? (
-                <div></div>
-            ) : (
-                <div>
+            <div className={"bg-primary overflow-hidden rounded-b-[26px]"}>
+                {tickets ? (
+                    <div
+                        className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-350px)] h-full">
+                        <BusTicket />
+                        <BusTicket />
+                        <BusTicket />
+                        <BusTicket />
+                        <BusTicket />
+                    </div>
+                ) : (
+                    <div>
 
-                </div>
-            )}
+                    </div>
+                )}
+            </div>
         </div>
     )
 };

@@ -8,3 +8,4 @@ export {Weign} from "./weign/weign";
 export {Calendar} from "./calendar/calendar";
 export {InputDate} from "./input-date/input-date";
 export {Dropdown} from "./dropdown/dropdown"
+export {TicketOptions} from "./ticket-options/ticket-options";

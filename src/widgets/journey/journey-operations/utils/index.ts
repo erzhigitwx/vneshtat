@@ -1,6 +1,5 @@
 import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
-import {Range} from "@/shared/types";
-import {TicketOption} from "@/entities/journey-ticket/UI/journey-ticket";
+import {Range, TicketOption} from "@/shared/types";
 
 export const priceRanges: Range = {min: 13000, max: 130000}
 export const timeOnWayRanges: Range = {min: 0, max: 885}

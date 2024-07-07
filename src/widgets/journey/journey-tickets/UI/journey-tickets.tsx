@@ -4,6 +4,8 @@ import BurgerImg from "@/assets/icons/burger.svg?react";
 import HeartImg from "@/assets/icons/heart.svg?react";
 import ChairExistsImg from "@/assets/icons/chair-exists.svg?react";
 import ChairAwayImg from "@/assets/icons/chair-away.svg?react";
+import PlaneImg from "@/assets/icons/plane.svg?react";
+import BusImg from "@/assets/icons/bus.svg?react";
 import {Input, Switch, TagFilter} from "@/shared/UI";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
 import {useState} from "react";
@@ -82,14 +84,49 @@ const JourneyTickets = () => {
                 <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4"}/>
             </div>
             <div className={"bg-primary overflow-hidden rounded-b-[26px]"}>
-                <div
-                    className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] h-full">
-                    <JourneyTicket />
-                    <JourneyTicket />
-                    <JourneyTicket />
-                    <JourneyTicket />
-                    <JourneyTicket />
-                </div>
+                {dateBack && dateTo ? (
+                    <div
+                        className="flex flex-col px-5 py-5 h-[calc(100vh-330px)]">
+                        <div
+                            className="flex flex-col p-7 h-full rounded-[23px] bg-secondary">
+                            <h1 className={"text-2xl"}>Билетов на эти даты уже нет в продаже</h1>
+                            <h3 className={"text-lg mt-4 font-normal"}>Что можно сделать?</h3>
+                            <div className={"flex flex-col gap-2.5 mt-6"}>
+                                <div className={"flex items-center gap-2.5"}>
+                                    <div className={"p-2 bg-primary rounded-secondary h-9"}>
+                                        <ChairAwayImg className={"black-fill"}/>
+                                    </div>
+                                    <p className={"text-base max-w-[280px]"}>Посмотреть распроданные билеты и создать
+                                        Автобронирование</p>
+                                </div>
+                                <div className={"flex items-center gap-2.5"}>
+                                    <div className={"p-2 bg-primary rounded-secondary w-9 h-9 flex justify-center items-center"}>
+                                        <RouteImg/>
+                                    </div>
+                                    <p className={"text-base max-w-[280px]"}>Изменить даты</p>
+                                </div>
+                                <div className={"flex items-center gap-2.5"}>
+                                    <div className={"p-2 bg-primary rounded-secondary w-9 h-9 flex justify-center items-center"}>
+                                        <PlaneImg/>
+                                    </div>
+                                    <div className={"p-2 bg-primary rounded-secondary w-9 h-9 flex justify-center items-center"}>
+                                        <BusImg/>
+                                    </div>
+                                    <p className={"text-base max-w-[280px]"}>Попробовать другой вид транспорта</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] h-full">
+                        <JourneyTicket/>
+                        <JourneyTicket/>
+                        <JourneyTicket/>
+                        <JourneyTicket/>
+                        <JourneyTicket/>
+                    </div>
+                )}
             </div>
         </div>
     )

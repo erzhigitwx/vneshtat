@@ -31,7 +31,7 @@ const JourneyFilter = () => {
                 <h3>Фильтры</h3>
                 <TrashImg/>
             </div>
-            <hr className="h-[1px] bg-section rounded-[1px] my-2.5"/>
+            <hr className="h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"/>
             <div className="flex flex-col gap-2.5">
                 <Dropdown
                     isChanged={priceRange.isChanged}

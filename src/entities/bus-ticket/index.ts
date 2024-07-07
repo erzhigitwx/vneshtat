@@ -1,0 +1,1 @@
+export { BusTicket } from "./UI/bus-ticket";

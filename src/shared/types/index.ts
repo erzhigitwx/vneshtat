@@ -20,3 +20,11 @@ export interface Passenger {
     internationalPw: string,
     deleteCountdown: null | number
 }
+
+export interface TicketOption {
+    id: number,
+    title: string,
+    count: number,
+    fromPrice: string
+    isSelected: boolean
+}

@@ -9,3 +9,10 @@ export const airportsFrom: CheckboxItem[] = [
     {content: "Домодедово", isSelected: false, id: 2},
     {content: "Внуково", isSelected: false, id: 3},
 ]
+
+export const classes: CheckboxItem[] = [
+    {content: "Эконом", isSelected: false, id: 1},
+    {content: "Комфорт", isSelected: true, id: 2},
+    {content: "Комфорт+", isSelected: false, id: 3},
+    {content: "Бизнес", isSelected: false, id: 4},
+]
