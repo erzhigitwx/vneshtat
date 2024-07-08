@@ -44,7 +44,7 @@ const PromoPopups = () => {
                         </div>
                         <div>
                             <Switch
-                                extraClass={"w-full h-[42px] bg-[#F5F5F5]"}
+                                extraClass={"w-full h-[42px] !bg-[#F5F5F5]"}
                                 extraChildClass={"py-2 h-full px-7 w-[50%]"}
                                 selectedBg={"#FBFBFB"}
                                 unselectedBg={"#F5F5F5"}
