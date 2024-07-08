@@ -6,28 +6,33 @@ import {RootState} from "@/app/config/store";
 import {Input} from "@/shared/UI";
 import {formatDate, getDayOfWeek} from "@/shared/utils";
 import {BusTicket} from "@/entities/bus-ticket";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, WheelEvent} from "react";
 
 const BusTickets = () => {
     const journeyDate = useSelector((state: RootState) => state.bus.journeyDate);
     const tickets = 1;
-    const scrollRef = useRef(null);
-    const ticketContainerRef = useRef(null);
+    const scrollRef = useRef<HTMLDivElement | null>(null);
+    const ticketContainerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const handleScroll = (event) => {
-            if (scrollRef.current && !ticketContainerRef.current.contains(event.target)) {
+        const handleScroll = (event: WheelEvent) => {
+            if (
+                scrollRef.current &&
+                ticketContainerRef.current &&
+                !ticketContainerRef.current?.contains(event.target as Node)
+            ) {
                 ticketContainerRef.current.scrollTop += event.deltaY
             }
         };
 
-        if (scrollRef.current) {
-            scrollRef.current.addEventListener('wheel', handleScroll);
+        const currentScrollRef = scrollRef.current;
+        if (currentScrollRef) {
+            currentScrollRef.addEventListener("wheel", handleScroll as unknown as EventListener);
         }
 
         return () => {
-            if (scrollRef.current) {
-                scrollRef.current.removeEventListener('wheel', handleScroll);
+            if (currentScrollRef) {
+                currentScrollRef.removeEventListener("wheel", handleScroll as unknown as EventListener);
             }
         };
     }, []);

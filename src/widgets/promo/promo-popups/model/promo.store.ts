@@ -36,7 +36,9 @@ const promoStore = createSlice({
         },
         updateInfo: (state, action) => {
             const {field, value} = action.payload
-            state.info[field] = value
+            if(field in state.info){
+                (state.info as any)[field] = value
+            }
         }
     }
 })
