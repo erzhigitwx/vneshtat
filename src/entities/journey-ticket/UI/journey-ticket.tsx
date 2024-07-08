@@ -4,7 +4,6 @@ import TrainImg from "@/assets/icons/train.svg?react";
 import MessageImg from "@/assets/icons/message.svg?react";
 import StarImg from "@/assets/icons/star.svg?react";
 import PawImg from "@/assets/icons/paw.svg?react";
-import PinImg from "@/assets/icons/fligt/flight-pin.svg?react";
 import BackCannotImg from "@/assets/icons/back-cannot.svg?react";
 import InvalidImg from "@/assets/icons/invalid.svg?react";
 import SuitcaseImg from "@/assets/icons/suitcase.svg?react";
@@ -55,9 +54,6 @@ const JourneyTicket = () => {
                 <div className={`flex gap-7`}>
                     <div className={"w-full flex flex-col gap-2.5"}>
                         <div className={"flex items-center gap-2.5"}>
-                            <button className={"p-1 rounded-[100%]"}>
-                                <PinImg className={"white-fill"}/>
-                            </button>
                             <button className={"p-1 bg-[#bdbfc7] rounded-[100%]"}>
                                 <TrainImg className={"white-fill h-3 w-3"}/>
                             </button>
