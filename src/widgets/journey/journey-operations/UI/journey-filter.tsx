@@ -25,11 +25,26 @@ const JourneyFilter = () => {
     const timeTo = useSelector((state: RootState) => state.journey.timeTo);
     const dispatch: AppDispatch = useDispatch();
 
+    const handleClearFilter = () => {
+        dispatch(setPriceRange(priceRanges))
+        dispatch(setTimeOnWay(timeOnWayRanges))
+        dispatch(setTimeFrom(timeOnWayRanges))
+        dispatch(setTimeTo(timeOnWayRanges))
+        dispatch(setRailwaysFrom("default"))
+        dispatch(setRailwaysTo("default"))
+        dispatch(setPrices("default"))
+        dispatch(setWeignTypes("default"))
+        dispatch(setServices("default"))
+        dispatch(setCarriers("default"))
+    }
+
     return (
         <div className="w-full max-h-[calc(100vh-368px)] overflow-y-auto scroll">
             <div className="flex justify-between items-center">
                 <h3>Фильтры</h3>
-                <TrashImg/>
+                <button onClick={handleClearFilter}>
+                    <TrashImg className={"transition black-stroke-hover black-fill-hover"}/>
+                </button>
             </div>
             <hr className="h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"/>
             <div className="flex flex-col gap-2.5">
@@ -71,7 +86,7 @@ const JourneyFilter = () => {
                 <Dropdown
                     isChanged={timeFrom.isChanged}
                     title="Время отправления"
-                    onErase={() => dispatch(setTimeFrom(timeOnWay))}>
+                    onErase={() => dispatch(setTimeFrom(timeOnWayRanges))}>
                     <InputRange
                         min={timeOnWayRanges.min}
                         max={timeOnWayRanges.max}

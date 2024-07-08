@@ -4,6 +4,7 @@ import TrainImg from "@/assets/icons/train.svg?react";
 import MessageImg from "@/assets/icons/message.svg?react";
 import StarImg from "@/assets/icons/star.svg?react";
 import PawImg from "@/assets/icons/paw.svg?react";
+import PinImg from "@/assets/icons/fligt/flight-pin.svg?react";
 import BackCannotImg from "@/assets/icons/back-cannot.svg?react";
 import InvalidImg from "@/assets/icons/invalid.svg?react";
 import SuitcaseImg from "@/assets/icons/suitcase.svg?react";
@@ -50,12 +51,15 @@ const JourneyTicket = () => {
                 </button>
             </div>
             <div
-                className={`w-full flex flex-col bg-secondary rounded-[38px] px-6 ${isOpen || activeTicketOption ? "py-5" : "pt-5"} pb-5`}>
+                className={`w-full flex flex-col bg-secondary rounded-[38px] px-6 ${isOpen || activeTicketOption ? "py-6" : "pt-6"} pb-6`}>
                 <div className={`flex gap-7`}>
                     <div className={"w-full flex flex-col gap-2.5"}>
                         <div className={"flex items-center gap-2.5"}>
+                            <button className={"p-1 rounded-[100%]"}>
+                                <PinImg className={"white-fill"}/>
+                            </button>
                             <button className={"p-1 bg-[#bdbfc7] rounded-[100%]"}>
-                                <TrainImg className={"white-fill"}/>
+                                <TrainImg className={"white-fill h-3 w-3"}/>
                             </button>
                             <h1 className={"text-2xl"}>016А</h1>
                         </div>

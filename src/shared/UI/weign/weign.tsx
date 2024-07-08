@@ -15,8 +15,8 @@ const Weign = () => {
         <div className={"relative flex flex-col justify-center"}>
             <WeignImg className={""}/>
             <div className={"grid-weign absolute"}>
-                {seats.map(couple => (
-                    <DoubleSeats seats={couple}/>
+                {seats.map((couple, i) => (
+                    <DoubleSeats seats={couple} key={i}/>
                 ))}
             </div>
         </div>

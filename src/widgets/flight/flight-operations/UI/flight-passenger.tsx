@@ -95,21 +95,21 @@ const FlightPassenger = () => {
                                         "w-full bg-secondary rounded-primary flex items-center justify-between gap-1 py-2 px-2.5"
                                     }
                                 >
-                                    <h3 className={"text-xs text-medium whitespace-nowrap"}>
+                                    <h3 className={"text-xs font-medium whitespace-nowrap"}>
                                         {passenger.surname} {passenger.name}
                                     </h3>
                                     <ArrowTop className={"min-w-5 min-h-5"}/>
                                 </div>
                                 <div className={"w-full bg-secondary rounded-primary py-4 px-5 mt-2.5"}>
                                     <div className={"flex justify-between items-center"}>
-                                        <h3 className={"text-base text-medium"}>Документы</h3>
+                                        <h3 className={"text-base font-medium"}>Документы</h3>
                                         <InfoImg className={"min-w-6 min-h-6 black-fill-hover"}/>
                                     </div>
                                     <div className={"flex flex-col gap-1.5 mt-2.5"}>
                                         <div
                                             className={"bg-primary py-2 px-2.5 gap-1 flex justify-between items-center rounded-primary"}
                                         >
-                                            <h6 className={"text-xs text-medium whitespace-nowrap"}>
+                                            <h6 className={"text-xs font-medium whitespace-nowrap"}>
                                                 {passenger.password}
                                             </h6>
                                             <p className={"text-xs text-[#9b9fad] whitespace-nowrap overflow-hidden text-ellipsis"}>
@@ -119,7 +119,7 @@ const FlightPassenger = () => {
                                         <div
                                             className={"bg-primary py-2 px-2.5 gap-1 flex justify-between items-center rounded-primary"}
                                         >
-                                            <h6 className={"text-xs text-medium whitespace-nowrap"}>
+                                            <h6 className={"text-xs font-medium whitespace-nowrap"}>
                                                 {passenger.internationalPw}
                                             </h6>
                                             <p className={"text-xs text-[#9b9fad] whitespace-nowrap overflow-hidden text-ellipsis"}>
@@ -134,7 +134,7 @@ const FlightPassenger = () => {
                                 <div
                                     className={"w-7 h-7 py-2 px-2.5 flex justify-center items-center rounded-full bg-secondary"}
                                 >
-                                    <h3 className={"text-xs text-medium uppercase"}>
+                                    <h3 className={"text-xs font-medium uppercase"}>
                                         {passenger.surname[0] + passenger.name[1]}
                                     </h3>
                                 </div>
@@ -152,7 +152,7 @@ const FlightPassenger = () => {
                                         <div className={"flex items-center gap-1"}>
                                             <h3
                                                 className={
-                                                    "text-xs text-medium whitespace-nowrap text-[#FF64A3] overflow-hidden text-ellipsis"
+                                                    "text-xs font-medium whitespace-nowrap text-[#FF64A3] overflow-hidden text-ellipsis"
                                                 }
                                             >
                                                 Отменить удаление
@@ -163,7 +163,7 @@ const FlightPassenger = () => {
                                         <>
                                             <h3
                                                 className={
-                                                    "text-xs text-medium whitespace-nowrap overflow-hidden text-ellipsis"
+                                                    "text-xs font-medium whitespace-nowrap overflow-hidden text-ellipsis"
                                                 }
                                             >
                                                 {passenger.surname} {passenger.name}

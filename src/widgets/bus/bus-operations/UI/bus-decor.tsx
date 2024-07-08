@@ -50,7 +50,7 @@ const BusDecor = () => {
                             <div className={"flex flex-col gap-1"}>
                                 <span className={"flex items-center gap-1"}>
                                     <SuccessImg/>
-                                    <p className={"text-xs text-medium"}>Автобус</p>
+                                    <p className={"text-xs font-medium"}>Автобус</p>
                                     <p className={"text-xs text-[#9B9FAD]"}>22.02.2024</p>
                                 </span>
                                 <p className={"text-xs text-[#9B9FAD] ml-5"}>ООО “Беркут”</p>
@@ -58,11 +58,11 @@ const BusDecor = () => {
                             <div
                                 className={"flex flex-col gap-2.5 pl-2 border-l-[5px] border-r-0 border-[#E5E7EA] border-y-0 border-solid"}>
                                 <span className={"flex flex-col gap-0.5"}>
-                                    <h6 className={"text-xs text-medium"}>Санкт-Петербург</h6>
+                                    <h6 className={"text-xs font-medium"}>Санкт-Петербург</h6>
                                     <p className={"text-xs text-[#9B9FAD] whitespace-wrap"}>Автовокзал "Обводный"; метро Обводный канал; набережная Обводного канала, дом 36</p>
                                 </span>
                                 <span className={"flex flex-col gap-0.5"}>
-                                    <h6 className={"text-xs text-medium"}>Москва</h6>
+                                    <h6 className={"text-xs font-medium"}>Москва</h6>
                                     <p className={"text-xs text-[#9B9FAD] whitespace-wrap"}>Международный автовокзал "Северные Ворота"; улица Дыбенко, дом 7, строение 1</p>
                                 </span>
                             </div>
@@ -70,7 +70,7 @@ const BusDecor = () => {
                         <div className={"rounded-primary bg-primary p-2.5"}>
                             <span className={"flex items-center gap-1"}>
                                 <TimeImg/>
-                                <p className={"text-xs text-medium"}>Отправление</p>
+                                <p className={"text-xs font-medium"}>Отправление</p>
                             </span>
                             <span className={"flex gap-1 ml-5"}>
                                 <p className={"text-xs text-[#9B9FAD]"}>12:00</p>
@@ -80,7 +80,7 @@ const BusDecor = () => {
                         <div className={"rounded-primary bg-primary p-2.5"}>
                             <span className={"flex items-center gap-1"}>
                                 <TimeImg/>
-                                <p className={"text-xs text-medium"}>Прибытие</p>
+                                <p className={"text-xs font-medium"}>Прибытие</p>
                             </span>
                             <span className={"flex gap-1 ml-5"}>
                                 <p className={"text-xs text-[#9B9FAD]"}>22:00</p>
@@ -94,7 +94,7 @@ const BusDecor = () => {
                         {passengers.map(passenger => (
                             <div className={"flex items-center gap-1"}>
                                 <span className={"w-full rounded-primary bg-primary px-2.5 py-2"}>
-                                    <p className={"text-xs text-medium"}>{passenger.surname} {passenger.name}</p>
+                                    <p className={"text-xs font-medium"}>{passenger.surname} {passenger.name}</p>
                                 </span>
                                 <button onClick={() => {
                                     setPassengers(prev => prev.filter(user => user.id !== passenger.id))

@@ -8,7 +8,7 @@ import PlaneImg from "@/assets/icons/plane.svg?react";
 import BusImg from "@/assets/icons/bus.svg?react";
 import {Input, Switch, TagFilter} from "@/shared/UI";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {formatDate, getDayOfWeek} from "@/shared/utils";
 import {RootState} from "@/app/config/store";
@@ -24,9 +24,30 @@ const JourneyTickets = () => {
         tags: ["Дешевле", "Быстрее", "Раннее отправление", "Раннее прибытие"],
         selectedTags: []
     });
+    const scrollRef = useRef(null);
+    const ticketContainerRef = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = (event) => {
+            if (scrollRef.current && !ticketContainerRef.current.contains(event.target)) {
+                ticketContainerRef.current.scrollTop += event.deltaY
+            }
+        };
+
+        if(scrollRef.current){
+            scrollRef.current.addEventListener('wheel', handleScroll);
+        }
+
+        return () => {
+            if(scrollRef.current){
+                scrollRef.current.removeEventListener('wheel', handleScroll);
+            }
+        };
+    }, []);
+
 
     return (
-        <div className={"w-full flex flex-col"}>
+        <div className={"w-full flex flex-col"} ref={scrollRef}>
             <div className={"bg-primary px-5 pt-5 rounded-t-[26px]"}>
                 <div className={"flex flex-col gap-4"}>
                     <div className={"flex flex-row items-center gap-2.5"}>
@@ -57,8 +78,8 @@ const JourneyTickets = () => {
                     </div>
                     <div className={"flex flex-row items-center gap-2.5"}>
                         <Switch
-                            firstChild={<p className={`text-sm ${go && "text-primary"}`}>Туда</p>}
-                            secondChild={<p className={`text-sm ${!go && "text-primary"}`}>Обратно</p>}
+                            firstChild={<p className={`text-sm font-medium ${go && "text-primary"}`}>Туда</p>}
+                            secondChild={<p className={`text-sm font-medium ${!go && "text-primary"}`}>Обратно</p>}
                             isSelected={go}
                             setter={setGo}
                             selectedBg={"#121212"}
@@ -69,13 +90,15 @@ const JourneyTickets = () => {
                             secondChild={<HeartImg className={"h-5 w-5"}/>}
                             isSelected={byQueue}
                             setter={setByQueue}
-                            extraClass={"max-h-9"}
+                            extraChildClass={"px-1 py-1"}
+                            extraClass={"max-h-9 w-26"}
                         />
                         <Switch
                             firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`}/>}
                             secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`}/>}
                             isSelected={isChair}
                             setter={setIsChair}
+                            extraChildClass={"py-1 px-1.5"}
                             extraClass={"max-h-9"}
                         />
                         <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"}/>
@@ -118,8 +141,7 @@ const JourneyTickets = () => {
                         </div>
                     </div>
                 ) : (
-                    <div
-                        className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] h-full">
+                    <div ref={ticketContainerRef} className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] h-full">
                         <JourneyTicket/>
                         <JourneyTicket/>
                         <JourneyTicket/>

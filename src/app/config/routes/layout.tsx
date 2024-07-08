@@ -5,6 +5,7 @@ const Home = lazy(() => import("@/pages/home/home"));
 const Journey = lazy(() => import("@/pages/journey/journey"));
 const Flight = lazy(() => import("@/pages/flight/flight"));
 const Bus = lazy(() => import("@/pages/bus/bus"));
+const Promo = lazy(() => import("@/pages/promo/promo"));
 
 const Layout = () => {
     return (
@@ -14,6 +15,7 @@ const Layout = () => {
                 <Route path="/journey" element={<Journey/>}/>
                 <Route path="/flight" element={<Flight/>}/>
                 <Route path="/bus" element={<Bus/>}/>
+                <Route path="/promo" element={<Promo/>} />
             </Routes>
         </Suspense>
     );

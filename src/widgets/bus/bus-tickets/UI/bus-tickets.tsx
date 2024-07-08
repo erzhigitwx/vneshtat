@@ -6,13 +6,34 @@ import {RootState} from "@/app/config/store";
 import {Input} from "@/shared/UI";
 import {formatDate, getDayOfWeek} from "@/shared/utils";
 import {BusTicket} from "@/entities/bus-ticket";
+import {useEffect, useRef} from "react";
 
 const BusTickets = () => {
     const journeyDate = useSelector((state: RootState) => state.bus.journeyDate);
     const tickets = 1;
+    const scrollRef = useRef(null);
+    const ticketContainerRef = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = (event) => {
+            if (scrollRef.current && !ticketContainerRef.current.contains(event.target)) {
+                ticketContainerRef.current.scrollTop += event.deltaY
+            }
+        };
+
+        if (scrollRef.current) {
+            scrollRef.current.addEventListener('wheel', handleScroll);
+        }
+
+        return () => {
+            if (scrollRef.current) {
+                scrollRef.current.removeEventListener('wheel', handleScroll);
+            }
+        };
+    }, []);
 
     return (
-        <div className={"w-full flex flex-col"}>
+        <div ref={scrollRef} className={"w-full flex flex-col"}>
             <div className={"bg-primary px-5 pt-5 rounded-t-[26px]"}>
                 <div className={"flex flex-col gap-4"}>
                     <div className={"flex flex-row items-center gap-2.5"}>
@@ -58,12 +79,13 @@ const BusTickets = () => {
             <div className={"bg-primary overflow-hidden rounded-b-[26px]"}>
                 {tickets ? (
                     <div
+                        ref={ticketContainerRef}
                         className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-350px)] h-full">
-                        <BusTicket />
-                        <BusTicket />
-                        <BusTicket />
-                        <BusTicket />
-                        <BusTicket />
+                        <BusTicket/>
+                        <BusTicket/>
+                        <BusTicket/>
+                        <BusTicket/>
+                        <BusTicket/>
                     </div>
                 ) : (
                     <div>

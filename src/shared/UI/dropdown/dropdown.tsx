@@ -26,7 +26,7 @@ const Dropdown = ({ isChanged = false, onErase = () => {}, title, selectedText, 
                             e.stopPropagation();
                             onErase && onErase();
                         }}>
-                            <EraserImg/>
+                            <EraserImg className={"transition hover:brightness-50"}/>
                         </button>
                     )}
                 </div>

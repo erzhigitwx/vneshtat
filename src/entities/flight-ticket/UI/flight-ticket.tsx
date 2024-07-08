@@ -105,12 +105,12 @@ const FlightTicket = () => {
                 </div>
                 <div className={"flex items-center justify-end gap-2.5 mt-7"}>
                     <button
-                        className={"p-2 w-9 h-9 flex justify-center items-center bg-primary rounded-secondary"}>
-                        <ReloadImg/>
-                    </button>
-                    <button
                         className={"p-2 w-9 h-9 flex justify-center items-center bg-[#FCBEDB] rounded-secondary"}>
                         <PoliticSvg/>
+                    </button>
+                    <button
+                        className={"w-9 h-9 flex justify-center items-center"}>
+                        <ReloadImg className={"w-5 h-5"}/>
                     </button>
                     <button
                         className={"w-52 h-9 py-4 px-9 flex justify-center items-center bg-black rounded-primary"}>

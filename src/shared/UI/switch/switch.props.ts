@@ -4,9 +4,9 @@ export interface SwitchProps {
     firstChild: ReactNode
     secondChild: ReactNode
     isSelected: boolean,
-    py?: string,
-    px?: string,
+    extraChildClass?: string,
     selectedBg?: string,
+    unselectedBg?: string,
     extraClass?: string,
     setter: Dispatch<SetStateAction<boolean>>
 }

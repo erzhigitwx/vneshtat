@@ -18,6 +18,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/promo",
+      "destination": "/index.html"
+    },
+    {
       "source": "/:catchAll*",
       "destination": "/index.html"
     }

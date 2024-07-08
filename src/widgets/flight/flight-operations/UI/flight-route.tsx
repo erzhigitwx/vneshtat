@@ -29,7 +29,7 @@ const FlightRoute = () => {
                     <div key={flight.id} className={"flex flex-col gap-2.5 mt-2.5"}>
                         {flight.id !== 1 && <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] mt-[15px]"}/>}
                         <div className={"flex items-center justify-between"}>
-                            <h4 className={"text-base text-medium"}>Перелет #{flight.id}</h4>
+                            <h4 className={"text-base font-medium"}>Перелет #{flight.id}</h4>
                             {flight.id !== 1 && (
                                 <button onClick={() => dispatch(removeFlight(flight.id))}>
                                     <CrossImg className={"grey-fill min-w-7 min-h-7"}/>
@@ -45,7 +45,7 @@ const FlightRoute = () => {
                             />
                             <input
                                 value={flight.arrivalCity}
-                                placeholder={"Город прибытия"}
+                                placeholder={"Город прилета"}
                                 className={"bg-secondary rounded-primary text-sm py-2 px-2.5 max-h-[30px]"}
                                 onChange={(e) => handleInputChange(flight.id, 'arrivalCity', e.target.value)}
                             />
