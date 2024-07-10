@@ -21,11 +21,13 @@ const loginStore = createSlice({
     initialState,
     reducers: {
         updateLoginState: <K extends keyof LoginState>(
-            state,
+            state: any,
             action: PayloadAction<{ field: K; value: LoginState[K] }>
         ) => {
             const {field, value} = action.payload;
-            state[field] = value;
+            if (field in state) {
+                (state as any)[field] = value
+            }
 
             const {withPhone, phone, sms, login} = state;
             state.isLoginReady = withPhone ? !!phone && !!sms : !!login && !!sms;

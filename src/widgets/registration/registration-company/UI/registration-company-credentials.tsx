@@ -1,5 +1,5 @@
 import {Input} from "@/shared/UI";
-import {setProgress, updateCredentialsState} from "../model/registration-company.store";
+import {updateCredentialsState} from "../model/registration-company.store";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import {Dispatch, SetStateAction} from "react";

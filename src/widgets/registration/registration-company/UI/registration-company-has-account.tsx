@@ -57,7 +57,7 @@ const RegistrationCompanyHasAccount = ({isLoginClicked, setIsLoginClicked, setHa
                 secondChild={<p
                     className={`font-medium text-base ${withPhone ? "text-[#9B9FAD]" : "text-[#121212]"}`}>Логин</p>}
                 isSelected={withPhone}
-                setter={(value) => dispatch(updateAccountState({field: "withPhone", value}))}
+                setter={(value) => dispatch(updateAccountState({field: "withPhone", value: value as boolean}))}
             />
             {withPhone ? (
                 <Input
@@ -91,7 +91,7 @@ const RegistrationCompanyHasAccount = ({isLoginClicked, setIsLoginClicked, setHa
             />
             <button
                 className={"w-full flex justify-center items-center py-3 h-[50px] rounded-primary bg-[#292933] disabled:bg-secondary"}
-                disabled={sms}>
+                disabled={!!sms}>
                 <p className={`text-lg font-medium text-primary ${sms && "!text-[#9B9FAD]"}`}>{sms ? "Отправить повторно 0:59" : "Получить код"}</p>
             </button>
             <button

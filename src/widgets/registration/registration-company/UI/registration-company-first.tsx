@@ -98,14 +98,14 @@ const RegistrationCompanyFirst = () => {
                         </div>
                         <button
                             className={"transition bg-black py-4 px-9 rounded-[16px] h-[50px] flex items-center justify-center w-full mt-4 disabled:cursor-not-allowed disabled:bg-secondary"}
-                            disabled={!isCompanyReady || uploadedFile}
+                            disabled={!isCompanyReady || !!uploadedFile}
                         >
                             <p className={`text-lg font-medium ${isCompanyReady && !uploadedFile ? "text-primary" : "text-[#787B86]"}`}>Скачать
                                 договор</p>
                         </button>
                         <button
                             className={"transition bg-secondary py-4 px-9 rounded-[16px] h-[50px] flex items-center justify-center w-full mt-2.5 disabled:cursor-not-allowed"}
-                            disabled={!isCompanyReady || uploadedFile}
+                            disabled={!isCompanyReady || !!uploadedFile}
                             onClick={() => document.getElementById("fileInput")?.click()}>
                             <p className={`text-lg font-medium ${isCompanyReady && !uploadedFile ? "text-[#787B86]" : "text-[#9B9FAD]"}`}>Загрузить
                                 договор</p>

@@ -1,7 +1,6 @@
 {
   "name": "vneshtat",
   "private": true,
-  "homepage": "https://www.vneshtat.com/",
   "version": "0.0.0",
   "homepage": "http://www.vneshtat.com/",
   "type": "module",

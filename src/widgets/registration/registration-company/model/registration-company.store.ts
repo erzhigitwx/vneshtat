@@ -88,7 +88,9 @@ const registrationCompanyStore = createSlice({
             }>
         ) => {
             const {field, value} = action.payload;
-            state.company[field] = value;
+            if(field in state.company){
+                (state.company as any)[field] = value
+            }
 
             const {legalName, legalAddress, shortName, kpp, inn} = state.company;
             const isCompanyReady = !!legalName && !!legalAddress && !!shortName && !!kpp && !!inn;
@@ -117,7 +119,9 @@ const registrationCompanyStore = createSlice({
             }>
         ) => {
             const {field, value} = action.payload;
-            state.info[field] = value;
+            if(field in state.info){
+                (state.info as any)[field] = value
+            }
 
             const {name, surname, middlename, birthday} = state.info;
             const isInfoReady = !!name && !!surname && !!middlename && !!birthday;
@@ -135,7 +139,9 @@ const registrationCompanyStore = createSlice({
             }>
         ) => {
             const {field, value} = action.payload;
-            state.credentials[field] = value;
+            if(field in state.credentials){
+                (state.credentials as any)[field] = value
+            }
 
             const {email, login, phone, password} = state.credentials;
             const isCredentialsReady = !!email && !!login && !!phone && !!password;
@@ -146,11 +152,13 @@ const registrationCompanyStore = createSlice({
             state.isCredentialsReady = isCredentialsReady;
         },
         updateAccountState: <K extends keyof RegistrationCompanyStoreState["account"]>(
-            state,
+            state: any,
             action: PayloadAction<{ field: K; value: RegistrationCompanyStoreState["account"][K] }>
         ) => {
             const {field, value} = action.payload;
-            state.account[field] = value;
+            if(field in state.account){
+                (state.account as any)[field] = value
+            }
 
             const {withPhone, login, phone, sms} = state.account;
             const isAccountReady = withPhone ? !!phone && !!sms : !!login && !!sms;
