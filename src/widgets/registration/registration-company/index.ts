@@ -1,0 +1,1 @@
+export { RegistrationCompany } from "./UI/registration-company";

@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 function App() {
     const location = useLocation().pathname;
 
-    if (["/promo"].includes(location)) {
+    if (["/promo", "/registration", "/login"].includes(location)) {
         return <Layout />
     }
     return <BasicLayout component={<Layout/>}/>

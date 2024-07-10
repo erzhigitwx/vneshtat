@@ -21,10 +21,17 @@
 @layer components {
     .transition {
         transition: all 0.3s ease;
+
         > * {
             transition: all 0.3s ease;
         }
     }
+
+
+}
+
+.first-letter-black::first-letter {
+    color: #121212 !important;
 }
 
 * {
