@@ -4,11 +4,13 @@ import {Input, Popup, Switch} from "@/shared/UI";
 import CrossImg from "@/assets/icons/cross.svg?react";
 import {setIsCeo, setIsOpen, updateInfo} from "@/widgets/promo/promo-popups/model/promo.store";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const PromoPopups = () => {
     const isCeo = useSelector((store: RootState) => store.promo.isCeo);
     const {fullname, companyName, travelFrequency, phone, email} = useSelector((store: RootState) => store.promo.info);
     const [status, setStatus] = useState<"success" | "error" | null>(null);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const createConsultingProposal = async () => {
@@ -27,6 +29,11 @@ const PromoPopups = () => {
         setStatus("success")
     }
 
+    const handleClose = () => {
+        dispatch(setIsOpen(false))
+        navigate("/promo")
+    }
+
     return (
         <Popup isCentered withShadow extraClass={"h-full flex items-center gap-[18px] py-24"}>
             {status === null ? (
@@ -35,7 +42,7 @@ const PromoPopups = () => {
                         <div className={"flex flex-col gap-2.5"}>
                             <div className={"flex items-center justify-between"}>
                                 <h1 className={"text-2xl text-[#787B86]"}>Знакомство</h1>
-                                <button onClick={() => dispatch(setIsOpen(false))}>
+                                <button onClick={handleClose}>
                                     <CrossImg className={"grey-fill min-h-6 min-w-6"}/>
                                 </button>
                             </div>
@@ -57,36 +64,79 @@ const PromoPopups = () => {
                             />
                         </div>
                         <div className={"flex flex-col gap-2.5"}>
-                            <Input
-                                extraClass={"bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3"}
-                                placeholder={"Как к вам обращаться?"}
-                                value={fullname}
-                                onChange={(e) => dispatch(updateInfo({field: "fullname", value: e.target.value}))}
-                            />
-                            <Input extraClass={"bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3"}
-                                   placeholder={"Название компании"}
-                                   value={companyName}
-                                   onChange={(e) => dispatch(updateInfo({field: "companyName", value: e.target.value}))}
-                            />
-                            <Input extraClass={"bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3"}
-                                   placeholder={"Кол-во командировок"}
-                                   value={travelFrequency}
-                                   onChange={(e) => dispatch(updateInfo({
-                                       field: "travelFrequency",
-                                       value: e.target.value
-                                   }))}
-                            />
-                            <Input extraClass={"bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3"}
-                                   placeholder={"Номер телефона"}
-                                   value={phone}
-                                   onChange={(e) => dispatch(updateInfo({field: "phone", value: e.target.value}))}
-                            />
-                            <Input extraClass={"bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3"}
-                                   type={"email"}
-                                   placeholder={"Email"}
-                                   value={email}
-                                   onChange={(e) => dispatch(updateInfo({field: "email", value: e.target.value}))}
-                            />
+                            <div className="relative">
+                                <Input
+                                    extraClass={"w-full bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3 placeholder:text-base"}
+                                    placeholder="Как к вам обращаться?"
+                                    value={fullname}
+                                    onChange={(e) => dispatch(updateInfo({field: "fullname", value: e.target.value}))}
+                                />
+                                {!fullname && (
+                                    <span className="absolute right-6 top-2.5 text-[#9B9FAD] text-sm font-medium">
+                                        Иван
+                                    </span>
+                                )}
+                            </div>
+                            <div className="relative">
+                                <Input
+                                    extraClass={"w-full bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3 placeholder:text-base"}
+                                    placeholder={"Название компании"}
+                                    value={companyName}
+                                    onChange={(e) => dispatch(updateInfo({
+                                        field: "companyName",
+                                        value: e.target.value
+                                    }))}
+                                />
+                                {!companyName && (
+                                    <span className="absolute right-6 top-2.5 text-[#9B9FAD] text-sm font-medium">
+                                        Альфа
+                                    </span>
+                                )}
+                            </div>
+                            <div className="relative">
+                                <Input
+                                    extraClass={"w-full bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3 placeholder:text-base"}
+                                    placeholder={"Кол-во командировок"}
+                                    value={travelFrequency}
+                                    onChange={(e) => dispatch(updateInfo({
+                                        field: "travelFrequency",
+                                        value: e.target.value
+                                    }))}
+                                />
+                                {!travelFrequency && (
+                                    <span className="absolute right-6 top-2.5 text-[#9B9FAD] text-sm font-medium">
+                                        Более 100 в месяц
+                                    </span>
+                                )}
+                            </div>
+                            <div className="relative">
+                                <Input
+                                    extraClass={"w-full bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3 placeholder:text-base"}
+                                    placeholder={"Номер телефона"}
+                                    value={phone}
+                                    onChange={(e) => dispatch(updateInfo({field: "phone", value: e.target.value}))}
+                                />
+                                {!phone && (
+                                    <span className="absolute right-6 top-2.5 text-[#9B9FAD] text-sm font-medium">
+                                        +7 (___) ___ - __ -__
+                                    </span>
+                                )}
+                            </div>
+                            <div className="relative">
+                                <Input
+                                    extraClass={"w-full bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3 placeholder:text-base"}
+                                    type={"email"}
+                                    placeholder={"Email"}
+                                    value={email}
+                                    onChange={(e) => dispatch(updateInfo({field: "email", value: e.target.value}))}
+                                />
+                                {!email && (
+                                    <span className="absolute right-6 top-2.5 text-[#9B9FAD] text-sm font-medium">
+                                        johndoe@gmail.com
+                                    </span>
+                                )}
+                            </div>
+
                         </div>
                         <button
                             className={"w-full flex justify-center items-center py-3 h-[42px] rounded-primary bg-black"}
@@ -117,7 +167,7 @@ const PromoPopups = () => {
                     <div
                         className={"h-[542px] pt-7 px-7 pb-9 bg-primary flex flex-col rounded-[35px] w-[440px] justify-between"}>
                         <div className={"flex justify-end"}>
-                            <button onClick={() => dispatch(setIsOpen(false))}>
+                            <button onClick={handleClose}>
                                 <CrossImg className={"grey-fill min-h-6 min-w-6"}/>
                             </button>
                         </div>
@@ -147,7 +197,7 @@ const PromoPopups = () => {
                     <div
                         className={"h-[542px] pt-7 px-7 pb-9 bg-primary flex flex-col rounded-[35px] w-[440px] justify-between"}>
                         <div className={"flex justify-end"}>
-                            <button onClick={() => dispatch(setIsOpen(false))}>
+                            <button onClick={handleClose}>
                                 <CrossImg className={"grey-fill min-h-6 min-w-6"}/>
                             </button>
                         </div>
@@ -159,7 +209,7 @@ const PromoPopups = () => {
                         <div className={"flex justify-end px-2"}>
                             <button
                                 className={"flex justify-center items-center py-3 px-10 h-[42px] rounded-primary bg-[#F5F5F5]"}
-                                onClick={() => dispatch(setIsOpen(false))}>
+                                onClick={handleClose}>
                                 <p className={"text-sm text-[#787B86]"}>Отменить</p>
                             </button>
                         </div>

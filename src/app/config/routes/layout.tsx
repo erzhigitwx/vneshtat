@@ -11,15 +11,16 @@ const Login = lazy(() => import("@/pages/login/login"));
 
 const Layout = () => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div></div>}>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/journey" element={<Journey/>}/>
                 <Route path="/flight" element={<Flight/>}/>
                 <Route path="/bus" element={<Bus/>}/>
                 <Route path="/promo" element={<Promo/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/registration" element={<Registration/>} />
+                <Route path="/try" element={<Promo/>} />
+                <Route path="/sign-in" element={<Login/>} />
+                <Route path="/sign-up" element={<Registration/>} />
             </Routes>
         </Suspense>
     );
