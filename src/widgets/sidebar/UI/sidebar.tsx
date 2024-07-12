@@ -1,3 +1,5 @@
+import {Link, useLocation} from "react-router-dom";
+import {useState} from "react";
 import LogoImg from "@/assets/icons/logo.svg?react";
 import HomeImg from "@/assets/icons/home.svg?react";
 import SwapImg from "@/assets/icons/swap.svg?react";
@@ -7,56 +9,155 @@ import JobImg from "@/assets/icons/job.svg?react";
 import ScopeImg from "@/assets/icons/scope.svg?react";
 import FilterImg from "@/assets/icons/filter.svg?react";
 import RightImg from "@/assets/icons/arrow-right.svg?react";
-import {Link} from "react-router-dom";
+import OptionsImg from "@/assets/icons/options.svg?react"
 
 const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isButtonHovered, setIsButtonHovered] = useState(false);
+    const location = useLocation().pathname;
+
     return (
-        <div className={"flex flex-col gap-5 items-center mt-5 min-w-fit ultra:w-full w-fit max-w-[100px]"}>
-            <Link to={"/"}>
+        <div
+            className={`flex flex-col gap-5 items-center mt-5 min-w-fit ultra:w-full w-fit max-w-[100px] ${isOpen ? "min-w-[235px]" : "min-w-[100px]"}`}>
+            <Link to={"/"} className={`${isOpen && "w-full flex justify-start ml-8"}`}>
                 <LogoImg/>
             </Link>
-            <div className={"h-full w-full flex flex-col items-center py-8 px-5 mt-3 gap-7 ultra:gap-10 bg-primary rounded-primary"}>
-                <div className={"flex flex-col gap-7 ultra:gap-12"}>
-                    <Link to={"/"}>
-                        <HomeImg className={"blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8"}/>
+            <div
+                className={`h-full w-full flex flex-col items-center  mt-3 ${isOpen ? "gap-3 py-5 px-5" : "gap-4 py-8 px-2.5"} ultra:gap-10 bg-primary rounded-primary`}>
+                <div className={`w-full flex flex-col ${isOpen ? "gap-2.5 ultra:gap-12" : "gap-4 ultra:gap-12"}`}>
+                    <Link to={"/"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <HomeImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/" && "blue-fill"}`}/>
+                            {isOpen && <p className={`text-sm ${location === "/" && "text-blue"}`}>Пульс</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>27</p>
+                            </div>
+                        )}
                     </Link>
-                    <Link to={"/"}>
-                        <SwapImg className={"blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8"}/>
+                    <Link to={"/swap"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <SwapImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/swap" && "blue-fill"}`}/>
+                            {isOpen && <p className={`text-sm ${location === "/swap" && "text-blue"}`}>Поездка</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>15</p>
+                            </div>
+                        )}
                     </Link>
-                    <Link to={"/"}>
-                        <CopyImg className={"blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8"}/>
+                    <Link to={"/copy"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <CopyImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/copy" && "blue-fill"}`}/>
+                            {isOpen && <p className={`text-sm ${location === "/copy" && "text-blue"}`}>Шаблоны</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>9</p>
+                            </div>
+                        )}
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div className={"flex flex-col gap-7 ultra:gap-12"}>
-                    <Link to={"/"}>
-                        <MessageImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
+                <div className={`w-full flex flex-col ${isOpen ? "gap-2.5 ultra:gap-12" : "gap-4 ultra:gap-12"}`}>
+                    <Link to={"/messages"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <MessageImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/messages" && "blue-fill"}`}/>
+                            {isOpen &&
+                                <p className={`text-sm ${location === "/messages" && "text-blue"}`}>Мессенджер</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>3</p>
+                            </div>
+                        )}
                     </Link>
-                    <Link to={"/"}>
-                        <JobImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
+                    <Link to={"/jobs"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <JobImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/jobs" && "blue-fill"}`}/>
+                            {isOpen && <p className={`text-sm ${location === "/jobs" && "text-blue"}`}>Компания</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>8</p>
+                            </div>
+                        )}
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div className={"flex flex-col gap-7 ultra:gap-12"}>
-                    <Link to={"/"}>
-                        <ScopeImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
+                <div className={`w-full flex flex-col ${isOpen ? "gap-2.5 ultra:gap-12" : "gap-4 ultra:gap-12"}`}>
+                    <Link to={"/scope"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <ScopeImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/scope" && "blue-fill"}`}/>
+                            {isOpen && <p className={`text-sm ${location === "/scope" && "text-blue"}`}>Учебник</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>12</p>
+                            </div>
+                        )}
                     </Link>
-                    <Link to={"/"}>
-                        <FilterImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
+                    <Link to={"/filter"}
+                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                        <div className="flex gap-2.5 items-center">
+                            <FilterImg
+                                className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/filter" && "blue-fill"}`}/>
+                            {isOpen && <p className={`text-sm ${location === "/filter" && "text-blue"}`}>Настройки</p>}
+                        </div>
+                        {isOpen && (
+                            <div className={"h-8 w-8 bg-primary flex items-center justify-center rounded-[9px]"}>
+                                <p className={"text-xs text-[#787B86]"}>7</p>
+                            </div>
+                        )}
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div>
-                    <RightImg className={"blue-fill-hover transition ultra:min-w-8 ultra:min-h-8"}/>
-                </div>
+                <button onClick={() => setIsOpen((prev) => !prev)}
+                        onMouseEnter={() => setIsButtonHovered(true)}
+                        onMouseLeave={() => setIsButtonHovered(false)}
+                        className={`${isOpen ? "w-full pl-4 mt-4" : ""} flex gap-2.5 items-center`}>
+                    <RightImg
+                        className={`blue-fill-hover transition ultra:min-w-8 ultra:min-h-8 ${isButtonHovered && "blue-fill"} ${isOpen ? "rotate-180" : "rotate-0"}`}/>
+                    {isOpen && <p className={`text-sm text-[#787B86] ${isButtonHovered && "text-blue"}`}>Свернуть</p>}
+                </button>
             </div>
-            <div className={"w-full min-h-16 rounded-[23px] flex justify-center items-center bg-black"}>
-                <div className={"bg-section mt-auto mb-auto rounded-[100%] py-1.5 px-2"}>
-                    <p className={"text-lg tracking-[-0.1em]"}>ИБ</p>
+            {isOpen ? (
+                <div className={"w-full min-h-16 rounded-[23px] py-3 pl-3 pr-4 flex justify-between items-center bg-black"}>
+                    <div className={"flex items-center gap-2.5"}>
+                        <div className={"bg-section mt-auto mb-auto rounded-[100%] py-1.5 px-2"}>
+                            <p className={"text-lg tracking-[-0.1em]"}>ИБ</p>
+                        </div>
+                        <span className={"flex flex-col"}>
+                            <h3 className={"text-base text-primary"}>Иван Б.</h3>
+                            <p className={"text-[11px] text-primary"}>администратор</p>
+                        </span>
+                    </div>
+                    <button>
+                        <OptionsImg />
+                    </button>
                 </div>
-            </div>
+            ) : (
+                <div className={"w-full min-h-16 rounded-[23px] flex justify-center items-center bg-black"}>
+                    <div className={"bg-section mt-auto mb-auto rounded-[100%] py-1.5 px-2"}>
+                        <p className={"text-lg tracking-[-0.1em]"}>ИБ</p>
+                    </div>
+                </div>
+            )}
         </div>
-    )
+    );
 };
 
 export {Sidebar};

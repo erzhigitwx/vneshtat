@@ -15,6 +15,15 @@ export default {
         "primary": "13px",
         "secondary": "11px"
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { transform: 'translateX(-30px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.3s ease',
+      },
     },
     colors: {
       primary: "#fafafa",
