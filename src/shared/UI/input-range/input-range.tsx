@@ -8,8 +8,6 @@ const InputRange: React.FC<InputRangeProps> = ({
                                                }: InputRangeProps) => {
     const [left, setLeft] = useState<number>(minVal);
     const [right, setRight] = useState<number>(maxVal);
-    const minRef = useRef<number>(min);
-    const maxRef = useRef<number>(max);
     const range = useRef<HTMLDivElement | null>(null);
 
     const getPercent = useCallback(
@@ -59,8 +57,8 @@ const InputRange: React.FC<InputRangeProps> = ({
         <div className={`container ${extraClass}`}>
             <input
                 type="range"
-                min={minRef.current}
-                max={maxRef.current}
+                min={min}
+                max={max}
                 value={left}
                 onChange={(event) => {
                     const value = Math.min(Number(event.target.value), right - 1);
@@ -73,8 +71,8 @@ const InputRange: React.FC<InputRangeProps> = ({
 
             <input
                 type="range"
-                min={minRef.current}
-                max={maxRef.current}
+                min={min}
+                max={max}
                 value={right}
                 onChange={(event) => {
                     const value = Math.max(Number(event.target.value), left + 1);

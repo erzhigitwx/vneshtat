@@ -5,14 +5,17 @@ import ReloadImg from "@/assets/icons/reload.svg?react";
 import VariationImg from "@/assets/icons/fligt/flight-variation.svg?react";
 import AvialogoImg from "@/assets/icons/fligt/flight-avialogo.svg?react";
 import LuggageImg from "@/assets/icons/luggage.svg?react";
+import PinImg from "@/assets/icons/pin.svg?react";
 import HandLuggageImg from "@/assets/icons/hand-luggage.svg?react";
-import PinImg from "@/assets/icons/fligt/flight-pin.svg?react";
 import PoliticSvg from "@/assets/icons/fligt/flight-politic.svg?react";
 
 const FlightTicket = () => {
     return (
         <div className={`flex flex-row items-center gap-5`}>
             <div className={"flex flex-col gap-2.5"}>
+                <button className={"rounded-secondary p-2 flex justify-center bg-secondary"}>
+                    <PinImg className={"max-h-5 max-w-5"}/>
+                </button>
                 <button className={"rounded-secondary p-2 flex justify-center bg-secondary"}>
                     <CopyImg className={"max-h-5 max-w-5"}/>
                 </button>
@@ -27,9 +30,6 @@ const FlightTicket = () => {
                 className={`w-full flex flex-col bg-secondary rounded-[38px] p-5`}>
                 <div className={"w-full flex gap-2.5"}>
                     <div className={"flex items-center gap-2.5 mb-5"}>
-                        <button>
-                            <PinImg/>
-                        </button>
                         <button>
                             <VariationImg/>
                         </button>
@@ -66,9 +66,6 @@ const FlightTicket = () => {
                 </div>
                 <div className={"w-full flex gap-2.5 mt-7"}>
                     <div className={"flex items-center gap-2.5 mb-5"}>
-                        <button>
-                            <PinImg/>
-                        </button>
                         <button>
                             <VariationImg/>
                         </button>

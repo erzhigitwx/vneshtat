@@ -1,18 +1,20 @@
 import PassengerImg from "@/assets/icons/users.svg?react";
 import RouteImg from "@/assets/icons/route.svg?react";
 import CopyImg from "@/assets/icons/copy.svg?react";
+import ArrowImg from "@/assets/icons/arrow-right.svg?react";
 import {useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import {Input} from "@/shared/UI";
-import {formatDate, getDayOfWeek} from "@/shared/utils";
+import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
 import {BusTicket} from "@/entities/bus-ticket";
-import {useEffect, useRef, WheelEvent} from "react";
+import {useEffect, useRef, useState, WheelEvent} from "react";
 
 const BusTickets = () => {
     const journeyDate = useSelector((state: RootState) => state.bus.journeyDate);
     const tickets = 1;
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
+    const [showScrollButton, setShowScrollButton] = useState(false);
 
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
@@ -33,6 +35,25 @@ const BusTickets = () => {
         return () => {
             if (currentScrollRef) {
                 currentScrollRef.removeEventListener("wheel", handleScroll as unknown as EventListener);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (ticketContainerRef.current) {
+                setShowScrollButton(ticketContainerRef.current.scrollTop > 0);
+            }
+        };
+
+        const currentTicketContainerRef = ticketContainerRef.current;
+        if (currentTicketContainerRef) {
+            currentTicketContainerRef.addEventListener("scroll", handleScroll);
+        }
+
+        return () => {
+            if (currentTicketContainerRef) {
+                currentTicketContainerRef.removeEventListener("scroll", handleScroll);
             }
         };
     }, []);
@@ -85,7 +106,18 @@ const BusTickets = () => {
                 {tickets ? (
                     <div
                         ref={ticketContainerRef}
-                        className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-350px)] h-full">
+                        className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-350px)] relative h-full">
+                        {showScrollButton && (
+                            <button
+                                className="rounded-secondary w-9 min-h-9 bg-black flex justify-center items-center fixed bottom-6"
+                                onClick={() => {
+                                    handleScrollToTop(ticketContainerRef);
+                                    setShowScrollButton(false)
+                                }}
+                            >
+                                <ArrowImg className="-rotate-90" />
+                            </button>
+                        )}
                         <BusTicket/>
                         <BusTicket/>
                         <BusTicket/>

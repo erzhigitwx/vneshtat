@@ -1,10 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import TrashImg from "@/assets/icons/trash.svg?react";
 import {AppDispatch, RootState} from "@/app/config/store";
-import {Checkbox, Dropdown, InputRange} from "@/shared/UI";
+import {Checkbox, Dropdown, Input, InputRange} from "@/shared/UI";
 import {priceRanges, timeOnWayRanges} from "../utils";
 import {Range} from "@/shared/types";
 import {setAirportFrom, setAirportTo, setPriceRange, setTimeFrom, setTimeTo} from "../model/flight.store";
+import {useState} from "react";
 
 const FlightFilter = () => {
     const priceRange = useSelector((state: RootState) => state.flight.priceRange);
@@ -12,33 +13,74 @@ const FlightFilter = () => {
     const timeTo = useSelector((state: RootState) => state.flight.timeTo);
     const airportFrom = useSelector((state: RootState) => state.flight.airportFrom);
     const airportTo = useSelector((state: RootState) => state.flight.airportTo);
+    const [customPriceRange, setCustomPriceRange] = useState<Range>(priceRanges);
     const dispatch: AppDispatch = useDispatch();
+
+    const handleClearFilter = () => {
+        dispatch(setPriceRange(priceRanges))
+        dispatch(setTimeFrom(timeOnWayRanges))
+        dispatch(setTimeTo(timeOnWayRanges))
+        setCustomPriceRange(priceRanges)
+        dispatch(setAirportFrom("default"));
+        dispatch(setAirportTo("default"));
+    }
 
     return (
         <div className="w-full max-h-[calc(100vh-368px)] overflow-y-auto scroll">
             <div className="flex justify-between items-center">
                 <h3>Фильтры</h3>
-                <TrashImg/>
+                <button onClick={handleClearFilter}>
+                    <TrashImg className={"transition black-fill-hover black-stroke-hover"}/>
+                </button>
             </div>
             <hr className="h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"/>
             <div className="flex flex-col gap-2.5">
                 <Dropdown
                     isChanged={priceRange.isChanged}
                     title="Стоимость"
-                    onErase={() => dispatch(setPriceRange(priceRanges))}>
+                    onErase={() => {
+                        setCustomPriceRange(priceRanges)
+                        dispatch(setPriceRange(priceRanges));
+                    }}>
                     <div className="flex flex-row gap-2.5">
-                        <div className="py-1.5 px-2.5 w-[50%] rounded-[23px] bg-primary flex items-end gap-1">
-                            <p className="text-md text-[#9b9fad]">от</p>
-                            <h6 className="text-md whitespace-nowrap">{priceRanges.min} ₽</h6>
+                        <div className={"relative flex items-center"}>
+                            <p className="text-md text-[#9b9fad] absolute ml-2.5 z-10">от</p>
+                            <div className={"flex items-center flex-row-reverse justify-center w-full"}>
+                                <Input
+                                    className={"text-md font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
+                                    value={customPriceRange.min ? customPriceRange.min : ""}
+                                    onChange={e => {
+                                        const value = e.target.value.replace(/\D/g, '');
+                                        setCustomPriceRange(prev => ({
+                                            ...prev,
+                                            min: Number(value) < prev.max ? Number(value) : prev.min
+                                        }));
+                                    }}
+                                />
+                                <p className={"text-md font-medium absolute right-2.5"}>₽</p>
+                            </div>
                         </div>
-                        <div className="py-1.5 px-2.5 w-[50%] rounded-[23px] bg-primary flex items-center gap-1">
-                            <p className="text-md text-[#9b9fad]">до</p>
-                            <h6 className="text-md whitespace-nowrap">{priceRanges.max} ₽</h6>
+                        <div className={"relative flex items-center"}>
+                            <p className="text-md text-[#9b9fad] absolute ml-2.5 z-10">до</p>
+                            <div className={"flex items-center flex-row-reverse justify-center w-full"}>
+                                <Input
+                                    className={"text-md font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
+                                    value={customPriceRange.max ? customPriceRange.max : ""}
+                                    onChange={e => {
+                                        const value = e.target.value.replace(/\D/g, '');
+                                        setCustomPriceRange(prev => ({
+                                            ...prev,
+                                            max: Number(value) > prev.min ? Number(value) : prev.max
+                                        }));
+                                    }}
+                                />
+                                <p className={"text-md font-medium absolute right-2.5"}>₽</p>
+                            </div>
                         </div>
                     </div>
                     <InputRange
-                        min={priceRanges.min}
-                        max={priceRanges.max}
+                        min={customPriceRange.min}
+                        max={customPriceRange.max}
                         minVal={priceRange.data.min}
                         maxVal={priceRange.data.max}
                         onChangeValue={(values: Range) => dispatch(setPriceRange(values))}

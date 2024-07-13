@@ -240,3 +240,9 @@ export const changeCheckbox = (items: CheckboxItem[], id: number, oneChoise: boo
 
     return updatedItems;
 };
+
+export const handleScrollToTop = (ref: any) => {
+    if (ref.current) {
+        ref.current.scrollTo({top: 0, behavior: 'smooth'});
+    }
+};

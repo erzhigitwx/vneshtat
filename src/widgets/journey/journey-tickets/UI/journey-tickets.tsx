@@ -5,12 +5,13 @@ import HeartImg from "@/assets/icons/heart.svg?react";
 import ChairExistsImg from "@/assets/icons/chair-exists.svg?react";
 import ChairAwayImg from "@/assets/icons/chair-away.svg?react";
 import PlaneImg from "@/assets/icons/plane.svg?react";
+import ArrowImg from "@/assets/icons/arrow-right.svg?react";
 import BusImg from "@/assets/icons/bus.svg?react";
 import { Input, Switch, TagFilter } from "@/shared/UI";
 import { Tag } from "@/shared/UI/tag-filter/tag-filter.props";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { formatDate, getDayOfWeek } from "@/shared/utils";
+import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
 import { RootState } from "@/app/config/store";
 import { JourneyTicket } from "@/entities/journey-ticket";
 
@@ -26,6 +27,7 @@ const JourneyTickets = () => {
     });
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
+    const [showScrollButton, setShowScrollButton] = useState(false);
 
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
@@ -46,6 +48,25 @@ const JourneyTickets = () => {
         return () => {
             if (currentScrollRef) {
                 currentScrollRef.removeEventListener("wheel", handleScroll as unknown as EventListener);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (ticketContainerRef.current) {
+                setShowScrollButton(ticketContainerRef.current.scrollTop > 0);
+            }
+        };
+
+        const currentTicketContainerRef = ticketContainerRef.current;
+        if (currentTicketContainerRef) {
+            currentTicketContainerRef.addEventListener("scroll", handleScroll);
+        }
+
+        return () => {
+            if (currentTicketContainerRef) {
+                currentTicketContainerRef.removeEventListener("scroll", handleScroll);
             }
         };
     }, []);
@@ -94,14 +115,19 @@ const JourneyTickets = () => {
                             extraChildClass={"px-1 py-1"}
                             extraClass={"max-h-9 w-26"}
                         />
-                        <Switch
-                            firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`} />}
-                            secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`} />}
-                            isSelected={isChair}
-                            setter={setIsChair}
-                            extraChildClass={"py-1 px-1.5"}
-                            extraClass={"max-h-9"}
-                        />
+                        <div className={"flex bg-[#F5F5F5] rounded-primary"}>
+                            <Switch
+                                firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`} />}
+                                secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`} />}
+                                isSelected={isChair}
+                                setter={setIsChair}
+                                extraChildClass={"py-1 px-1.5"}
+                                extraClass={"max-h-9"}
+                            />
+                            <div className={"px-2.5 flex justify-center items-center"}>
+                                <p className={"text-xs font-medium text-[#9B9FAD]"}>Найдено: 215</p>
+                            </div>
+                        </div>
                         <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"} />
                     </div>
                 </div>
@@ -139,7 +165,18 @@ const JourneyTickets = () => {
                         </div>
                     </div>
                 ) : (
-                    <div ref={ticketContainerRef} className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] h-full">
+                    <div ref={ticketContainerRef} className="flex flex-col gap-4 px-5 py-5 overflow-y-auto scroll max-h-[calc(100vh-330px)] relative h-full">
+                        {showScrollButton && (
+                            <button
+                                className="rounded-secondary w-9 min-h-9 bg-black flex justify-center items-center fixed bottom-6"
+                                onClick={() => {
+                                    handleScrollToTop(ticketContainerRef);
+                                    setShowScrollButton(false)
+                                }}
+                            >
+                                <ArrowImg className="-rotate-90" />
+                            </button>
+                        )}
                         <JourneyTicket />
                         <JourneyTicket />
                         <JourneyTicket />
