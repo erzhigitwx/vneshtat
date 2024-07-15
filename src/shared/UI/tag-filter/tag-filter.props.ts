@@ -4,6 +4,7 @@ export interface TagFilterProps {
     tags: Tag,
     setter: Dispatch<SetStateAction<Tag>>
     extraClass?: string
+    childClass?: string
 }
 
 export interface Tag {

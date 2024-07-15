@@ -16,7 +16,7 @@ const FlightRoute = () => {
     };
 
     return (
-        <div className={"w-full h-[calc(100vh-380px)] flex flex-col"}>
+        <div className={"w-full h-[calc(100vh-375px)] flex flex-col"}>
             <div className={"flex justify-between items-center"}>
                 <h3>Маршрут</h3>
             </div>

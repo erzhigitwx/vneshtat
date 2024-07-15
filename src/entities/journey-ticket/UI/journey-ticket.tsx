@@ -2,7 +2,7 @@ import HeartImg from "@/assets/icons/heart.svg?react";
 import CopyImg from "@/assets/icons/copy.svg?react";
 import TrainImg from "@/assets/icons/train.svg?react";
 import MessageImg from "@/assets/icons/message.svg?react";
-import StarImg from "@/assets/icons/star.svg?react";
+import StarImg from "@/assets/icons/stars.svg?react";
 import PawImg from "@/assets/icons/paw.svg?react";
 import BackCannotImg from "@/assets/icons/back-cannot.svg?react";
 import InvalidImg from "@/assets/icons/invalid.svg?react";

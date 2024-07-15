@@ -26,15 +26,15 @@ const FlightFilter = () => {
     }
 
     return (
-        <div className="w-full max-h-[calc(100vh-368px)] overflow-y-auto scroll">
+        <div className="w-full">
             <div className="flex justify-between items-center">
                 <h3>Фильтры</h3>
                 <button onClick={handleClearFilter}>
                     <TrashImg className={"transition black-fill-hover black-stroke-hover"}/>
                 </button>
             </div>
-            <hr className="h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"/>
-            <div className="flex flex-col gap-2.5">
+            <hr className="h-[1px] bg-[#E5E7EA] rounded-[1px] mt-2.5"/>
+            <div className="h-[calc(100vh-410px)] overflow-y-auto scroll flex flex-col gap-2.5 py-2.5">
                 <Dropdown
                     isChanged={priceRange.isChanged}
                     title="Стоимость"

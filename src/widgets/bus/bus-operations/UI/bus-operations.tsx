@@ -7,12 +7,12 @@ import {BusRoute} from "@/widgets/bus/bus-operations/UI/bus-route";
 import {BusPassenger} from "@/widgets/bus/bus-operations/UI/bus-passenger";
 import {BusDecor} from "@/widgets/bus/bus-operations/UI/bus-decor";
 
-const BusOperation = () => {
+const BusOperations = () => {
     const [activeOperation, setActiveOperation] = useState<ActiveOperation>("route");
 
     return (
         <aside>
-            <div className={"w-[330px] rounded-[26px] p-5 rounded-primary bg-primary flex flex-col gap-5"}>
+            <div className={"w-[330px] rounded-[26px] p-5 bg-primary flex flex-col gap-5"}>
                 <div className={"flex flex-row gap-[10px]"}>
                     <button
                         onClick={() => setActiveOperation("route")}
@@ -48,4 +48,4 @@ const BusOperation = () => {
     )
 };
 
-export {BusOperation};
+export {BusOperations};

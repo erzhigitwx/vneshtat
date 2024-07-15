@@ -1,9 +1,16 @@
 .container {
-    height: 50px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.container-wrapper {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
 }
 
 .slider {
@@ -12,16 +19,14 @@
 }
 
 .slider__track,
-.slider__range,
-.slider__left-value,
-.slider__right-value {
+.slider__range {
     position: absolute;
 }
 
 .slider__track,
 .slider__range {
     border-radius: 3px;
-    height: 5px;
+    height: 2px;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -42,15 +47,6 @@
 .slider__right-value {
     color: #9b9fad;
     font-size: 12px;
-    margin-top: 10px;
-}
-
-.slider__left-value {
-    left: 6px;
-}
-
-.slider__right-value {
-    right: -4px;
 }
 
 .thumb,

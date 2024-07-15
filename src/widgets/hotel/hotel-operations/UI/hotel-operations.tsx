@@ -1,5 +1,9 @@
 import {useState} from "react";
 import {ActiveOperation} from "@/shared/types";
+import {HotelRoute} from "@/widgets/hotel/hotel-operations/UI/hotel-route";
+import {HotelPassenger} from "@/widgets/hotel/hotel-operations/UI/hotel-passenger";
+import {HotelFilter} from "@/widgets/hotel/hotel-operations/UI/hotel-filter";
+import {HotelDecor} from "@/widgets/hotel/hotel-operations/UI/hotel-decor";
 import RouteImg from "@/assets/icons/route.svg?react";
 import PassengersImg from "@/assets/icons/users.svg?react";
 import FilterImg from "@/assets/icons/filter.svg?react";
@@ -7,19 +11,14 @@ import TicketImg from "@/assets/icons/ticket.svg?react";
 import AddImg from "@/assets/icons/add.svg?react";
 import RadarImg from "@/assets/icons/radar.svg?react";
 import ReloadImg from "@/assets/icons/reload.svg?react";
-import {JourneyRoute} from "./journey-route";
-import {JourneyDecor} from "./journey-decor";
-import {JourneyAdd} from "./journey-add";
-import {JourneyFilter} from "./journey-filter";
-import {JourneyPassenger} from "./journey-passenger";
 
-const JourneyOperations = () => {
+const HotelOperations = () => {
     const [activeOperation, setActiveOperation] = useState<ActiveOperation>("route");
 
     return (
         <aside>
             <div className={"w-[330px] rounded-[26px] p-5 bg-primary flex flex-col gap-5"}>
-                <div className={"flex gap-[10px]"}>
+                <div className={"flex flex-row gap-[10px]"}>
                     <button
                         onClick={() => setActiveOperation("route")}
                         className={`${activeOperation === "route" ? "bg-black" : "bg-section"} transition p-2 rounded-secondary w-9 h-9 flex justify-center items-center`}>
@@ -46,12 +45,16 @@ const JourneyOperations = () => {
                         <AddImg className={activeOperation === "add" ? "white-fill" : undefined}/>
                     </button>
                 </div>
-                {activeOperation === "route" && <JourneyRoute/>}
-                {activeOperation === "passengers" && <JourneyPassenger/>}
-                {activeOperation === "filter" && <JourneyFilter/>}
-                {activeOperation === "decor" && <JourneyDecor/>}
-                {activeOperation === "add" && <JourneyAdd/>}
+                {activeOperation === "route" && <HotelRoute/>}
+                {activeOperation === "passengers" && <HotelPassenger/>}
+                {activeOperation === "filter" && <HotelFilter/>}
+                {activeOperation === "decor" && <HotelDecor/>}
             </div>
+            {activeOperation === "route" && (
+                <button className={"w-full flex justify-center items-center py-4 rounded-[18px] bg-black mt-4"}>
+                    <h1 className={"text-lg text-[#fff]"}>Выбрать гостей</h1>
+                </button>
+            )}
             {activeOperation === "passengers" && (
                 <button className={"w-full flex justify-center items-center py-4 rounded-[18px] bg-black mt-4"}>
                     <h1 className={"text-lg text-[#fff]"}>Поиск!</h1>
@@ -73,4 +76,4 @@ const JourneyOperations = () => {
     )
 };
 
-export {JourneyOperations};
+export {HotelOperations};

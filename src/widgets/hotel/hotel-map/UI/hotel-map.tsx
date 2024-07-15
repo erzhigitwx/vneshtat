@@ -1,30 +1,36 @@
+import {useSelector} from "react-redux";
+import {RootState} from "@/app/config/store";
 import PassengerImg from "@/assets/icons/users.svg?react";
 import RouteImg from "@/assets/icons/route.svg?react";
-import BurgerImg from "@/assets/icons/burger.svg?react";
-import HeartImg from "@/assets/icons/heart.svg?react";
-import ChairExistsImg from "@/assets/icons/chair-exists.svg?react";
 import ChairAwayImg from "@/assets/icons/chair-away.svg?react";
 import PlaneImg from "@/assets/icons/plane.svg?react";
 import ArrowImg from "@/assets/icons/arrow-right.svg?react";
 import BusImg from "@/assets/icons/bus.svg?react";
-import { Input, Switch, TagFilter } from "@/shared/UI";
-import { Tag } from "@/shared/UI/tag-filter/tag-filter.props";
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
-import { RootState } from "@/app/config/store";
-import { JourneyTicket } from "@/entities/journey-ticket";
+import KeyImg from "@/assets/icons/key.svg?react";
+import CopyImg from "@/assets/icons/copy.svg?react";
+import {useEffect, useRef, useState} from "react";
+import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
+import {Checkbox, Input, TagFilter} from "@/shared/UI";
+import { formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
+import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
+import {setIsFreeCancelFilter} from "@/widgets/hotel/hotel-operations/model/hotel.store";
 
-const JourneyTickets = () => {
-    const dateTo = useSelector((state: RootState) => state.journey.dateTo);
-    const dateBack = useSelector((state: RootState) => state.journey.dateBack);
-    const [go, setGo] = useState(true);
-    const [byQueue, setByQueue] = useState(true);
-    const [isChair, setIsChair] = useState(true);
+const HotelMap = () => {
+    const dateTo = useSelector((state: RootState) => state.hotel.dateTo);
+    const dateBack = useSelector((state: RootState) => state.hotel.dateBack);
     const [tags, setTags] = useState<Tag>({
-        tags: ["Дешевле", "Быстрее", "Раннее отправление", "Раннее прибытие"],
+        tags: ["RO", "BB", "HB", "FB", "AI"],
         selectedTags: []
     });
+    const [stars, setStars] = useState<Tag>({
+        tags: ["Без звёзд", "2 звезды", "3 звезды", "4 звезды", "5 звёзд"],
+        selectedTags: []
+    })
+    const [isFreeCancel, setIsFreeCancel] = useState<CheckboxItem[]>([{
+        id: 1,
+        isSelected: false,
+        content: "Бесплатная отмена",
+    }])
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
     const [showScrollButton, setShowScrollButton] = useState(false);
@@ -80,55 +86,60 @@ const JourneyTickets = () => {
                             <PassengerImg />
                             <p className={"text-xs"}>+2</p>
                         </div>
-                        <Input placeholder={"Город отправления"} extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"} />
-                        <button>
-                            <RouteImg className={"grey-fill black-fill-hover transition min-w-5 min-h-5"} />
-                        </button>
-                        <Input placeholder={"Город прибытия"} extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"} />
+                        <div className={"flex flex-row items-center py-3 px-2.5 gap-2 max-h-9 rounded-primary bg-secondary"}>
+                            <KeyImg />
+                            <p className={"text-xs"}>+0</p>
+                        </div>
+                        <Input placeholder={"Город"} extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-[255px]"} />
+                        <span className={"h-7 bg-[#E5E7EA] w-[1px] rounded-[1px]"}/>
                         <Input
-                            placeholder={"Туда"}
-                            extraClass={"py-3 px-2.5 max-h-9"}
+                            placeholder={"Заезд"}
+                            extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
                             value={dateTo ? `${formatDate(dateTo, true)}, ${getDayOfWeek(dateTo, true)}` : ""}
                             disabled
                         />
                         <Input
-                            placeholder={"Обратно"}
-                            extraClass={"py-3 px-2.5 max-h-9"}
+                            placeholder={"Выезд"}
+                            extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
                             value={dateBack ? `${formatDate(dateBack, true)}, ${getDayOfWeek(dateBack, true)}` : ""}
                             disabled
                         />
                     </div>
                     <div className={"flex flex-row items-center gap-2.5"}>
-                        <Switch
-                            firstChild={<p className={`text-sm font-medium ${go && "text-primary"}`}>Туда</p>}
-                            secondChild={<p className={`text-sm font-medium ${!go && "text-primary"}`}>Обратно</p>}
-                            isSelected={go}
-                            setter={setGo}
-                            selectedBg={"#121212"}
-                            extraClass={"max-h-9"}
+                        <TagFilter tags={tags} setter={setTags} extraClass={"max-h-8"}/>
+                        <span className={"h-7 bg-[#E5E7EA] w-[1px] rounded-[1px]"}/>
+                        <TagFilter tags={stars} setter={setStars} extraClass={"max-h-8"}/>
+                        <span className={"h-7 bg-[#E5E7EA] w-[1px] rounded-[1px]"}/>
+                        <Checkbox
+                            items={isFreeCancel}
+                            onChange={() => {
+                            setIsFreeCancelFilter(!isFreeCancel[0].isSelected)
+                            setIsFreeCancel(prev => {
+                                return [{
+                                    ...prev[0],
+                                    isSelected: !prev[0].isSelected
+                                }]
+                                })
+                            }}
+                            childClass={"bg-secondary py-[6px] px-3"}
                         />
-                        <Switch
-                            firstChild={<BurgerImg className={"h-5 w-5"} />}
-                            secondChild={<HeartImg className={"h-5 w-5"} />}
-                            isSelected={byQueue}
-                            setter={setByQueue}
-                            extraChildClass={"px-1 py-1"}
-                            extraClass={"max-h-9 w-26"}
-                        />
-                        <div className={"flex bg-[#F5F5F5] rounded-primary"}>
-                            <Switch
-                                firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`} />}
-                                secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`} />}
-                                isSelected={isChair}
-                                setter={setIsChair}
-                                extraChildClass={"py-1 px-1.5"}
-                                extraClass={"max-h-9"}
-                            />
-                            <div className={"px-2.5 flex justify-center items-center"}>
-                                <p className={"text-xs font-medium text-[#9B9FAD]"}>Найдено: 215</p>
-                            </div>
+                    </div>
+                    <div className={"flex gap-2.5"}>
+                        <div
+                            className={"flex flex-col gap-1 px-4 py-2 rounded-primary bg-secondary cursor-pointer"}>
+                            <h6 className={"text-sm text-md"}>Москва</h6>
+                            <p className={"text-[10px] text-[#9B9FAD]"}>17.01.2023 - 20.01.2023</p>
                         </div>
-                        <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"} />
+                        <div
+                            className={"flex flex-col gap-1 px-4 py-2.5 rounded-primary bg-secondary cursor-pointer"}>
+                            <h6 className={"text-sm text-md"}>Norke Prime Зарядье</h6>
+                            <p className={"text-[10px] text-[#9B9FAD]"}>18.02.2023 - 21.02.2023</p>
+                        </div>
+                        <div
+                            className={"flex items-center gap-2.5 px-4 py-2.5 rounded-primary bg-secondary cursor-pointer"}>
+                            <CopyImg/>
+                            <h6 className={"text-sm text-md"}>Выбрать из шаблонов</h6>
+                        </div>
                     </div>
                 </div>
                 <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4"} />
@@ -177,11 +188,6 @@ const JourneyTickets = () => {
                                 <ArrowImg className="-rotate-90" />
                             </button>
                         )}
-                        <JourneyTicket />
-                        <JourneyTicket />
-                        <JourneyTicket />
-                        <JourneyTicket />
-                        <JourneyTicket />
                     </div>
                 )}
             </div>
@@ -189,4 +195,4 @@ const JourneyTickets = () => {
     );
 };
 
-export { JourneyTickets };
+export {HotelMap};

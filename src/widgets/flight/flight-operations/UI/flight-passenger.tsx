@@ -73,12 +73,12 @@ const FlightPassenger = () => {
     const circumference = 2 * Math.PI * 8;
 
     return (
-        <div className={"w-full overflow-y-auto scroll"}>
+        <div className={"w-full"}>
             <div className={"flex justify-between items-center"}>
                 <h3>Пассажиры</h3>
             </div>
-            <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] my-2.5"}/>
-            <div className={"w-full flex flex-col gap-2.5"}>
+            <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] mt-2.5"}/>
+            <div className={"h-[calc(100vh-500px)] overflow-y-auto scroll w-full flex flex-col gap-2.5 py-2.5"}>
                 {passengers.map((passenger) => (
                     <React.Fragment key={passenger.id}>
                         {passenger.id === activePassenger ? (

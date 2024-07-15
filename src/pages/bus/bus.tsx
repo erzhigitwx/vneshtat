@@ -1,4 +1,4 @@
-import {BusOperation} from "@/widgets/bus/bus-operations";
+import {BusOperations} from "@/widgets/bus/bus-operations";
 import {BusTickets} from "@/widgets/bus/bus-tickets";
 
 const Bus = () => {
@@ -10,7 +10,7 @@ const Bus = () => {
             </div>
             <div className={"flex flex-row gap-4"}>
                 <BusTickets/>
-                <BusOperation/>
+                <BusOperations/>
             </div>
         </div>
     )

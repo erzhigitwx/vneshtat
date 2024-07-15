@@ -1,1 +1,1 @@
-export { BusOperation } from "./UI/bus-operation";
+export { BusOperations } from "./UI/bus-operations";

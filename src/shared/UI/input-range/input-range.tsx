@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import "./input-range.css";
-import { InputRangeProps } from "./input-range.props";
-import { formatTime, parseTime } from "@/shared/utils";
+import {InputRangeProps} from "./input-range.props";
+import {formatTime, parseTime} from "@/shared/utils";
 
 const InputRange: React.FC<InputRangeProps> = ({
-                                                   extraClass, min, max, minVal, maxVal, onChangeValue = () => {}, isTime = false
+                                                   extraClass, min, max, minVal, maxVal, onChangeValue = () => {
+    }, isTime = false, leftElem, rightElem, isLeftFixed = false, isRightFixed = false
                                                }: InputRangeProps) => {
     const [left, setLeft] = useState<number>(minVal);
     const [right, setRight] = useState<number>(maxVal);
@@ -47,49 +48,59 @@ const InputRange: React.FC<InputRangeProps> = ({
 
     useEffect(() => {
         if (isTime) {
-            onChangeValue && onChangeValue({ min: parseTime(formatTime(left)), max: parseTime(formatTime(right)) });
+            onChangeValue && onChangeValue({min: parseTime(formatTime(left)), max: parseTime(formatTime(right))});
         } else {
-            onChangeValue && onChangeValue({ min: left, max: right });
+            onChangeValue && onChangeValue({min: left, max: right});
         }
     }, [left, right, isTime]);
 
     return (
-        <div className={`container ${extraClass}`}>
-            <input
-                type="range"
-                min={min}
-                max={max}
-                value={left}
-                onChange={(event) => {
-                    const value = Math.min(Number(event.target.value), right - 1);
-                    setLeft(value);
-                }}
-                className="thumb thumb--left"
-                style={{ zIndex: left > max - 100 ? "5" : "4" }}
-            />
-            <div className="thumb-indicator" style={{ left: getLeftValue(left) }} />
+        <div className={`container-wrapper`}>
+            <div className={`container ${extraClass}`}>
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    value={left}
+                    onChange={(event) => {
+                        if (!isLeftFixed) {
+                            const value = Math.min(Number(event.target.value), right - 1);
+                            setLeft(value);
+                        }
+                    }}
+                    className="thumb thumb--left"
+                    style={{zIndex: left > max - 100 ? "5" : "4"}}
+                    disabled={isLeftFixed}
+                />
+                {!isLeftFixed && <div className="thumb-indicator" style={{left: getLeftValue(left)}}/>}
 
-            <input
-                type="range"
-                min={min}
-                max={max}
-                value={right}
-                onChange={(event) => {
-                    const value = Math.max(Number(event.target.value), left + 1);
-                    setRight(value);
-                }}
-                className="thumb thumb--right"
-            />
-            <div className="thumb-indicator" style={{ left: getLeftValue(right) }} />
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    value={right}
+                    onChange={(event) => {
+                        if (!isRightFixed) {
+                            const value = Math.max(Number(event.target.value), left + 1);
+                            setRight(value);
+                        }
+                    }}
+                    className="thumb thumb--right"
+                    disabled={isRightFixed}
+                />
+                {!isRightFixed && <div className="thumb-indicator" style={{left: getLeftValue(right)}}/>}
 
-            <div className="slider">
-                <div className="slider__track" />
-                <div ref={range as React.MutableRefObject<HTMLDivElement>} className="slider__range" />
-                <p className="slider__left-value">{isTime ? formatTime(left) : left}</p>
-                <p className="slider__right-value">{isTime ? formatTime(right) : right}</p>
+                <div className="slider">
+                    <div className="slider__track"/>
+                    <div ref={range as React.MutableRefObject<HTMLDivElement>} className="slider__range"/>
+                </div>
+            </div>
+            <div className={"flex items-center justify-between"}>
+                {leftElem ? leftElem : <p className="slider__left-value">{isTime ? formatTime(left) : left}</p>}
+                {rightElem ? rightElem : <p className="slider__right-value">{isTime ? formatTime(right) : right}</p>}
             </div>
         </div>
     );
 };
 
-export { InputRange };
+export {InputRange};
