@@ -79,7 +79,7 @@ const InputRange: React.FC<InputRangeProps> = ({
     const addThumbEventListeners = (thumbRef: React.MutableRefObject<HTMLDivElement | null>, thumb: 'left' | 'right') => {
         if (!thumbRef.current) return;
 
-        thumbRef.current.addEventListener('mousedown', (event) => {
+        thumbRef.current.addEventListener('mousedown', () => {
             const onMouseMove = (e: MouseEvent) => handleThumbDrag(e, thumb);
             const onMouseUp = () => {
                 document.removeEventListener('mousemove', onMouseMove);
