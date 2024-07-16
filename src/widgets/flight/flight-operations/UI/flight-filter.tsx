@@ -49,13 +49,7 @@ const FlightFilter = () => {
                                 <Input
                                     className={"text-md font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
                                     value={customPriceRange.min ? customPriceRange.min : ""}
-                                    onChange={e => {
-                                        const value = e.target.value.replace(/\D/g, '');
-                                        setCustomPriceRange(prev => ({
-                                            ...prev,
-                                            min: Number(value) < prev.max ? Number(value) : prev.min
-                                        }));
-                                    }}
+                                    disabled
                                 />
                                 <p className={"text-md font-medium absolute right-2.5"}>₽</p>
                             </div>

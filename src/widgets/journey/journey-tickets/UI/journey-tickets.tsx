@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
 import { RootState } from "@/app/config/store";
-import { JourneyTicket } from "@/entities/journey-ticket";
+import {JourneyTicket, JourneyTicketPreload} from "@/entities/journey-ticket";
 
 const JourneyTickets = () => {
     const dateTo = useSelector((state: RootState) => state.journey.dateTo);
@@ -22,7 +22,7 @@ const JourneyTickets = () => {
     const [byQueue, setByQueue] = useState(true);
     const [isChair, setIsChair] = useState(true);
     const [tags, setTags] = useState<Tag>({
-        tags: ["Дешевле", "Быстрее", "Раннее отправление", "Раннее прибытие"],
+        tags: ["Дешевле", "Быстрее", "+ Свой фильтр"],
         selectedTags: []
     });
     const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -177,6 +177,7 @@ const JourneyTickets = () => {
                                 <ArrowImg className="-rotate-90" />
                             </button>
                         )}
+                        <JourneyTicketPreload />
                         <JourneyTicket />
                         <JourneyTicket />
                         <JourneyTicket />

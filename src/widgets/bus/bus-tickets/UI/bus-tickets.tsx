@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import {Input} from "@/shared/UI";
 import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
-import {BusTicket} from "@/entities/bus-ticket";
+import {BusTicket, BusTicketPreload} from "@/entities/bus-ticket";
 import {useEffect, useRef, useState, WheelEvent} from "react";
 
 const BusTickets = () => {
@@ -118,6 +118,7 @@ const BusTickets = () => {
                                 <ArrowImg className="-rotate-90" />
                             </button>
                         )}
+                        <BusTicketPreload />
                         <BusTicket/>
                         <BusTicket/>
                         <BusTicket/>

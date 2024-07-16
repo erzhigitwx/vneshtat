@@ -25,11 +25,11 @@ const FlightRoute = () => {
                 <Dropdown title={"Класс"} selectedText={activeClass && activeClass.content} extraClass={"py-2"}>
                     <Checkbox items={classes} onChange={(id: number) => dispatch(setClass({id, oneChoise: true}))}/>
                 </Dropdown>
-                {flights.map(flight => (
+                {flights.map((flight, i) => (
                     <div key={flight.id} className={"flex flex-col gap-2.5 mt-2.5"}>
                         {flight.id !== 1 && <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] mt-[15px]"}/>}
                         <div className={"flex items-center justify-between"}>
-                            <h4 className={"text-base font-medium"}>Перелет #{flight.id}</h4>
+                            <h4 className={"text-base font-medium"}>Перелет #{i + 1}</h4>
                             {flight.id !== 1 && (
                                 <button onClick={() => dispatch(removeFlight(flight.id))}>
                                     <CrossImg className={"grey-fill min-w-7 min-h-7"}/>

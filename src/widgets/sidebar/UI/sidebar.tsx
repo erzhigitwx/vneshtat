@@ -18,15 +18,15 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`flex flex-col gap-5 items-center mt-5 min-w-fit ultra:w-full w-fit max-w-[100px] ${isOpen ? "min-w-[235px]" : "min-w-[100px]"}`}>
-            <Link to={"/"} className={`${isOpen && "w-full flex justify-start ml-8"}`}>
+            className={`flex flex-col gap-5 items-center mt-4 min-w-fit ultra:w-full w-fit max-w-[100px] ${isOpen ? "min-w-[240px]" : "min-w-[100px]"}`}>
+            <Link to={"/"} className={`${isOpen && "w-full flex justify-start ml-10"}`}>
                 <LogoImg/>
             </Link>
             <div
-                className={`h-full w-full flex flex-col items-center  mt-3 ${isOpen ? "gap-3 py-5 px-5" : "gap-4 py-8 px-2.5"} ultra:gap-10 bg-primary rounded-primary`}>
-                <div className={`w-full flex flex-col ${isOpen ? "gap-2.5 ultra:gap-12" : "gap-4 ultra:gap-12"}`}>
+                className={`h-full w-full flex flex-col items-center mt-3 gap-2.5 py-8 px-2.5 ultra:gap-10 bg-primary rounded-primary`}>
+                <div className={`w-full flex flex-col gap-2.5 ultra:gap-12`}>
                     <Link to={"/"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <HomeImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/" && "blue-fill"}`}/>
@@ -39,7 +39,7 @@ const Sidebar = () => {
                         )}
                     </Link>
                     <Link to={"/swap"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <SwapImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/swap" && "blue-fill"}`}/>
@@ -52,7 +52,7 @@ const Sidebar = () => {
                         )}
                     </Link>
                     <Link to={"/copy"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <CopyImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/copy" && "blue-fill"}`}/>
@@ -66,9 +66,9 @@ const Sidebar = () => {
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div className={`w-full flex flex-col ${isOpen ? "gap-2.5 ultra:gap-12" : "gap-4 ultra:gap-12"}`}>
+                <div className={`w-full flex flex-col gap-2.5 ultra:gap-12`}>
                     <Link to={"/messages"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <MessageImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/messages" && "blue-fill"}`}/>
@@ -82,7 +82,7 @@ const Sidebar = () => {
                         )}
                     </Link>
                     <Link to={"/jobs"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <JobImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/jobs" && "blue-fill"}`}/>
@@ -96,9 +96,9 @@ const Sidebar = () => {
                     </Link>
                 </div>
                 <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
-                <div className={`w-full flex flex-col ${isOpen ? "gap-2.5 ultra:gap-12" : "gap-4 ultra:gap-12"}`}>
+                <div className={`w-full flex flex-col gap-2.5 ultra:gap-12`}>
                     <Link to={"/scope"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <ScopeImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/scope" && "blue-fill"}`}/>
@@ -111,7 +111,7 @@ const Sidebar = () => {
                         )}
                     </Link>
                     <Link to={"/filter"}
-                          className={`${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <FilterImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/filter" && "blue-fill"}`}/>
@@ -124,11 +124,11 @@ const Sidebar = () => {
                         )}
                     </Link>
                 </div>
-                <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>
+                {!isOpen && <hr className={"h-[1px] w-full bg-[#e5e7ea]"}/>}
                 <button onClick={() => setIsOpen((prev) => !prev)}
                         onMouseEnter={() => setIsButtonHovered(true)}
                         onMouseLeave={() => setIsButtonHovered(false)}
-                        className={`${isOpen ? "w-full pl-4 mt-4" : ""} flex gap-2.5 items-center`}>
+                        className={`${isOpen ? "w-full pl-4 mt-5" : "mt-2.5"} flex gap-2.5 items-center`}>
                     <RightImg
                         className={`blue-fill-hover transition ultra:min-w-8 ultra:min-h-8 ${isButtonHovered && "blue-fill"} ${isOpen ? "rotate-180" : "rotate-0"}`}/>
                     {isOpen && <p className={`text-sm text-[#787B86] ${isButtonHovered && "text-blue"}`}>Свернуть</p>}

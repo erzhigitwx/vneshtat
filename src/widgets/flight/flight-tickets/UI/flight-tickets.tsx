@@ -13,7 +13,7 @@ import {useEffect, useRef, useState} from "react";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
 import {Input, Switch, TagFilter} from "@/shared/UI";
 import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
-import {FlightTicket} from "@/entities/flight-ticket";
+import {FlightTicket, FlightTicketPreload} from "@/entities/flight-ticket";
 
 const FlightTickets = () => {
     const flights = useSelector((state: RootState) => state.flight.flights);
@@ -160,6 +160,7 @@ const FlightTickets = () => {
                                 <ArrowImg className="-rotate-90" />
                             </button>
                         )}
+                        <FlightTicketPreload />
                         <FlightTicket/>
                         <FlightTicket/>
                         <FlightTicket/>
