@@ -11,18 +11,26 @@ export default {
       ultra: "2560px"
     },
     extend: {
+      transitionDuration: {
+        "400": "400ms"
+      },
       borderRadius: {
         "primary": "13px",
         "secondary": "11px"
       },
       keyframes: {
         fadeIn: {
-          '0%': { transform: 'translateX(-30px)' },
-          '100%': { transform: 'translateX(0)' },
+          '0%': { opacity: 0, transform: 'translateX(-30px)' },
+          '100%': { opacity: 1, transform: 'translateX(0)' },
+        },
+        fadeOut: {
+          '0%': { opacity: 1, transform: 'translateX(0)' },
+          '100%': { opacity: 0, transform: 'translateX(-30px)' },
         },
       },
       animation: {
-        fadeIn: 'fadeIn 0.3s ease',
+        fadeIn: 'fadeIn 0.5s ease',
+        fadeOut: 'fadeOut 0.3s ease',
       },
     },
     colors: {

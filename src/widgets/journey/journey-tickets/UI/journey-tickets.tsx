@@ -22,7 +22,7 @@ const JourneyTickets = () => {
     const [byQueue, setByQueue] = useState(true);
     const [isChair, setIsChair] = useState(true);
     const [tags, setTags] = useState<Tag>({
-        tags: ["Дешевле", "Быстрее", "+ Свой фильтр"],
+        tags: ["Дешевле", "Быстрее"],
         selectedTags: []
     });
     const scrollRef = useRef<HTMLDivElement | null>(null);

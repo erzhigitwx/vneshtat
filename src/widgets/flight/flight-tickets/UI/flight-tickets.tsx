@@ -20,7 +20,7 @@ const FlightTickets = () => {
     const [byQueue, setByQueue] = useState(true);
     const [isChair, setIsChair] = useState(true);
     const [tags, setTags] = useState<Tag>({
-        tags: ["Только прямые", "Дешевле", "Быстрее", "+ Свой фильтр"],
+        tags: ["Только прямые", "Дешевле", "Быстрее"],
         selectedTags: []
     });
     const firstFlight = flights[0];
