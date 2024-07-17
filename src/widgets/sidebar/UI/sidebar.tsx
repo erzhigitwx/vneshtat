@@ -26,7 +26,7 @@ const Sidebar = () => {
                 className={`h-full w-full flex flex-col items-center mt-3 gap-2.5 py-8 px-2.5 ultra:gap-10 bg-primary rounded-primary`}>
                 <div className={`w-full flex flex-col gap-2.5 ultra:gap-12`}>
                     <Link to={"/"}
-                          className={`min-h-[45px] h-[45px] flex items-center justify-center ${isOpen ? "flex items-center justify-between w-full py-2.5 px-4 rounded-primary hover:bg-secondary transition group" : "p-2.5 rounded-primary hover:bg-secondary transition group"}`}>
+                          className={`min-h-[45px] h-[45px] flex items-center justify-center p-2.5 ${isOpen ? "flex items-center justify-between w-full rounded-primary hover:bg-secondary transition group" : "rounded-primary hover:bg-secondary transition group"}`}>
                         <div className="flex gap-2.5 items-center">
                             <HomeImg
                                 className={`blue-fill-hover transition min-w-5 min-h-5 ultra:min-w-8 ultra:min-h-8 ${location === "/" && "blue-fill"}`}/>
