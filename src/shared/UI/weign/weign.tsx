@@ -49,7 +49,7 @@ const DoubleSeats = ({seats}: { seats: Seat[] }) => {
                 return (
                     <div className={"flex justify-center items-center relative"} key={i}>
                         <SeatComponent className={seat.isBooked ? "opacity-40" : ""} />
-                        <p className={"absolute text-[6px] text-md text-primary"}>{seat.order}</p>
+                        <p className={"absolute text-[6px] text-sm text-primary"}>{seat.order}</p>
                     </div>
                 )
             })}

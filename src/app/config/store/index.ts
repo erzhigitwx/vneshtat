@@ -6,6 +6,7 @@ import promoStore from "@/widgets/promo/promo-popups/model/promo.store";
 import registrationCompanyStore from "@/widgets/registration/registration-company/model/registration-company.store";
 import loginStore from "@/widgets/login/login-user/model/login.store";
 import hotelStore from "@/widgets/hotel/hotel-operations/model/hotel.store";
+import {thunk} from "redux-thunk";
 
 const rootReducer = combineReducers({
     journey: journeyStore,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 })
 
 export type RootState = ReturnType<typeof store.getState>

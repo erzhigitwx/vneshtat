@@ -9,8 +9,8 @@ import {
     weignTypes
 } from "../utils";
 import { CheckboxItem } from "@/shared/UI/checkbox/checkbox.props";
-import { Range } from "@/shared/types";
-import {changeCheckbox, checkIfChanged} from "@/shared/utils";
+import {City, Range} from "@/shared/types";
+import { changeCheckbox, checkIfChanged } from "@/shared/utils";
 
 export interface FilterData<T> {
     data: T;
@@ -28,8 +28,16 @@ export interface JourneyState {
     timeOnWay: FilterData<Range>;
     timeFrom: FilterData<Range>;
     timeTo: FilterData<Range>;
+    cityFrom: City | null,
+    cityTo: City | null,
+    cityFromName: string,
+    cityToName: string,
     dateTo: Date | null;
     dateBack: Date | null;
+    tickets: any[];
+    loading: boolean;
+    error: string | null;
+    validationErrors: { [key: string]: string[] } | null;
 }
 
 const initialState: JourneyState = {
@@ -43,9 +51,57 @@ const initialState: JourneyState = {
     timeOnWay: { data: timeOnWayRanges, isChanged: false },
     timeFrom: { data: timeOnWayRanges, isChanged: false },
     timeTo: { data: timeOnWayRanges, isChanged: false },
+    cityFrom: null,
+    cityTo: null,
+    cityFromName: "",
+    cityToName: "",
     dateTo: null,
     dateBack: null,
+    tickets: [],
+    loading: false,
+    error: null,
+    validationErrors: null,
 };
+
+// export const fetchJourneyTickets = createAsyncThunk(
+//     'journey/fetchTickets',
+//     async (_, { getState, rejectWithValue }) => {
+//         const state = getState().journey;
+//         const { timeFrom, timeTo, dateTo } = state;
+//
+//         const url = new URL('https://vneshtat.com/api/search/train/search/');
+//         const params = {
+//             CarGrouping: 'DontGroup',
+//             SpecialPlacesDemand: 'NoValue',
+//             GetOnlyCarTransportationCoaches: 'False',
+//             GetOnlyNonRefundableTariffs: 'False',
+//             BonusCardNumber: 'null',
+//             ExcludeProviders: 'null',
+//             Origin: '2000000',
+//             Destination: '2004000',
+//             DepartureDate: dateTo ? dateTo.toISOString() : undefined,
+//             TimeFrom: timeFrom.isChanged ? (timeFrom.data / 60) : undefined,
+//             TimeTo: timeTo.isChanged ? (timeTo.data / 60) : undefined,
+//             GetByLocalTime: 'False'
+//         };
+//         Object.keys(params).forEach(key => params[key] && url.searchParams.append(key, params[key]));
+//
+//         const response = await fetch(url, {
+//             method: 'GET',
+//             headers: {
+//                 Authorization: `Bearer ${window.localStorage.getItem("token")}`
+//             }
+//         });
+//
+//         const data = await response.json();
+//
+//         if (!response.ok) {
+//             return rejectWithValue(data);
+//         }
+//
+//         return data;
+//     }
+// );
 
 const journeySlice = createSlice({
     name: 'journey',
@@ -72,6 +128,18 @@ const journeySlice = createSlice({
         setTimeOnWay: (state, action) => {
             state.timeOnWay.data = action.payload;
             state.timeOnWay.isChanged = checkIfChanged(initialState.timeOnWay.data, action.payload);
+        },
+        setCityFrom: (state, action) => {
+            state.cityFrom = action.payload;
+        },
+        setCityTo: (state, action) => {
+            state.cityTo = action.payload;
+        },
+        setCityFromName: (state, action) => {
+            state.cityFromName = action.payload;
+        },
+        setCityToName: (state, action) => {
+            state.cityToName = action.payload;
         },
         setPrices: (state, action) => {
             if (action.payload === "default") {
@@ -134,6 +202,25 @@ const journeySlice = createSlice({
             }
         },
     },
+    // extraReducers: (builder) => {
+    //     builder
+    //         .addCase(fetchJourneyTickets.pending, (state) => {
+    //             state.loading = true;
+    //             state.error = null;
+    //             state.validationErrors = null;
+    //         })
+    //         .addCase(fetchJourneyTickets.fulfilled, (state, action) => {
+    //             state.tickets = action.payload;
+    //             state.loading = false;
+    //         })
+    //         .addCase(fetchJourneyTickets.rejected, (state, action) => {
+    //             state.loading = false;
+    //             state.error = action.error.message;
+    //             if (action.payload && action.payload.errors) {
+    //                 state.validationErrors = action.payload.errors;
+    //             }
+    //         });
+    // },
 });
 
 export const {
@@ -148,7 +235,11 @@ export const {
     setTimeTo,
     setTimeFrom,
     setDateTo,
-    setDateBack
+    setDateBack,
+    setCityTo,
+    setCityFrom,
+    setCityToName,
+    setCityFromName
 } = journeySlice.actions;
 
 export default journeySlice.reducer;

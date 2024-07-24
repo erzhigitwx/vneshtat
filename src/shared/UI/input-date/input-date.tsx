@@ -12,7 +12,7 @@ const InputDate = ({extraClass, inputValue, setter, calendarOpt, placeholder, ..
     }, [inputValue])
 
     return (
-        <div className={`flex flex-col min-h-[30px] ${extraClass}`} {...rest}>
+        <div className={`flex flex-col min-h-9 ${extraClass}`} {...rest}>
             <label className={"relative flex justify-end items-center w-full"}>
                 <div className={"w-full bg-secondary rounded-primary text-sm py-2 px-2.5"}>
                     {inputValue ? (

@@ -1,30 +1,17 @@
-import PassengerImg from "@/assets/icons/users.svg?react";
 import RouteImg from "@/assets/icons/route.svg?react";
-import BurgerImg from "@/assets/icons/burger.svg?react";
-import HeartImg from "@/assets/icons/heart.svg?react";
-import ChairExistsImg from "@/assets/icons/chair-exists.svg?react";
 import ChairAwayImg from "@/assets/icons/chair-away.svg?react";
 import PlaneImg from "@/assets/icons/plane.svg?react";
 import ArrowImg from "@/assets/icons/arrow-right.svg?react";
 import BusImg from "@/assets/icons/bus.svg?react";
-import { Input, Switch, TagFilter } from "@/shared/UI";
-import { Tag } from "@/shared/UI/tag-filter/tag-filter.props";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
+import { useSelector} from "react-redux";
+import {handleScrollToTop} from "@/shared/utils";
 import { RootState } from "@/app/config/store";
 import {JourneyTicket, JourneyTicketPreload} from "@/entities/journey-ticket";
+import {JourneyTicketsHeader} from "@/widgets/journey/journey-tickets/UI/journey-tickets-header";
 
 const JourneyTickets = () => {
-    const dateTo = useSelector((state: RootState) => state.journey.dateTo);
-    const dateBack = useSelector((state: RootState) => state.journey.dateBack);
-    const [go, setGo] = useState(true);
-    const [byQueue, setByQueue] = useState(true);
-    const [isChair, setIsChair] = useState(true);
-    const [tags, setTags] = useState<Tag>({
-        tags: ["Дешевле", "Быстрее"],
-        selectedTags: []
-    });
+    const {dateTo, dateBack} = useSelector((state: RootState) => state.journey);
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
     const [showScrollButton, setShowScrollButton] = useState(false);
@@ -71,66 +58,23 @@ const JourneyTickets = () => {
         };
     }, [])
 
+    useEffect(() => {
+        async function test() {
+            const res = await fetch("https://vneshtat.com/api/search/train/search/?CarGrouping=DontGroup&SpecialPlacesDemand=NoValue&GetOnlyCarTransportationCoaches=False&GetOnlyNonRefundableTariffs=False&BonusCardNumber=null&ExcludeProviders=null&Origin=2000000&Destination=2004000&DepartureDate=2024-11-01T21:00:00&TimeFrom=null&TimeTo=null&GetByLocalTime=False", {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem("token")}`
+                }
+            })
+            console.log(res)
+        }
+        test()
+    }, []);
+
     return (
         <div className={"w-full flex flex-col"} ref={scrollRef}>
             <div className={"bg-primary px-5 pt-5 rounded-t-[26px]"}>
-                <div className={"flex flex-col gap-4"}>
-                    <div className={"flex flex-row items-center gap-2.5"}>
-                        <div className={"flex flex-row items-center py-3 px-2.5 gap-2 max-h-9 rounded-primary bg-secondary"}>
-                            <PassengerImg />
-                            <p className={"text-xs"}>+2</p>
-                        </div>
-                        <Input placeholder={"Город отправления"} extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"} />
-                        <button>
-                            <RouteImg className={"grey-fill black-fill-hover transition min-w-5 min-h-5"} />
-                        </button>
-                        <Input placeholder={"Город прибытия"} extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-full"} />
-                        <Input
-                            placeholder={"Туда"}
-                            extraClass={"py-3 px-2.5 max-h-9"}
-                            value={dateTo ? `${formatDate(dateTo, true)}, ${getDayOfWeek(dateTo, true)}` : ""}
-                            disabled
-                        />
-                        <Input
-                            placeholder={"Обратно"}
-                            extraClass={"py-3 px-2.5 max-h-9"}
-                            value={dateBack ? `${formatDate(dateBack, true)}, ${getDayOfWeek(dateBack, true)}` : ""}
-                            disabled
-                        />
-                    </div>
-                    <div className={"flex flex-row items-center gap-2.5"}>
-                        <Switch
-                            firstChild={<p className={`text-sm font-medium ${go && "text-primary"}`}>Туда</p>}
-                            secondChild={<p className={`text-sm font-medium ${!go && "text-primary"}`}>Обратно</p>}
-                            isSelected={go}
-                            setter={setGo}
-                            selectedBg={"#121212"}
-                            extraClass={"max-h-9"}
-                        />
-                        <Switch
-                            firstChild={<BurgerImg className={"h-5 w-5"} />}
-                            secondChild={<HeartImg className={"h-5 w-5"} />}
-                            isSelected={byQueue}
-                            setter={setByQueue}
-                            extraChildClass={"px-1 py-1"}
-                            extraClass={"max-h-9 w-26"}
-                        />
-                        <div className={"flex bg-[#F5F5F5] rounded-primary"}>
-                            <Switch
-                                firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`} />}
-                                secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`} />}
-                                isSelected={isChair}
-                                setter={setIsChair}
-                                extraChildClass={"py-1 px-1.5"}
-                                extraClass={"max-h-9"}
-                            />
-                            <div className={"px-2.5 flex justify-center items-center"}>
-                                <p className={"text-xs font-medium text-[#9B9FAD]"}>Найдено: 215</p>
-                            </div>
-                        </div>
-                        <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"} />
-                    </div>
-                </div>
+                <JourneyTicketsHeader />
                 <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4"} />
             </div>
             <div className={"bg-primary overflow-hidden rounded-b-[26px]"}>

@@ -6,7 +6,7 @@ const Calendar = ({value, setter, ...opt}: {
     value: Date | Date[] | null,
     setter: any
 }) => {
-    // if provide date[] it will be multiple, but if just date it will be single-selectable
+    // if provide date[] it will be multiple, but just date it will be a single-selectable
     const tileContent = (tile: { view: string }) => {
         if (tile.view === 'month') {
             return <p className="tile-text">5439</p>;
@@ -58,12 +58,12 @@ const Calendar = ({value, setter, ...opt}: {
             prev2Label={null}
             prevLabel={
                 <button className={"controller-button"}>
-                    <ArrowLeftImg/>
+                    <ArrowLeftImg className={"black-stroke"}/>
                 </button>
             }
             nextLabel={
                 <button className={"controller-button"}>
-                    <ArrowLeftImg className={"rotate-180"}/>
+                    <ArrowLeftImg className={"rotate-180 black-stroke"}/>
                 </button>
             }
             tileContent={tileContent}

@@ -1,6 +1,6 @@
-import {HTMLAttributes} from "react";
+import {InputHTMLAttributes} from "react";
 
-export interface InputDateProps extends HTMLAttributes<HTMLInputElement>{
+export interface InputDateProps extends InputHTMLAttributes<HTMLInputElement>{
     inputValue: Date | Date[] | null
     setter: any
     calendarOpt?: any

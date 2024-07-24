@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
-import {Range} from "@/shared/types";
+import {City, Range} from "@/shared/types";
 import {
     bedType,
     facilities,
@@ -34,6 +34,8 @@ interface HotelState {
     forTrips: boolean
     dateTo: Date | null
     dateBack: Date | null
+    city: City | null
+    cityName: string
 }
 
 const initialState: HotelState = {
@@ -83,7 +85,9 @@ const initialState: HotelState = {
     isFreeCancel: false,
     forTrips: false,
     dateTo: null,
-    dateBack: null
+    dateBack: null,
+    city: null,
+    cityName: ""
 }
 
 const hotelStore = createSlice({
@@ -205,6 +209,12 @@ const hotelStore = createSlice({
         setForTrips: (state, action) => {
             state.forTrips = action.payload;
         },
+        setCity: (state, action) => {
+            state.city = action.payload;
+        },
+        setCityName: (state, action) => {
+            state.cityName = action.payload;
+        }
     },
 });
 
@@ -223,7 +233,9 @@ export const {
     setRating,
     setForTrips,
     setDateBack,
-    setDateTo
+    setDateTo,
+    setCity,
+    setCityName
 } = hotelStore.actions;
 
 export default hotelStore.reducer;

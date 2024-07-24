@@ -1,4 +1,4 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import PassengerImg from "@/assets/icons/users.svg?react";
 import RouteImg from "@/assets/icons/route.svg?react";
@@ -10,14 +10,13 @@ import KeyImg from "@/assets/icons/key.svg?react";
 import CopyImg from "@/assets/icons/copy.svg?react";
 import {useEffect, useRef, useState} from "react";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
-import {Checkbox, Input, TagFilter} from "@/shared/UI";
+import {Checkbox, Input, InputCity, TagFilter} from "@/shared/UI";
 import { formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
 import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
-import {setIsFreeCancelFilter} from "@/widgets/hotel/hotel-operations/model/hotel.store";
+import {setCity, setCityName, setIsFreeCancelFilter} from "@/widgets/hotel/hotel-operations/model/hotel.store";
 
 const HotelMap = () => {
-    const dateTo = useSelector((state: RootState) => state.hotel.dateTo);
-    const dateBack = useSelector((state: RootState) => state.hotel.dateBack);
+    const { dateTo, dateBack, cityName } = useSelector((state: RootState) => state.hotel);
     const [tags, setTags] = useState<Tag>({
         tags: ["RO", "BB", "HB", "FB", "AI"],
         selectedTags: []
@@ -34,6 +33,7 @@ const HotelMap = () => {
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
@@ -90,7 +90,12 @@ const HotelMap = () => {
                             <KeyImg />
                             <p className={"text-xs"}>+0</p>
                         </div>
-                        <Input placeholder={"Город"} extraClass={"py-3 px-2.5 max-h-9 rounded-primary w-[255px]"} />
+                        <InputCity
+                            placeholder={"Город"}
+                            value={cityName}
+                            setValue={(str) => dispatch(setCityName(str))}
+                            callback={(city) => dispatch(setCity(city))}
+                        />
                         <span className={"h-7 bg-[#E5E7EA] w-[1px] rounded-[1px]"}/>
                         <Input
                             placeholder={"Заезд"}
@@ -121,24 +126,24 @@ const HotelMap = () => {
                                 }]
                                 })
                             }}
-                            childClass={"bg-secondary py-[6px] px-3"}
+                            childClass={"bg-secondary py-[6px] px-3 max-h-8"}
                         />
                     </div>
                     <div className={"flex gap-2.5"}>
                         <div
                             className={"flex flex-col gap-1 px-4 py-2 rounded-primary bg-secondary cursor-pointer"}>
-                            <h6 className={"text-sm text-md"}>Москва</h6>
+                            <h6 className={"text-xs font-medium"}>Москва</h6>
                             <p className={"text-[10px] text-[#9B9FAD]"}>17.01.2023 - 20.01.2023</p>
                         </div>
                         <div
                             className={"flex flex-col gap-1 px-4 py-2.5 rounded-primary bg-secondary cursor-pointer"}>
-                            <h6 className={"text-sm text-md"}>Norke Prime Зарядье</h6>
+                            <h6 className={"text-xs font-medium"}>Norke Prime Зарядье</h6>
                             <p className={"text-[10px] text-[#9B9FAD]"}>18.02.2023 - 21.02.2023</p>
                         </div>
                         <div
                             className={"flex items-center gap-2.5 px-4 py-2.5 rounded-primary bg-secondary cursor-pointer"}>
                             <CopyImg/>
-                            <h6 className={"text-sm text-md"}>Выбрать из шаблонов</h6>
+                            <h6 className={"text-xs font-medium"}>Выбрать из шаблонов</h6>
                         </div>
                     </div>
                 </div>

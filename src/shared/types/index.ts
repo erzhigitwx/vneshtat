@@ -28,3 +28,21 @@ export interface TicketOption {
     fromPrice: string
     isSelected: boolean
 }
+
+export interface City {
+    CityId: number;
+    Code: string;
+    CountryId: number;
+    ExpressCode: string | null;
+    Guid: string;
+    IsActive: number;
+    Location: string;
+    NameEn: string;
+    NameRu: string;
+    PopularityIndex: number;
+    RegionId: number;
+    SysCode: string;
+    Updated: string;
+    nameEn: string;
+    nameRu: string;
+}

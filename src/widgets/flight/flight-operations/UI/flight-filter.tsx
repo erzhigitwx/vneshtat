@@ -44,21 +44,21 @@ const FlightFilter = () => {
                     }}>
                     <div className="flex flex-row gap-2.5">
                         <div className={"relative flex items-center"}>
-                            <p className="text-md text-[#9b9fad] absolute ml-2.5 z-10">от</p>
+                            <p className="text-sm text-[#9b9fad] absolute ml-2.5 z-10">от</p>
                             <div className={"flex items-center flex-row-reverse justify-center w-full"}>
                                 <Input
-                                    className={"text-md font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
+                                    className={"text-sm font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
                                     value={customPriceRange.min ? customPriceRange.min : ""}
                                     disabled
                                 />
-                                <p className={"text-md font-medium absolute right-2.5"}>₽</p>
+                                <p className={"text-sm font-medium absolute right-2.5"}>₽</p>
                             </div>
                         </div>
                         <div className={"relative flex items-center"}>
-                            <p className="text-md text-[#9b9fad] absolute ml-2.5 z-10">до</p>
+                            <p className="text-sm text-[#9b9fad] absolute ml-2.5 z-10">до</p>
                             <div className={"flex items-center flex-row-reverse justify-center w-full"}>
                                 <Input
-                                    className={"text-md font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
+                                    className={"text-sm font-medium whitespace-nowrap pl-8 pr-6 py-1.5 w-full rounded-[23px] bg-primary flex items-center gap-1 relative"}
                                     value={customPriceRange.max ? customPriceRange.max : ""}
                                     onChange={e => {
                                         const value = e.target.value.replace(/\D/g, '');
@@ -68,7 +68,7 @@ const FlightFilter = () => {
                                         }));
                                     }}
                                 />
-                                <p className={"text-md font-medium absolute right-2.5"}>₽</p>
+                                <p className={"text-sm font-medium absolute right-2.5"}>₽</p>
                             </div>
                         </div>
                     </div>

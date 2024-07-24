@@ -7,6 +7,7 @@ export {InputRange} from "./input-range/input-range"
 export {Weign} from "./weign/weign";
 export {Calendar} from "./calendar/calendar";
 export {InputDate} from "./input-date/input-date";
+export {InputCity} from "./input-city/input-city";
 export {Dropdown} from "./dropdown/dropdown"
 export {TicketOptions} from "./ticket-options/ticket-options";
 export {Popup} from "./popup/popup";

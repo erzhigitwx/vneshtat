@@ -1,19 +1,21 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {FilterData} from "@/widgets/journey/journey-operations/model/journey.store";
-import {airportsFrom, classes, priceRanges, timeOnWayRanges} from "../utils";
-import {changeCheckbox, checkIfChanged} from "@/shared/utils";
-import {Range} from "@/shared/types";
-import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
+import { createSlice } from '@reduxjs/toolkit'; // Remove createAsyncThunk
+import { FilterData } from "@/widgets/journey/journey-operations/model/journey.store";
+import { airportsFrom, classes, priceRanges, timeOnWayRanges } from "../utils";
+import { changeCheckbox, checkIfChanged } from "@/shared/utils";
+import { City, Range } from "@/shared/types";
+import { CheckboxItem } from "@/shared/UI/checkbox/checkbox.props";
 
 export interface Flight {
     id: number;
-    departureCity: string;
-    arrivalCity: string;
+    departureCity: City | null;
+    arrivalCity: City | null;
     flightDate: Date | null;
 }
 
 export interface FlightState {
     flights: Flight[];
+    cityFrom: string,
+    cityTo: string,
     priceRange: FilterData<Range>;
     timeFrom: FilterData<Range>;
     timeTo: FilterData<Range>;
@@ -24,8 +26,10 @@ export interface FlightState {
 
 const initialState: FlightState = {
     flights: [
-        {id: 1, departureCity: "", arrivalCity: "", flightDate: null}
+        {id: 1, departureCity: null, arrivalCity: null, flightDate: null}
     ],
+    cityFrom: "",
+    cityTo: "",
     priceRange: {data: priceRanges, isChanged: false},
     timeFrom: {data: timeOnWayRanges, isChanged: false},
     timeTo: {data: timeOnWayRanges, isChanged: false},
@@ -40,7 +44,7 @@ const flightStore = createSlice({
     reducers: {
         addFlight: (state) => {
             const newFlightId = state.flights.length + 1;
-            state.flights.push({id: newFlightId, departureCity: "", arrivalCity: "", flightDate: null});
+            state.flights.push({id: newFlightId, departureCity: null, arrivalCity: null, flightDate: null});
         },
         removeFlight: (state, action) => {
             state.flights = state.flights.filter(flight => flight.id !== action.payload);
@@ -53,6 +57,12 @@ const flightStore = createSlice({
                     (flight as any)[field] = value;
                 }
             }
+        },
+        setCityFrom: (state, action) => {
+            state.cityFrom = action.payload;
+        },
+        setCityTo: (state, action) => {
+            state.cityTo = action.payload;
         },
         setClass: (state, action) => {
             const {id, oneChoise} = action.payload;
@@ -102,6 +112,8 @@ export const {
     setClass,
     removeFlight,
     updateFlight,
-    addFlight
+    addFlight,
+    setCityFrom,
+    setCityTo
 } = flightStore.actions
-export default flightStore.reducer
+export default flightStore.reducer;
