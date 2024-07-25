@@ -19,12 +19,16 @@ const BusRoute = () => {
                     <div className={"flex flex-col gap-2.5"}>
                         <InputCity
                             placeholder={"Город отправления"}
+                            extraClass={"min-w-full"}
+                            inputClass={"rounded-[13px] max-h-8"}
                             value={cityFromName}
                             setValue={(str) => dispatch(setCityFromName(str))}
                             callback={(city) => dispatch(setCityFrom(city))}
                         />
                         <InputCity
                             placeholder={"Город прибытия"}
+                            extraClass={"min-w-full"}
+                            inputClass={"rounded-[13px] max-h-8"}
                             value={cityToName}
                             setValue={(str) => dispatch(setCityToName(str))}
                             callback={(city) => dispatch(setCityTo(city))}

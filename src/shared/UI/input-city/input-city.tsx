@@ -25,9 +25,9 @@ const InputCity = ({extraClass = '', inputClass = '', value, setValue, callback,
     );
 
     return (
-        <div className={`min-w-[255px] max-h-9 relative ${extraClass}`}>
+        <div className={`min-w-[255px] relative ${extraClass}`}>
             <Input
-                className={`py-3 px-2.5 max-h-9 rounded-secondary bg-secondary w-full ${inputClass}`}
+                className={`py-3 px-2.5 h-9 rounded-secondary bg-secondary w-full ${inputClass}`}
                 value={value}
                 onChange={(e) => {
                     const newValue = e.target.value;
@@ -36,7 +36,7 @@ const InputCity = ({extraClass = '', inputClass = '', value, setValue, callback,
                 }}
                 {...rest}
             />
-            {cities?.length ? (
+            {cities?.length && value.length ? (
                 <div className={"bg-primary p-2.5 flex rounded-[23px] w-full top-10 flex-col gap-1 absolute z-20"}
                      style={{
                          background: 'rgba(245, 245, 245, 0.82)',

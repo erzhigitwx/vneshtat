@@ -30,44 +30,45 @@ const Header = () => {
 
     return (
         <div className="flex justify-between items-center py-[10px]">
-            <div className="flex items-center bg-primary py-2.5 px-4 rounded-primary gap-2.5 cursor-pointer"
-                 onMouseEnter={() => setIsJourneysHovered(true)}
-                 onMouseLeave={() => setIsJourneysHovered(false)}>
-                <button>
-                    <BurgerImg className={`transition w-6 h-6 ${isJourneysHovered && "blue-fill"}`}/>
-                </button>
-                <p className={`transition text-base ${isJourneysHovered && "text-blue"}`}>Все поездки</p>
-            </div>
+           <div className={"flex items-center gap-5"}>
+               <button className="flex items-center bg-primary py-2.5 px-4 rounded-primary gap-2.5"
+                       onMouseEnter={() => setIsJourneysHovered(true)}
+                       onMouseLeave={() => setIsJourneysHovered(false)}>
+                   <BurgerImg className={`transition w-6 h-6 ${isJourneysHovered && "blue-fill"}`}/>
+                   <p className={`transition text-base ${isJourneysHovered && "text-blue"}`}>Все поездки</p>
+               </button>
+               <div
+                   className="flex items-center justify-between bg-primary py-2.5 px-4 rounded-primary transition-all duration-400 w-[400px] hover:w-[980px]"
+                   onMouseEnter={() => setIsRoutesHovered(true)}
+                   onMouseLeave={() => setIsRoutesHovered(false)}
+               >
+                   {links.map(({to, img: Img, text}) => (
+                       <Link
+                           key={to}
+                           to={to}
+                           className="flex items-center overflow-hidden"
+                           onMouseEnter={() => setActiveHover(to)}
+                           onMouseLeave={() => setActiveHover(null)}
+                       >
+                           <div className={"bg-primary relative z-10"}>
+                               <Img className={clsx(
+                                   "blue-fill-hover transition",
+                                   (location === to || activeHover === to) && "blue-fill"
+                               )}/>
+                           </div>
+                           {isRoutesHovered && (
+                               <p className={clsx(
+                                   "ml-1 text-base transition-all whitespace-nowrap animate-fadeIn",
+                                   activeHover === to || location === to ? "text-blue" : ""
+                               )}>
+                                   {text}
+                               </p>
+                           )}
+                       </Link>
+                   ))}
+               </div>
+           </div>
             <div className="flex items-center gap-5">
-                <div className="flex items-center justify-between bg-primary py-2.5 px-4 rounded-primary transition-all duration-400 w-[400px] hover:w-[980px]"
-                     onMouseEnter={() => setIsRoutesHovered(true)}
-                     onMouseLeave={() => setIsRoutesHovered(false)}
-                >
-                    {links.map(({to, img: Img, text}) => (
-                        <Link
-                            key={to}
-                            to={to}
-                            className="flex items-center overflow-hidden"
-                            onMouseEnter={() => setActiveHover(to)}
-                            onMouseLeave={() => setActiveHover(null)}
-                        >
-                            <div className={"bg-primary relative z-10"}>
-                                <Img className={clsx(
-                                    "blue-fill-hover transition",
-                                    (location === to || activeHover === to) && "blue-fill"
-                                )}/>
-                            </div>
-                            {isRoutesHovered &&  (
-                                <p className={clsx(
-                                    "ml-1 text-base transition-all whitespace-nowrap",
-                                    activeHover === to || location === to ? "text-blue" : ""
-                                )}>
-                                    {text}
-                                </p>
-                            )}
-                        </Link>
-                    ))}
-                </div>
                 <button
                     className="bg-primary border rounded-primary px-9 h-[45px] flex justify-center items-center transition">
                     <p className="hover:text-blue text-base">Создать поездку</p>

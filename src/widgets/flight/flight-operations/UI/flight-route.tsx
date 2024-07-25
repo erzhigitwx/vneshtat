@@ -45,7 +45,8 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
             <div className={"flex flex-col gap-2.5 mt-[5px]"}>
                 <InputCity
                     placeholder={"Город вылета"}
-                    extraClass={"h-9 min-w-full"}
+                    extraClass={"min-w-full"}
+                    inputClass={"rounded-[13px] max-h-8"}
                     value={isFirstFlight ? cityFrom : departureCity}
                     setValue={(value) => {
                         if (isFirstFlight) dispatch(setCityFrom(value))
@@ -55,7 +56,8 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
                 />
                 <InputCity
                     placeholder={"Город прилета"}
-                    extraClass={"h-9 min-w-full"}
+                    extraClass={"min-w-full"}
+                    inputClass={"rounded-[13px] max-h-8"}
                     value={isFirstFlight ? cityTo : arrivalCity}
                     setValue={(value) => {
                         if (isFirstFlight) dispatch(setCityTo(value))

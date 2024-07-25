@@ -18,6 +18,8 @@ const HotelRoute = () => {
                     <h4 className={"text-base font-medium"}>Город</h4>
                     <InputCity
                         placeholder={"Город, страна"}
+                        extraClass={"min-w-full"}
+                        inputClass={"rounded-[13px] max-h-8"}
                         value={cityName}
                         setValue={(str) => dispatch(setCityName(str))}
                         callback={(city) => dispatch(setCity(city))}

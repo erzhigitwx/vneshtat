@@ -32,7 +32,7 @@ const FlightTicketsHeader = ({showPriceGraph, setShowPriceGraph}: {
     const secondFlight = flights[1];
 
     return (
-        <div className={"bg-primary px-5 pt-5"}>
+        <div className={"bg-primary px-5 pt-5 rounded-t-[26px]"}>
             <div className={"flex flex-col gap-4"}>
                 <div className={"flex flex-row items-center gap-2.5"}>
                     <div
@@ -112,8 +112,9 @@ const FlightTicketsHeader = ({showPriceGraph, setShowPriceGraph}: {
                         <div className={"p-3 rounded-[18px] bg-black cursor-pointer"}>
                             <GraphImg className={"min-h-[26px] min-w-[26px] white-fill"}/>
                         </div>
-                        {Array.from({length: 8}).map(() => (
+                        {Array.from({length: 8}).map((_, i) => (
                             <div
+                                key={i}
                                 className={"min-w-28 rounded-[18px] bg-secondary cursor-pointer flex flex-col justify-center items-center gap-1 min-h-[50px]"}>
                                 <h6 className={"text-sm font-medium leading-none"}>12 310 ₽ </h6>
                                 <p className={"text-[10px] text-[#787B86] leading-none"}>1-3 фев</p>

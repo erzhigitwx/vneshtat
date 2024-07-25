@@ -28,6 +28,7 @@
     }
 }
 
+
 .first-letter-black::first-letter {
     color: #121212 !important;
 }
