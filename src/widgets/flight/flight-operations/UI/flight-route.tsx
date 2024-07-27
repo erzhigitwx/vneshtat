@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
-import CrossImg from "@/assets/icons/cross.svg?react";
+import TrashImg from "@/assets/icons/trash.svg?react";
 import PlusImg from "@/assets/icons/plus.svg?react";
-import {Checkbox, Dropdown, InputCity, InputDate} from "@/shared/UI";
+import {Checkbox, CountdownCircle, Dropdown, InputCity, InputDate} from "@/shared/UI";
 import {addFlight, removeFlight, setCityFrom, setCityTo, setClass, updateFlight} from "../model/flight.store";
 import {useState, useEffect} from "react";
 import {City} from "@/shared/types";
@@ -20,15 +20,52 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
     const {cityFrom, cityTo} = useSelector((state: RootState) => state.flight);
     const isFirstFlight = flight.id === 1;
     const [flightDate, setFlightDate] = useState(flight.flightDate || null);
+    const [countdown, setCountdown] = useState<number | null>(flight.deleteCountdown || null);
 
     useEffect(() => {
         setDepartureCity(flight.departureCity?.nameRu || "");
         setArrivalCity(flight.arrivalCity?.nameRu || "");
         setFlightDate(flight.flightDate || null);
+        setCountdown(flight.deleteCountdown || null);
     }, [flight]);
+
+    useEffect(() => {
+        let countdownInterval: any;
+
+        if (countdown !== null && countdown > 0) {
+            countdownInterval = setInterval(() => {
+                setCountdown(prevCountdown => {
+                    if (prevCountdown && prevCountdown > 1) {
+                        dispatch(updateFlight({id: flight.id, field: 'deleteCountdown', value: prevCountdown - 1}));
+                        return prevCountdown - 1;
+                    } else {
+                        dispatch(updateFlight({id: flight.id, field: 'deleteCountdown', value: null}));
+                        onRemove(flight.id);
+                        clearInterval(countdownInterval);
+                        return null;
+                    }
+                });
+            }, 1000);
+        } else {
+            clearInterval(countdownInterval);
+        }
+
+        return () => clearInterval(countdownInterval);
+    }, [countdown, dispatch, flight.id, onRemove]);
 
     const handleInputChange = (field: string, value: string | Date | null | City) => {
         dispatch(updateFlight({id: flight.id, field, value}));
+    };
+
+    const handleRemoveClick = () => {
+        if (countdown === null) {
+            setCountdown(5);
+        }
+    };
+
+    const handleCancelClick = () => {
+        dispatch(updateFlight({id: flight.id, field: 'deleteCountdown', value: null}));
+        setCountdown(null);
     };
 
     return (
@@ -37,8 +74,17 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
             <div className={"flex items-center justify-between"}>
                 <h4 className={"text-base font-medium"}>Перелет #{index + 1}</h4>
                 {flight.id !== 1 && (
-                    <button onClick={() => onRemove(flight.id)}>
-                        <CrossImg className={"grey-fill min-w-7 min-h-7"}/>
+                    <button onClick={() => countdown !== null ? handleCancelClick() : handleRemoveClick()}
+                            className={"h-5"}>
+                        {countdown !== null ? (
+                            <div
+                                className={"bg-secondary rounded-primary flex items-center gap-[6px] p-[2px] pr-[6px]"}>
+                                <CountdownCircle countdown={countdown} onCancel={handleCancelClick} extraClass={"bg-primary rounded-full"}/>
+                                <p className={"text-[#FF64A3] text-[10px] font-medium"}>Отмена</p>
+                            </div>
+                        ) : (
+                            <TrashImg className={"grey-fill min-w-5 min-h-5"}/>
+                        )}
                     </button>
                 )}
             </div>

@@ -8,11 +8,39 @@ import SuccessImg from "@/assets/icons/success-filled.svg?react";
 import ArrowImg from "@/assets/icons/arrow-long.svg?react";
 import {useState} from "react";
 import {updateLoginState} from "../model/login.store";
+import {setAccessToken, setRefreshToken} from "@/shared/utils";
+import {useNavigate} from "react-router-dom";
 
 const LoginUser = () => {
     const {withPhone, sms, phone, login, isLoginReady} = useSelector((state: RootState) => state.login)
     const [isLoginClicked, setIsLoginClicked] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    async function handleLogin() {
+        const formdata = new FormData();
+        formdata.append("Username", login);
+        formdata.append("Password", sms);
+        formdata.append("DeviceName", "MacBook");
+        formdata.append("Browser", "Safari");
+
+        try {
+            const res = await fetch("https://vneshtat.com/api/auth/sign_in/auth_token_by_username", {
+                method: "POST",
+                body: formdata,
+                redirect: "follow"
+            });
+            const data = await res.json();
+
+            if (data.status === "success" && data.data) {
+                setAccessToken(data.data.access_token);
+                setRefreshToken(data.data.refresh_token);
+                navigate("/")
+            }
+        } catch (error) {
+            console.error("Error fetching tokens:", error);
+        }
+    }
 
     return (
         <div className={"h-[calc(100vh-54px)] flex justify-center items-center"}>
@@ -123,7 +151,10 @@ const LoginUser = () => {
                             <button
                                 className={"w-full flex justify-center items-center py-3 h-[50px] rounded-primary bg-[#292933] disabled:bg-secondary"}
                                 disabled={!isLoginReady}
-                                onClick={() => setIsLoginClicked(true)}
+                                onClick={() => {
+                                    setIsLoginClicked(true);
+                                    handleLogin();
+                                }}
                             >
                                 <p className={`text-lg font-medium text-primary ${!isLoginReady && "!text-[#9B9FAD]"}`}>Войти</p>
                             </button>

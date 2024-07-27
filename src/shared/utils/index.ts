@@ -179,6 +179,65 @@ export const seatsMock: Seat[][] = [[{
     state: "free"
 }],]
 
+export const setAccessToken = (token: string) => {
+    localStorage.setItem('AccessToken', token);
+};
+
+export const getAccessToken = () => {
+    return localStorage.getItem('AccessToken');
+};
+
+export const removeAccessToken = () => {
+    localStorage.removeItem('AccessToken');
+};
+
+export const setRefreshToken = (token: string) => {
+    localStorage.setItem('RefreshToken', token);
+};
+
+export const getRefreshToken = () => {
+    return localStorage.getItem('RefreshToken');
+};
+
+export const removeRefreshToken = () => {
+    localStorage.removeItem('RefreshToken');
+};
+
+export const checkAccessToken = async () => {
+    const accessToken = getAccessToken();
+    const refreshToken = getRefreshToken();
+
+    if (accessToken) {
+        return true;
+    } else if (refreshToken) {
+        try {
+            const formdata = new FormData();
+            formdata.append("RefreshToken", refreshToken);
+
+            const res = await fetch("https://vneshtat.com/api/auth/sign_in/auth_token", {
+                method: "PATCH",
+                body: formdata,
+                redirect: "follow"
+            });
+
+            console.log(res)
+
+            const data = await res.json();
+
+            if (data.status === "success" && data.data) {
+                setAccessToken(data.data.access_token);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            return false;
+        }
+    } else {
+        return false;
+    }
+};
+
 export const formatDate = (date: Date, shortForm: boolean = false): string => {
     const options: Intl.DateTimeFormatOptions = {
         day: 'numeric',
@@ -262,4 +321,23 @@ export const debounce = <T extends (...args: any[]) => any>(
     };
 };
 
-export default debounce;
+export const getDayOfWeekMock = (day: number, month: string, year: number): string => {
+    const monthMap: { [key: string]: string } = {
+        "Январь": "January",
+        "Февраль": "February",
+        "Март": "March",
+        "Апрель": "April",
+        "Май": "May",
+        "Июнь": "June",
+        "Июль": "July",
+        "Август": "August",
+        "Сентябрь": "September",
+        "Октябрь": "October",
+        "Ноябрь": "November",
+        "Декабрь": "December"
+    };
+
+    const date = new Date(`${monthMap[month]} ${day}, ${year}`);
+    const daysOfWeek = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+    return daysOfWeek[date.getDay()];
+};

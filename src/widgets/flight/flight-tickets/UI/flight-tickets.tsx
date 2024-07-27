@@ -9,6 +9,9 @@ import { FlightTicket, FlightTicketPreload } from "@/entities/flight-ticket";
 import { setCityFrom, setCityTo } from "@/widgets/flight/flight-operations/model/flight.store";
 import { FlightTicketsHeader } from "@/widgets/flight/flight-tickets/UI/flight-tickets-header";
 import { FlightChart } from "@/widgets/flight/flight-tickets/UI/flight-chart";
+import {PriceData} from "../utils";
+
+export type ShowedGraph = "graph" | "dashboard" | null;
 
 const FlightTickets = () => {
     const { flights } = useSelector((state: RootState) => state.flight);
@@ -17,8 +20,9 @@ const FlightTickets = () => {
     const dispatch = useDispatch();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
+    const [activeRate, setActiveRate] = useState<PriceData | null>(null);
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [showPriceGraph, setShowPriceGraph] = useState(false);
+    const [showedGraph, setShowedGraph] = useState<ShowedGraph>(null);
 
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
@@ -72,11 +76,11 @@ const FlightTickets = () => {
 
     return (
         <div ref={scrollRef} className={"w-full flex flex-col bg-primary rounded-[26px]"}>
-            <FlightTicketsHeader setShowPriceGraph={setShowPriceGraph} showPriceGraph={showPriceGraph} />
-            <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4"} />
+            <FlightTicketsHeader setShowedGraph={setShowedGraph} showedGraph={showedGraph} activeRate={activeRate} setActiveRate={setActiveRate} />
+            <hr className={"h-[1px] bg-[#e5e7ea] rounded-[1px] mt-4 mx-5"} />
             <div className={"bg-primary overflow-hidden rounded-b-[26px]"}>
-                {showPriceGraph ? (
-                    <FlightChart />
+                {showedGraph ? (
+                    <FlightChart showedGraph={showedGraph} setShowedGraph={setShowedGraph} activeRate={activeRate}/>
                 ) : (
                     <>
                         {tickets ? (

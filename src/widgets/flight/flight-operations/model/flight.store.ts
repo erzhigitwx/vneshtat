@@ -10,6 +10,7 @@ export interface Flight {
     departureCity: City | null;
     arrivalCity: City | null;
     flightDate: Date | null;
+    deleteCountdown: null | number
 }
 
 export interface FlightState {
@@ -26,7 +27,7 @@ export interface FlightState {
 
 const initialState: FlightState = {
     flights: [
-        {id: 1, departureCity: null, arrivalCity: null, flightDate: null}
+        {id: 1, departureCity: null, arrivalCity: null, flightDate: null, deleteCountdown: null},
     ],
     cityFrom: "",
     cityTo: "",
@@ -44,7 +45,7 @@ const flightStore = createSlice({
     reducers: {
         addFlight: (state) => {
             const newFlightId = state.flights.length + 1;
-            state.flights.push({id: newFlightId, departureCity: null, arrivalCity: null, flightDate: null});
+            state.flights.push({id: newFlightId, departureCity: null, deleteCountdown: null, arrivalCity: null, flightDate: null});
         },
         removeFlight: (state, action) => {
             state.flights = state.flights.filter(flight => flight.id !== action.payload);

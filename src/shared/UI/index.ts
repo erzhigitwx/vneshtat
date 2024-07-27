@@ -11,3 +11,4 @@ export {InputCity} from "./input-city/input-city";
 export {Dropdown} from "./dropdown/dropdown"
 export {TicketOptions} from "./ticket-options/ticket-options";
 export {Popup} from "./popup/popup";
+export {CountdownCircle} from "./countdown-circle/countdown-circle";

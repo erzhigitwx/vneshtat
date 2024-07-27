@@ -1,8 +1,8 @@
 import {Input} from "@/shared/UI";
 import {useState, useCallback} from "react";
-import debounce from "@/shared/utils";
 import {City} from "@/shared/types";
 import {InputCityProps} from "./input-city.props";
+import {debounce} from "@/shared/utils";
 
 const InputCity = ({extraClass = '', inputClass = '', value, setValue, callback, ...rest}: InputCityProps) => {
     const [cities, setCities] = useState<null | City[]>(null);
