@@ -10,9 +10,12 @@ import ScopeImg from "@/assets/icons/scope.svg?react";
 import FilterImg from "@/assets/icons/filter.svg?react";
 import RightImg from "@/assets/icons/arrow-right.svg?react";
 import OptionsImg from "@/assets/icons/options.svg?react"
+import {useSelector} from "react-redux";
+import {RootState} from "@/app/config/store";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const {fullname} = useSelector((state: RootState) => state.user);
     const [isButtonHovered, setIsButtonHovered] = useState(false);
     const location = useLocation().pathname;
 
@@ -135,24 +138,27 @@ const Sidebar = () => {
                 </button>
             </div>
             {isOpen ? (
-                <div className={"w-full min-h-16 rounded-[23px] py-3 pl-3 pr-4 flex justify-between items-center bg-black"}>
+                <div
+                    className={"w-full min-h-16 rounded-[23px] py-3 pl-3 pr-4 flex justify-between items-center bg-black"}>
                     <div className={"flex items-center gap-2.5"}>
                         <div className={"bg-section mt-auto mb-auto rounded-[100%] py-1.5 px-2"}>
-                            <p className={"text-lg tracking-[-0.1em]"}>ИБ</p>
+                            <p className={"text-lg tracking-[-0.1em]"}>{fullname.name[0].toUpperCase()}{fullname.surname[0].toUpperCase()}</p>
                         </div>
                         <span className={"flex flex-col"}>
-                            <h3 className={"text-base text-primary"}>Иван Б.</h3>
+                            <h3 className={"text-base text-primary capitalize"}>{fullname.name} {fullname.surname[0].toUpperCase()}.</h3>
                             <p className={"text-[11px] text-primary"}>администратор</p>
                         </span>
                     </div>
                     <button>
-                        <OptionsImg />
+                        <OptionsImg/>
                     </button>
                 </div>
             ) : (
                 <div className={"w-full min-h-16 rounded-[23px] flex justify-center items-center bg-black"}>
                     <div className={"bg-section mt-auto mb-auto rounded-[100%] py-1.5 px-2"}>
-                        <p className={"text-lg tracking-[-0.1em]"}>ИБ</p>
+                        {fullname.name.length && fullname.surname.length ? (
+                            <p className={"text-lg tracking-[-0.1em]"}>{fullname.name[0].toUpperCase()}{fullname.surname[0].toUpperCase()}</p>
+                        ) : null}
                     </div>
                 </div>
             )}

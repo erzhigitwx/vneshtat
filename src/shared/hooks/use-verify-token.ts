@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { checkAccessToken } from "@/shared/utils";
+import {checkAccessToken} from "@/shared/utils/methods";
 
 export const useVerifyToken = () => {
     const [isLoading, setIsLoading] = useState(true);

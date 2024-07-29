@@ -171,17 +171,10 @@ const FlightPassenger = () => {
                                     )}
                                 </div>
                                 {passenger.deleteCountdown ? (
-                                    <button
-                                        onClick={() => cancelDelete(passenger.id)}
-                                        className={
-                                            "min-w-5 min-h-5 relative flex justify-center items-center"
-                                        }
-                                    >
-                                        <CountdownCircle
-                                            countdown={passenger.deleteCountdown}
-                                            onCancel={cancelDelete}
-                                        />
-                                    </button>
+                                    <CountdownCircle
+                                        countdown={passenger.deleteCountdown}
+                                        onCancel={() => cancelDelete(passenger.id)}
+                                    />
                                 ) : (
                                     <button onClick={() => handleDelete(passenger.id)} className={"min-w-5 min-h-5"}>
                                         <TrashImg className={"black-fill-hover black-stroke-hover transition"}/>

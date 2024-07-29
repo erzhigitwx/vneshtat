@@ -165,7 +165,7 @@
 }
 
 .react-calendar__navigation {
-    margin-bottom: 0 !important;
+    margin: 0 18px !important;
 }
 
 .react-calendar__tile--now {

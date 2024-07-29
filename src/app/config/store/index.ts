@@ -7,11 +7,13 @@ import registrationCompanyStore from "@/widgets/registration/registration-compan
 import loginStore from "@/widgets/login/login-user/model/login.store";
 import hotelStore from "@/widgets/hotel/hotel-operations/model/hotel.store";
 import {thunk} from "redux-thunk";
+import userStore from "@/app/model/user.store";
 
 const rootReducer = combineReducers({
     journey: journeyStore,
     flight: flightStore,
     bus: busStore,
+    user: userStore,
     promo: promoStore,
     login: loginStore,
     hotel: hotelStore,

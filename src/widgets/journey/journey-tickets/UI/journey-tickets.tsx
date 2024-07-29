@@ -58,18 +58,17 @@ const JourneyTickets = () => {
         };
     }, [])
 
-    useEffect(() => {
-        async function test() {
-            const res = await fetch("https://vneshtat.com/api/search/train/search/?CarGrouping=DontGroup&SpecialPlacesDemand=NoValue&GetOnlyCarTransportationCoaches=False&GetOnlyNonRefundableTariffs=False&BonusCardNumber=null&ExcludeProviders=null&Origin=2000000&Destination=2004000&DepartureDate=2024-11-01T21:00:00&TimeFrom=null&TimeTo=null&GetByLocalTime=False", {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${window.localStorage.getItem("token")}`
-                }
-            })
-            console.log(res)
-        }
-        test()
-    }, []);
+    // useEffect(() => {
+    //     async function test() {
+    //         const res = await fetch("https://vneshtat.com/api/search/train/search/?CarGrouping=DontGroup&SpecialPlacesDemand=NoValue&GetOnlyCarTransportationCoaches=False&GetOnlyNonRefundableTariffs=False&BonusCardNumber=null&ExcludeProviders=null&Origin=2000000&Destination=2004000&DepartureDate=2024-11-01T21:00:00&TimeFrom=null&TimeTo=null&GetByLocalTime=False", {
+    //             method: 'GET',
+    //             headers: {
+    //                 Authorization: `Bearer ${window.localStorage.getItem("token")}`
+    //             }
+    //         })
+    //     }
+    //     test()
+    // }, []);
 
     return (
         <div className={"w-full flex flex-col"} ref={scrollRef}>

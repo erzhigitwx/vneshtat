@@ -4,8 +4,8 @@ import TrashImg from "@/assets/icons/trash.svg?react";
 import InfoImg from "@/assets/icons/info.svg?react";
 import PlusImg from "@/assets/icons/plus.svg?react";
 import CrossImg from "@/assets/icons/cross.svg?react";
-import CircleImg from "@/assets/icons/red-circle.svg?react";
 import {Passenger} from "@/shared/types";
+import {CountdownCircle} from "@/shared/UI";
 
 const JourneyPassenger = () => {
     const [activePassenger, setActivePassenger] = useState<number | null>(null);
@@ -69,8 +69,6 @@ const JourneyPassenger = () => {
         );
         setPassengers(updatedPassengers);
     };
-
-    const circumference = 2 * Math.PI * 8;
 
     return (
         <div className={"w-full h-[calc(100vh-380px)]"}>
@@ -173,24 +171,10 @@ const JourneyPassenger = () => {
                                     )}
                                 </div>
                                 {passenger.deleteCountdown ? (
-                                    <button
-                                        onClick={() => cancelDelete(passenger.id)}
-                                        className={
-                                            "min-w-5 min-h-5 relative flex justify-center items-center"
-                                        }
-                                    >
-                                        <p className={"text-xs text-[#FF64A3]"}>
-                                            {passenger.deleteCountdown}
-                                        </p>
-                                        <CircleImg
-                                            className={"absolute min-h-5 min-w-5"}
-                                            style={{
-                                                strokeDasharray: `${circumference}`,
-                                                strokeDashoffset: `${circumference - (circumference * (passenger.deleteCountdown - 1)) / 4}`,
-                                                transition: "stroke-dashoffset 1s linear",
-                                            }}
-                                        />
-                                    </button>
+                                    <CountdownCircle
+                                        countdown={passenger.deleteCountdown}
+                                        onCancel={() => cancelDelete(passenger.id)}
+                                    />
                                 ) : (
                                     <button onClick={() => handleDelete(passenger.id)} className={"min-w-5 min-h-5"}>
                                         <TrashImg className={"black-fill-hover black-stroke-hover transition"}/>

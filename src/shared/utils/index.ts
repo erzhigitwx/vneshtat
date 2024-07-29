@@ -203,41 +203,6 @@ export const removeRefreshToken = () => {
     localStorage.removeItem('RefreshToken');
 };
 
-export const checkAccessToken = async () => {
-    const accessToken = getAccessToken();
-    const refreshToken = getRefreshToken();
-
-    if (accessToken) {
-        return true;
-    } else if (refreshToken) {
-        try {
-            const formdata = new FormData();
-            formdata.append("RefreshToken", refreshToken);
-
-            const res = await fetch("https://vneshtat.com/api/auth/sign_in/auth_token", {
-                method: "PATCH",
-                body: formdata,
-                redirect: "follow"
-            });
-
-            console.log(res)
-
-            const data = await res.json();
-
-            if (data.status === "success" && data.data) {
-                setAccessToken(data.data.access_token);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (error) {
-            return false;
-        }
-    } else {
-        return false;
-    }
-};
-
 export const formatDate = (date: Date, shortForm: boolean = false): string => {
     const options: Intl.DateTimeFormatOptions = {
         day: 'numeric',
