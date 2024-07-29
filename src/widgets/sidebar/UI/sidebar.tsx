@@ -12,6 +12,7 @@ import RightImg from "@/assets/icons/arrow-right.svg?react";
 import OptionsImg from "@/assets/icons/options.svg?react"
 import {useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
+import {removeAccessToken, removeRefreshToken} from "@/shared/utils";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -149,7 +150,10 @@ const Sidebar = () => {
                             <p className={"text-[11px] text-primary"}>администратор</p>
                         </span>
                     </div>
-                    <button>
+                    <button onClick={() => {
+                        removeAccessToken();
+                        removeRefreshToken();
+                    }}>
                         <OptionsImg/>
                     </button>
                 </div>

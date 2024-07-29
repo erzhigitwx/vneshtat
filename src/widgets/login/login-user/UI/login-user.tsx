@@ -89,7 +89,7 @@ const LoginUser = () => {
                             <ArrowImg/>
                         </button>
                         {companies?.map((item) => (
-                            <div className={"bg-primary p-6 rounded-[35px] w-[320px]"}>
+                            <div className={"bg-primary p-6 rounded-[35px] w-[320px]"} key={item.EmployeeId}>
                                 <div className={"flex justify-center items-center"}>
                                     <AlphaImg/>
                                 </div>
@@ -101,7 +101,7 @@ const LoginUser = () => {
                                 <button
                                     className={"w-full flex justify-center items-center py-3 mt-2.5 h-[50px] rounded-primary bg-[#292933]"}
                                     onClick={() => {
-                                        localStorage.setItem("selectedCompany", item.EmployeeId.toString());
+                                        localStorage.setItem("EmployeeId", item.EmployeeId.toString());
                                         navigate("/")
                                     }}
                                 >
