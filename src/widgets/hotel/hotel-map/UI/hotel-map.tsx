@@ -10,10 +10,15 @@ import KeyImg from "@/assets/icons/key.svg?react";
 import CopyImg from "@/assets/icons/copy.svg?react";
 import {useEffect, useRef, useState} from "react";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
-import {Checkbox, Input, InputCity, TagFilter} from "@/shared/UI";
-import { formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
+import {Checkbox, InputCity, InputDate, TagFilter} from "@/shared/UI";
+import { handleScrollToTop} from "@/shared/utils";
 import {CheckboxItem} from "@/shared/UI/checkbox/checkbox.props";
-import {setCity, setCityName, setIsFreeCancelFilter} from "@/widgets/hotel/hotel-operations/model/hotel.store";
+import {
+    setCity,
+    setCityName, setDateBack,
+    setDateTo,
+    setIsFreeCancelFilter
+} from "../../hotel-operations/model/hotel.store";
 
 const HotelMap = () => {
     const { dateTo, dateBack, cityName } = useSelector((state: RootState) => state.hotel);
@@ -97,17 +102,27 @@ const HotelMap = () => {
                             callback={(city) => dispatch(setCity(city))}
                         />
                         <span className={"h-7 bg-[#E5E7EA] w-[1px] rounded-[1px]"}/>
-                        <Input
+                        <InputDate
                             placeholder={"Заезд"}
-                            extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                            value={dateTo ? `${formatDate(dateTo, true)}, ${getDayOfWeek(dateTo, true)}` : ""}
-                            disabled
+                            extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                            inputValue={dateTo}
+                            isShortDate={true}
+                            withIcon={false}
+                            calendarOpt={{maxDate: dateBack}}
+                            setter={(date: Date) => {
+                                dispatch(setDateTo(date))
+                            }}
                         />
-                        <Input
+                        <InputDate
                             placeholder={"Выезд"}
-                            extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                            value={dateBack ? `${formatDate(dateBack, true)}, ${getDayOfWeek(dateBack, true)}` : ""}
-                            disabled
+                            extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                            inputValue={dateBack}
+                            isShortDate={true}
+                            withIcon={false}
+                            calendarOpt={{minDate: dateTo}}
+                            setter={(date: Date) => {
+                                dispatch(setDateBack(date))
+                            }}
                         />
                     </div>
                     <div className={"flex flex-row items-center gap-2.5"}>

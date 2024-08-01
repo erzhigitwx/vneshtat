@@ -2,10 +2,14 @@ import LibCalendar from 'react-calendar';
 import ArrowLeftImg from '@/assets/icons/arrow-left.svg?react';
 import "./calendar.css";
 
-const Calendar = ({value, setter, ...opt}: {
-    value: Date | Date[] | null,
-    setter: any
-}) => {
+interface CalendarProps {
+    value: Date | Date[] | [Date, Date] | null;
+    setter: (value: Date | Date[] | [Date, Date] | null) => void;
+    allowPartialOptions?: boolean;
+    [key: string]: any;
+}
+
+const Calendar = ({value, setter, ...opt}: CalendarProps) => {
     // if provide date[] it will be multiple, but just date it will be a single-selectable
     const tileContent = (tile: { view: string }) => {
         if (tile.view === 'month') {
@@ -50,10 +54,14 @@ const Calendar = ({value, setter, ...opt}: {
         return classNames.join(' ');
     };
 
+    // @ts-ignore
+    const allowPartialOptions = opt.allowPartialOptions ?? false;
+
     return (
+        // @ts-ignore
         <LibCalendar
             className={"!border-none"}
-            {...(Array.isArray(value) ? {onClickDay, tileClassName} : {value, onChange: setter})}
+            {...(Array.isArray(value) && !allowPartialOptions ? {onClickDay, tileClassName} : {value, onChange: setter})}
             next2Label={null}
             prev2Label={null}
             prevLabel={

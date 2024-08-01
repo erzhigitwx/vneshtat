@@ -15,7 +15,7 @@ const Dropdown = ({ isChanged = false, onErase = () => {}, title, selectedText, 
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className={`p-3 rounded-[23px] bg-secondary flex flex-col cursor-pointer ${extraClass}`}>
+        <div className={`p-3 rounded-[13px] bg-secondary flex flex-col cursor-pointer ${extraClass}`}>
             <div className={"flex flex-row justify-between items-center"} onClick={() => setIsOpen(prev => !prev)}>
                 <div className={"flex flex-row items-center gap-1"}>
                     {isChanged && <span className={"h-[5px] w-[5px] rounded-[100%] bg-red mb-3"}/>}

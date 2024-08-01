@@ -40,11 +40,13 @@ const JourneyRoute = () => {
                     <h4 className={"text-base font-medium"}>Даты</h4>
                     <div className={"flex flex-col gap-2.5"}>
                         <InputDate
+                            extraCalendarClass={"right-[210px]"}
                             setter={(value: Date) => dispatch(setDateTo(value))}
                             inputValue={dateTo}
                             placeholder={"Туда"}
                         />
                         <InputDate
+                            extraCalendarClass={"right-[210px]"}
                             setter={(value: Date) => dispatch(setDateBack(value))}
                             inputValue={dateBack}
                             placeholder={"Обратно"}

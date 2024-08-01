@@ -1,4 +1,4 @@
-import {Input, InputCity, Switch, TagFilter} from "@/shared/UI";
+import { InputCity, InputDate, Switch, TagFilter} from "@/shared/UI";
 import BurgerImg from "@/assets/icons/burger.svg?react";
 import HeartImg from "@/assets/icons/heart.svg?react";
 import ChairExistsImg from "@/assets/icons/chair-exists.svg?react";
@@ -9,9 +9,8 @@ import {
     setCityFrom,
     setCityFromName,
     setCityTo,
-    setCityToName
+    setCityToName, setDateBack, setDateTo
 } from "../../journey-operations/model/journey.store";
-import {formatDate, getDayOfWeek} from "@/shared/utils";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import {useState} from "react";
@@ -32,7 +31,7 @@ const JourneyTicketsHeader = () => {
         <div className={"flex flex-col gap-4"}>
             <div className={"flex flex-row items-center gap-2.5"}>
                 <div className={"flex flex-row items-center py-3 px-2.5 gap-2 max-h-9 rounded-primary bg-secondary"}>
-                    <PassengerImg />
+                    <PassengerImg/>
                     <p className={"text-xs"}>+2</p>
                 </div>
                 <InputCity
@@ -42,7 +41,7 @@ const JourneyTicketsHeader = () => {
                     callback={(city) => dispatch(setCityFrom(city))}
                 />
                 <button>
-                    <RouteImg className={"grey-fill black-fill-hover transition min-w-5 min-h-5"} />
+                    <RouteImg className={"grey-fill black-fill-hover transition min-w-5 min-h-5"}/>
                 </button>
                 <InputCity
                     placeholder={"Город прибытия"}
@@ -50,17 +49,27 @@ const JourneyTicketsHeader = () => {
                     setValue={(str) => dispatch(setCityToName(str))}
                     callback={(city) => dispatch(setCityTo(city))}
                 />
-                <Input
+                <InputDate
                     placeholder={"Туда"}
-                    extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                    value={dateTo ? `${formatDate(dateTo, true)}, ${getDayOfWeek(dateTo, true)}` : ""}
-                    disabled
+                    extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                    inputValue={dateTo}
+                    isShortDate={true}
+                    withIcon={false}
+                    calendarOpt={{maxDate: dateBack}}
+                    setter={(date: Date) => {
+                        dispatch(setDateTo(date))
+                    }}
                 />
-                <Input
+                <InputDate
                     placeholder={"Обратно"}
-                    extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                    value={dateBack ? `${formatDate(dateBack, true)}, ${getDayOfWeek(dateBack, true)}` : ""}
-                    disabled
+                    extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                    inputValue={dateBack}
+                    isShortDate={true}
+                    withIcon={false}
+                    calendarOpt={{minDate: dateTo}}
+                    setter={(date: Date) => {
+                        dispatch(setDateBack(date))
+                    }}
                 />
             </div>
             <div className={"flex flex-row items-center gap-2.5"}>
@@ -73,8 +82,8 @@ const JourneyTicketsHeader = () => {
                     extraClass={"max-h-9"}
                 />
                 <Switch
-                    firstChild={<BurgerImg className={"h-5 w-5"} />}
-                    secondChild={<HeartImg className={"h-5 w-5"} />}
+                    firstChild={<BurgerImg className={"h-5 w-5"}/>}
+                    secondChild={<HeartImg className={"h-5 w-5"}/>}
                     isSelected={byQueue}
                     setter={setByQueue}
                     extraChildClass={"px-1 py-1"}
@@ -82,8 +91,8 @@ const JourneyTicketsHeader = () => {
                 />
                 <div className={"flex bg-[#F5F5F5] rounded-primary"}>
                     <Switch
-                        firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`} />}
-                        secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`} />}
+                        firstChild={<ChairExistsImg className={`${!isChair && "grey-fill"}`}/>}
+                        secondChild={<ChairAwayImg className={`${isChair ? "grey-fill" : "black-fill"}`}/>}
                         isSelected={isChair}
                         setter={setIsChair}
                         extraChildClass={"py-1 px-1.5"}
@@ -93,7 +102,7 @@ const JourneyTicketsHeader = () => {
                         <p className={"text-xs font-medium text-[#9B9FAD]"}>Найдено: 215</p>
                     </div>
                 </div>
-                <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"} />
+                <TagFilter tags={tags} setter={setTags} extraClass={"max-h-9"}/>
             </div>
         </div>
     )

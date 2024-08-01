@@ -13,11 +13,12 @@ interface FlightRouteItemProps {
     onRemove: (id: number) => void;
 }
 
-const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
+const FlightRouteItem = ({ flight, index, onRemove }: FlightRouteItemProps) => {
     const dispatch = useDispatch();
+    const flights = useSelector((state: RootState) => state.flight.flights);
     const [departureCity, setDepartureCity] = useState(flight.departureCity?.nameRu! || "");
     const [arrivalCity, setArrivalCity] = useState(flight.arrivalCity?.nameRu! || "");
-    const {cityFrom, cityTo} = useSelector((state: RootState) => state.flight);
+    const { cityFrom, cityTo } = useSelector((state: RootState) => state.flight);
     const isFirstFlight = flight.id === 1;
     const [flightDate, setFlightDate] = useState(flight.flightDate || null);
     const [countdown, setCountdown] = useState<number | null>(flight.deleteCountdown || null);
@@ -36,10 +37,10 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
             countdownInterval = setInterval(() => {
                 setCountdown(prevCountdown => {
                     if (prevCountdown && prevCountdown > 1) {
-                        dispatch(updateFlight({id: flight.id, field: 'deleteCountdown', value: prevCountdown - 1}));
+                        dispatch(updateFlight({ id: flight.id, field: 'deleteCountdown', value: prevCountdown - 1 }));
                         return prevCountdown - 1;
                     } else {
-                        dispatch(updateFlight({id: flight.id, field: 'deleteCountdown', value: null}));
+                        dispatch(updateFlight({ id: flight.id, field: 'deleteCountdown', value: null }));
                         onRemove(flight.id);
                         clearInterval(countdownInterval);
                         return null;
@@ -54,7 +55,7 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
     }, [countdown, dispatch, flight.id, onRemove]);
 
     const handleInputChange = (field: string, value: string | Date | null | City) => {
-        dispatch(updateFlight({id: flight.id, field, value}));
+        dispatch(updateFlight({ id: flight.id, field, value }));
     };
 
     const handleRemoveClick = () => {
@@ -64,26 +65,32 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
     };
 
     const handleCancelClick = () => {
-        dispatch(updateFlight({id: flight.id, field: 'deleteCountdown', value: null}));
+        dispatch(updateFlight({ id: flight.id, field: 'deleteCountdown', value: null }));
         setCountdown(null);
+    };
+
+    const previousFlightDate = index > 0 ? flights[index - 1].flightDate : null;
+    const nextFlightDate = index < flights.length - 1 ? flights[index + 1].flightDate : null;
+
+    const calendarOptions = {
+        minDate: previousFlightDate ? new Date(previousFlightDate) : null,
+        maxDate: nextFlightDate ? new Date(nextFlightDate) : null,
     };
 
     return (
         <div className={"flex flex-col gap-2.5 mt-2.5"}>
-            {flight.id !== 1 && <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] mt-[15px]"}/>}
+            {flight.id !== 1 && <hr className={"h-[1px] bg-[#E5E7EA] rounded-[1px] mt-[15px]"} />}
             <div className={"flex items-center justify-between"}>
                 <h4 className={"text-base font-medium"}>Перелет #{index + 1}</h4>
                 {flight.id !== 1 && (
-                    <button onClick={() => countdown !== null ? handleCancelClick() : handleRemoveClick()}
-                            className={"h-5"}>
+                    <button onClick={() => countdown !== null ? handleCancelClick() : handleRemoveClick()} className={"h-5"}>
                         {countdown !== null ? (
-                            <div
-                                className={"bg-secondary rounded-primary flex items-center gap-[6px] p-[2px] pr-[6px]"}>
-                                <CountdownCircle countdown={countdown} onCancel={handleCancelClick} extraClass={"bg-primary rounded-full"}/>
+                            <div className={"bg-secondary rounded-primary flex items-center gap-[6px] p-[2px] pr-[6px]"}>
+                                <CountdownCircle countdown={countdown} onCancel={handleCancelClick} extraClass={"bg-primary rounded-full"} />
                                 <p className={"text-[#FF64A3] text-[10px] font-medium"}>Отмена</p>
                             </div>
                         ) : (
-                            <TrashImg className={"grey-fill min-w-5 min-h-5"}/>
+                            <TrashImg className={"grey-fill min-w-5 min-h-5"} />
                         )}
                     </button>
                 )}
@@ -114,6 +121,8 @@ const FlightRouteItem = ({flight, index, onRemove}: FlightRouteItemProps) => {
                 <InputDate
                     setter={(value: Date) => handleInputChange('flightDate', value)}
                     inputValue={flightDate}
+                    calendarOpt={calendarOptions}
+                    extraCalendarClass={"right-[180px] -translate-y-[200px]"}
                     placeholder={"Дата"}
                 />
             </div>

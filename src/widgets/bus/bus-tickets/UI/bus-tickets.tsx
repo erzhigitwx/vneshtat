@@ -4,11 +4,17 @@ import CopyImg from "@/assets/icons/copy.svg?react";
 import ArrowImg from "@/assets/icons/arrow-right.svg?react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
-import {Input, InputCity} from "@/shared/UI";
-import {formatDate, getDayOfWeek, handleScrollToTop} from "@/shared/utils";
+import {InputCity, InputDate} from "@/shared/UI";
+import {handleScrollToTop} from "@/shared/utils";
 import {BusTicket, BusTicketPreload} from "@/entities/bus-ticket";
 import {useEffect, useRef, useState, WheelEvent} from "react";
-import {setCityTo, setCityFrom, setCityFromName, setCityToName} from "../../bus-operations/model/bus.store";
+import {
+    setCityTo,
+    setCityFrom,
+    setCityFromName,
+    setCityToName,
+    setJourneyDate
+} from "../../bus-operations/model/bus.store";
 
 const BusTickets = () => {
     const {journeyDate, cityFromName, cityToName } = useSelector((state: RootState) => state.bus);
@@ -85,11 +91,15 @@ const BusTickets = () => {
                             setValue={(str) => dispatch(setCityToName(str))}
                             callback={(city) => dispatch(setCityTo(city))}
                         />
-                        <Input
+                        <InputDate
                             placeholder={"Дата"}
-                            extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                            value={journeyDate ? `${formatDate(journeyDate, true)}, ${getDayOfWeek(journeyDate, true)}` : ""}
-                            disabled
+                            extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                            inputValue={journeyDate}
+                            isShortDate={true}
+                            withIcon={false}
+                            setter={(date: Date) => {
+                                dispatch(setJourneyDate(date))
+                            }}
                         />
                     </div>
                     <div className={"flex gap-2.5"}>

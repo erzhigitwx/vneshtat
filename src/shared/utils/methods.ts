@@ -21,6 +21,7 @@ export const checkAccessToken = async () => {
 };
 
 export async function getUser() {
+    await checkAccessToken();
     const res = await fetch("https://vneshtat.com/api/user/main_info/get_user", {
         headers: {
             Authorization: `Bearer ${getAccessToken()}`,

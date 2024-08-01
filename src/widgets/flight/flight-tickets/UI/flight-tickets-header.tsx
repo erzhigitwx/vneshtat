@@ -1,6 +1,5 @@
-import {Input, InputCity, Switch, TagFilter} from "@/shared/UI";
-import {setCityFrom, setCityTo, updateFlight} from "@/widgets/flight/flight-operations/model/flight.store";
-import {formatDate, getDayOfWeek} from "@/shared/utils";
+import {InputCity, InputDate, Switch, TagFilter} from "@/shared/UI";
+import {addFlight, setCityFrom, setCityTo, updateFlight} from "@/widgets/flight/flight-operations/model/flight.store";
 import {Dispatch, SetStateAction, useState} from "react";
 import {Tag} from "@/shared/UI/tag-filter/tag-filter.props";
 import {useDispatch, useSelector} from "react-redux";
@@ -67,18 +66,34 @@ const FlightTicketsHeader = ({showedGraph, setShowedGraph, activeRate, setActive
                             value: city
                         }))}
                     />
-                    <Input
+                    <InputDate
                         placeholder={"Туда"}
-                        extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                        value={firstFlight.flightDate ? `${formatDate(firstFlight.flightDate, true)}, ${getDayOfWeek(firstFlight.flightDate, true)}` : ""}
-                        disabled
+                        extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                        inputValue={firstFlight.flightDate}
+                        isShortDate={true}
+                        withIcon={false}
+                        calendarOpt={{maxDate: secondFlight && secondFlight.flightDate}}
+                        setter={(date: Date) => {
+                            dispatch(updateFlight({id: firstFlight.id, field: "flightDate", value: date}));
+                        }}
                     />
-                    <Input
-                        placeholder={"Обратно"}
-                        extraClass={"py-3 px-2.5 max-h-9 w-[100px]"}
-                        value={secondFlight && secondFlight.flightDate ? `${formatDate(secondFlight.flightDate, true)}, ${getDayOfWeek(secondFlight.flightDate, true)}` : ""}
-                        disabled
-                    />
+                    <div onClick={() => {
+                        if (!secondFlight) {
+                            dispatch(addFlight());
+                        }
+                    }}>
+                        <InputDate
+                            placeholder={"Обратно"}
+                            extraClass={"py-3 px-2.5 h-9 min-w-[100px] max-w-[100px] rounded-primary"}
+                            isShortDate={true}
+                            withIcon={false}
+                            inputValue={secondFlight ? secondFlight.flightDate : null}
+                            calendarOpt={{minDate: firstFlight.flightDate}}
+                            setter={(date: Date) => {
+                                dispatch(updateFlight({id: secondFlight.id, field: "flightDate", value: date}));
+                            }}
+                        />
+                    </div>
                 </div>
                 <div className={"flex flex-row items-center gap-2.5"}>
                     <Switch

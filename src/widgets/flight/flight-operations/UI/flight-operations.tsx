@@ -18,7 +18,7 @@ const FlightOperations = () => {
 
     return (
         <aside>
-            <div className={"w-[300px] rounded-[26px] p-5 bg-primary flex flex-col gap-5"}>
+            <div className={"w-[300px] rounded-[26px] p-5 bg-primary flex flex-col gap-5 relative z-0"}>
                 <div className={"flex flex-row gap-2.5"}>
                     <button
                         onClick={() => setActiveOperation("route")}

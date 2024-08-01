@@ -33,11 +33,14 @@ const HotelRoute = () => {
                             setter={(value: Date) => dispatch(setDateTo(value))}
                             inputValue={dateTo}
                             placeholder={"Дата заезда"}
+                            extraCalendarClass={"right-[210px]"}
+                            calendarOpt={{maxDate: dateBack}}
                         />
                         <InputDate
                             setter={(value: Date) => dispatch(setDateBack(value))}
                             inputValue={dateBack}
                             placeholder={"Дата выезда"}
+                            extraCalendarClass={"right-[210px]"}
                             calendarOpt={{minDate: dateTo}}
                         />
                     </div>

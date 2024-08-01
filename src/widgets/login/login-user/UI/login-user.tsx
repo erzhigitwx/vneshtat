@@ -390,6 +390,7 @@ const LoginUser = () => {
                                                 field: "login",
                                                 value: e.target.value.startsWith('@') ? e.target.value.slice(1) : e.target.value
                                             }))}
+                                            autoComplete={"on"}
                                         />
                                         <Input
                                             extraClass={`!text-lg !font-medium h-[50px] text-center w-full rounded-[16px] border border-solid border-[#E5E7EA] !bg-primary first-letter-black`}
@@ -400,6 +401,7 @@ const LoginUser = () => {
                                                 field: "password",
                                                 value: e.target.value
                                             }))}
+                                            autoComplete={"on"}
                                         />
                                         {login ? (
                                             <p className={"text-center text-[15px] text-[#FF64A3] px-7"}>Аккаунта, с
