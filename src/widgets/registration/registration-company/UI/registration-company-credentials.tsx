@@ -25,6 +25,7 @@ const RegistrationCompanyCredentials = ({setHasAccount}: { setHasAccount: Dispat
                 <Input
                     extraClass={"!text-lg text-center !font-medium h-[50px] rounded-[16px] border border-solid border-[#E5E7EA] !bg-primary"}
                     placeholder={"Телефон"}
+                    type={"phone"}
                     value={phone}
                     onChange={e => dispatch(updateCredentialsState({
                         field: "phone",

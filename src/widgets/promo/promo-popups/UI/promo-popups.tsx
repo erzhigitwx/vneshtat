@@ -113,6 +113,7 @@ const PromoPopups = () => {
                                 <Input
                                     extraClass={"w-full bg-[#F5F5F5] text-[#9B9AD] font-medium px-6 py-3 placeholder:text-base"}
                                     placeholder={"Номер телефона"}
+                                    type={"phone"}
                                     value={phone}
                                     onChange={(e) => dispatch(updateInfo({field: "phone", value: e.target.value}))}
                                 />

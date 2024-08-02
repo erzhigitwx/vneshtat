@@ -13,7 +13,7 @@ export const useVerifyToken = () => {
             const isTokenValid = await checkAccessToken();
             if (!isTokenValid) {
                 if (!["/sign-in", "/sign-up", "/promo", "/try"].includes(location.pathname)) {
-                    navigate("/sign-in");
+                    navigate("/promo");
                 }
             } else {
                 if (["/sign-in", "/sign-up", "/promo", "/try"].includes(location.pathname)) {

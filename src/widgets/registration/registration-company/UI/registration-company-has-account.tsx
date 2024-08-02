@@ -63,6 +63,7 @@ const RegistrationCompanyHasAccount = ({isLoginClicked, setIsLoginClicked, setHa
                 <Input
                     extraClass={"!text-lg !font-medium h-[50px] text-center rounded-[16px] border border-solid border-[#E5E7EA] !bg-primary"}
                     placeholder={"+7 (___) ___ - __ -__"}
+                    type={"phone"}
                     value={phone}
                     onChange={e => dispatch(updateAccountState({
                         field: "phone",

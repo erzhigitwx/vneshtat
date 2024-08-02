@@ -213,6 +213,7 @@ const LoginUser = () => {
                                                 <Input
                                                     extraClass={"!text-lg !font-medium h-[50px] rounded-[16px] text-center border border-solid border-[#E5E7EA] !bg-primary"}
                                                     placeholder={"+7 (___) ___ - __ -__"}
+                                                    type={"phone"}
                                                     value={restorePhone}
                                                     onChange={e => dispatch(updateRestoreState({
                                                         field: "phone",
@@ -338,6 +339,7 @@ const LoginUser = () => {
                                         <Input
                                             extraClass={"!text-lg !font-medium h-[50px] rounded-[16px] text-center border border-solid border-[#E5E7EA] !bg-primary"}
                                             placeholder={"+7 (___) ___ - __ -__"}
+                                            type={"phone"}
                                             value={phone}
                                             onChange={e => dispatch(updateLoginState({
                                                 field: "phone",
