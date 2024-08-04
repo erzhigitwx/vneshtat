@@ -1,10 +1,15 @@
 import {getAccessToken, getRefreshToken, setAccessToken} from "@/shared/utils/index";
+import {jwtDecode} from "jwt-decode";
 
 async function delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const checkAccessToken = async () => {
+export const decodeJWT = (token: string) => {
+    return jwtDecode(token);
+};
+
+export const refreshAccessToken = async () => {
     const refreshToken = getRefreshToken();
     if (!refreshToken) return false;
     const formdata = new FormData();
@@ -24,7 +29,6 @@ export const checkAccessToken = async () => {
 };
 
 export async function getUser() {
-    await checkAccessToken();
     const res = await fetch("https://vneshtat.com/api/user/main_info/get_user", {
         headers: {
             Authorization: `Bearer ${getAccessToken()}`,
@@ -44,7 +48,6 @@ export async function getUser() {
 }
 
 export async function getUserOnline() {
-    await checkAccessToken();
     let failures = 0;
     const maxRetries = 3;
     const body = new FormData();

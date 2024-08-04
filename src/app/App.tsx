@@ -18,14 +18,12 @@ function App() {
             const user = await getUser();
             dispatch(setUser(user));
         }
-
         setUserData()
 
         const setUserOnline = async () => {
             const isOnline = await getUserOnline();
             dispatch(setIsOnline(isOnline));
         }
-
         setUserOnline();
         setInterval(() => {
             setUserOnline();

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {checkAccessToken} from "@/shared/utils/methods";
+import { refreshAccessToken, decodeJWT } from "@/shared/utils/methods";
+import {getAccessToken} from "@/shared/utils";
 
 export const useVerifyToken = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -10,21 +11,45 @@ export const useVerifyToken = () => {
 
     useEffect(() => {
         const verifyToken = async () => {
-            const isTokenValid = await checkAccessToken();
-            if (!isTokenValid) {
-                if (!["/sign-in", "/sign-up", "/promo", "/try"].includes(location.pathname)) {
-                    navigate("/promo");
+            const token = getAccessToken();
+            if (token) {
+                const { exp } = decodeJWT(token) as {exp: number};
+                const currentTime = Math.floor(Date.now() / 1000);
+                const isTokenExpired = exp < currentTime;
+
+                if (isTokenExpired) {
+                    const isTokenRefreshed = await refreshAccessToken();
+                    if (!isTokenRefreshed) {
+                        navigate("/promo");
+                    } else {
+                        setIsAuthorized(true);
+                    }
+                } else {
+                    setIsAuthorized(true);
                 }
             } else {
-                if (["/sign-in", "/sign-up", "/promo", "/try"].includes(location.pathname)) {
-                    navigate("/");
-                }
-                setIsAuthorized(true);
+                navigate("/promo");
             }
             setIsLoading(false);
         };
 
         verifyToken();
+
+        const refreshTokenPeriodically = async () => {
+            const token = getAccessToken();
+            if (token) {
+                const { exp } = decodeJWT(token) as {exp: number};
+                const currentTime = Math.floor(Date.now() / 1000);
+                const refreshTime = (exp - currentTime) * 1000 - 300000;
+
+                setTimeout(async () => {
+                    await refreshAccessToken();
+                    refreshTokenPeriodically();
+                }, refreshTime);
+            }
+        };
+
+        refreshTokenPeriodically();
     }, [navigate, location.pathname]);
 
     return { isLoading, isAuthorized };
