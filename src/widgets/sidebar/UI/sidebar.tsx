@@ -1,6 +1,5 @@
 import {Link, useLocation} from "react-router-dom";
-import {useState} from "react";
-import LogoImg from "@/assets/icons/logo.svg?react";
+import {useEffect, useRef, useState} from "react";
 import HomeImg from "@/assets/icons/home.svg?react";
 import SwapImg from "@/assets/icons/swap.svg?react";
 import CopyImg from "@/assets/icons/copy.svg?react";
@@ -13,21 +12,59 @@ import OptionsImg from "@/assets/icons/options.svg?react"
 import {useSelector} from "react-redux";
 import {RootState} from "@/app/config/store";
 import {removeAccessToken, removeRefreshToken} from "@/shared/utils";
+import logoAnimation from "@/assets/animation/logo-animation.json"
+import lottie, {AnimationItem} from 'lottie-web';
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const {fullname} = useSelector((state: RootState) => state.user);
     const [isButtonHovered, setIsButtonHovered] = useState(false);
     const location = useLocation().pathname;
+    const containerRef = useRef<HTMLAnchorElement | null>(null);
+    const animationRef = useRef<AnimationItem | null>(null);
+
+    useEffect(() => {
+        animationRef.current = lottie.loadAnimation({
+            container: containerRef.current!,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            animationData: logoAnimation
+        });
+
+        return () => {
+            animationRef.current?.destroy();
+        };
+    }, []);
+
+    const handleMouseEnter = () => {
+        if (animationRef.current) {
+            animationRef.current?.goToAndStop(0, true);
+            animationRef.current?.setDirection(1);
+            animationRef.current?.play();
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (animationRef.current) {
+            animationRef.current?.stop();
+            animationRef.current?.goToAndStop(animationRef.current?.totalFrames - 1, true);
+            animationRef.current?.setDirection(-1);
+            animationRef.current?.play();
+        }
+    };
 
     return (
         <div
             className={`flex flex-col gap-5 items-center mt-4 min-w-fit ultra:w-full w-fit max-w-[100px] ${isOpen ? "min-w-[240px]" : "min-w-[100px]"}`}>
-            <Link to={"/"} className={`${isOpen && "w-full flex justify-start ml-10"}`}>
-                <LogoImg/>
+            <Link to={"/"}
+                  className={`flex items-center ${isOpen ? "w-full" : ""} logo-animation-container`}
+                  ref={containerRef}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}>
             </Link>
             <div
-                className={`h-full w-full flex flex-col items-center mt-3 gap-2.5 py-8 px-2.5 ultra:gap-10 bg-primary rounded-primary`}>
+                className={`h-full w-full flex flex-col items-center gap-2.5 py-8 px-2.5 ultra:gap-10 bg-primary rounded-primary`}>
                 <div className={`w-full flex flex-col gap-2.5 ultra:gap-12`}>
                     <Link to={"/"}
                           className={`min-h-[45px] h-[45px] flex items-center justify-center p-2.5 ${isOpen ? "flex items-center justify-between w-full rounded-primary hover:bg-secondary transition group" : "rounded-primary hover:bg-secondary transition group"}`}>

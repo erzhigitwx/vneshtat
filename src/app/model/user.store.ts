@@ -10,6 +10,7 @@ interface UserStore {
         name: string,
         surname: string
     }
+    isOnline: boolean
     companies: Company[] | null
 }
 
@@ -18,6 +19,7 @@ const initialState: UserStore = {
         name: "",
         surname: ""
     },
+    isOnline: false,
     companies: null
 }
 
@@ -30,9 +32,12 @@ export const userStore = createSlice({
         },
         setCompanies: (state, action) => {
             state.companies = action.payload;
+        },
+        setIsOnline: (state, action) => {
+            state.isOnline = action.payload;
         }
     }
 })
 
-export const { setUser, setCompanies } = userStore.actions;
+export const { setUser, setCompanies, setIsOnline } = userStore.actions;
 export default userStore.reducer;

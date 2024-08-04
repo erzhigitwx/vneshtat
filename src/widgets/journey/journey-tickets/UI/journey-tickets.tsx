@@ -4,17 +4,19 @@ import PlaneImg from "@/assets/icons/plane.svg?react";
 import ArrowImg from "@/assets/icons/arrow-right.svg?react";
 import BusImg from "@/assets/icons/bus.svg?react";
 import { useEffect, useRef, useState } from "react";
-import { useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {handleScrollToTop} from "@/shared/utils";
-import { RootState } from "@/app/config/store";
+import {AppDispatch, RootState} from "@/app/config/store";
 import {JourneyTicket, JourneyTicketPreload} from "@/entities/journey-ticket";
 import {JourneyTicketsHeader} from "@/widgets/journey/journey-tickets/UI/journey-tickets-header";
+import {fetchJourneyTickets} from "@/widgets/journey/journey-operations/model/journey.store";
 
 const JourneyTickets = () => {
     const {dateTo, dateBack} = useSelector((state: RootState) => state.journey);
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const ticketContainerRef = useRef<HTMLDivElement | null>(null);
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
@@ -58,17 +60,9 @@ const JourneyTickets = () => {
         };
     }, [])
 
-    // useEffect(() => {
-    //     async function test() {
-    //         const res = await fetch("https://vneshtat.com/api/search/train/search/?CarGrouping=DontGroup&SpecialPlacesDemand=NoValue&GetOnlyCarTransportationCoaches=False&GetOnlyNonRefundableTariffs=False&BonusCardNumber=null&ExcludeProviders=null&Origin=2000000&Destination=2004000&DepartureDate=2024-11-01T21:00:00&TimeFrom=null&TimeTo=null&GetByLocalTime=False", {
-    //             method: 'GET',
-    //             headers: {
-    //                 Authorization: `Bearer ${window.localStorage.getItem("token")}`
-    //             }
-    //         })
-    //     }
-    //     test()
-    // }, []);
+    useEffect(() => {
+       dispatch(fetchJourneyTickets())
+    }, []);
 
     return (
         <div className={"w-full flex flex-col"} ref={scrollRef}>

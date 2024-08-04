@@ -1,5 +1,9 @@
 import {getAccessToken, getRefreshToken, setAccessToken} from "@/shared/utils/index";
 
+async function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const checkAccessToken = async () => {
     const refreshToken = getRefreshToken();
     if (!refreshToken) return false;
@@ -7,12 +11,11 @@ export const checkAccessToken = async () => {
     formdata.append("RefreshToken", refreshToken);
     const res = await fetch("https://vneshtat.com/api/auth/sign_in/auth_token", {
         method: "PATCH",
-        body: formdata,
-        redirect: "follow"
+        body: formdata
     });
     const data = await res.json();
 
-    if (data.message === "token_has_been_refreshed") {
+    if (data.status === "success") {
         setAccessToken(data.data.access_token);
         return true;
     } else {
@@ -38,4 +41,41 @@ export async function getUser() {
             }
         }
     }
+}
+
+export async function getUserOnline() {
+    await checkAccessToken();
+    let failures = 0;
+    const maxRetries = 3;
+    const body = new FormData();
+    body.append("EmployeeId", localStorage.getItem("EmployeeId") || "");
+
+    async function makeRequest() {
+        const res = await fetch("https://vneshtat.com/api/user/utility/update_last_online", {
+            headers: {
+                Authorization: `Bearer ${getAccessToken()}`,
+            },
+            method: "PATCH",
+            body
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+
+            if (data.status === "success") {
+                return true;
+            } else if (data.status === "error") {
+                failures++;
+                if (failures >= maxRetries) {
+                    return false;
+                }
+                await delay(5000);
+                return makeRequest();
+            }
+        } else {
+            return false;
+        }
+    }
+
+    return makeRequest();
 }

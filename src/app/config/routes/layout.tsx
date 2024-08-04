@@ -9,6 +9,7 @@ const Promo = lazy(() => import("@/pages/promo/promo"));
 const Registration = lazy(() => import("@/pages/registration/registration"));
 const Login = lazy(() => import("@/pages/login/login"));
 const Hotel = lazy(() => import("@/pages/hotel/hotel"));
+const Aero = lazy(() => import("@/pages/aero/aero"));
 
 const Layout = () => {
     return (
@@ -18,6 +19,7 @@ const Layout = () => {
                 <Route path="/journey" element={<Journey/>}/>
                 <Route path="/flight" element={<Flight/>}/>
                 <Route path="/bus" element={<Bus/>}/>
+                <Route path="/aero" element={<Aero/>}/>
                 <Route path="/promo" element={<Promo/>} />
                 <Route path="/try" element={<Promo/>} />
                 <Route path="/hotel" element={<Hotel/>} />
