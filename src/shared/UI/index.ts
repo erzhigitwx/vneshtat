@@ -12,3 +12,4 @@ export {Dropdown} from "./dropdown/dropdown"
 export {TicketOptions} from "./ticket-options/ticket-options";
 export {Popup} from "./popup/popup";
 export {CountdownCircle} from "./countdown-circle/countdown-circle";
+export {InputTime} from "./input-time/input-time";

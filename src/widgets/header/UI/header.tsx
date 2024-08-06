@@ -22,7 +22,7 @@ const Header = () => {
         {to: "/bus", img: BusImg},
         {to: "/hotel", img: BedImg},
         {to: "/aero", img: WebImg},
-        {to: "/car", img: CarImg},
+        {to: "/transfer", img: CarImg},
         {to: "/yandex-taxi", img: YandexTaxiImg},
         {to: "/restaurant", img: RestaurantImg},
     ];

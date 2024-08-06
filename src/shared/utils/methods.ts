@@ -29,25 +29,29 @@ export const refreshAccessToken = async () => {
 };
 
 export async function getUser() {
-    const res = await fetch("https://vneshtat.com/api/user/main_info/get_user", {
-        headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-        }
-    })
+    const token = getAccessToken();
+    if(token){
+        const res = await fetch("https://vneshtat.com/api/user/main_info/get_user", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
 
-    if (res.ok) {
-        const data = await res.json()
+        if (res.ok) {
+            const data = await res.json()
 
-        if (data.status === "success") {
-            return {
-                name: data.data.Name,
-                surname: data.data.Surname
+            if (data.status === "success") {
+                return {
+                    name: data.data.Name,
+                    surname: data.data.Surname
+                }
             }
         }
     }
 }
 
 export async function getUserOnline() {
+    const token = getAccessToken();
     let failures = 0;
     const maxRetries = 3;
     const body = new FormData();
@@ -56,7 +60,7 @@ export async function getUserOnline() {
     async function makeRequest() {
         const res = await fetch("https://vneshtat.com/api/user/utility/update_last_online", {
             headers: {
-                Authorization: `Bearer ${getAccessToken()}`,
+                Authorization: `Bearer ${token}`,
             },
             method: "PATCH",
             body
@@ -80,5 +84,5 @@ export async function getUserOnline() {
         }
     }
 
-    return makeRequest();
+    return token ? makeRequest() : false;
 }

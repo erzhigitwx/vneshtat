@@ -1,20 +1,21 @@
 import clsx from "clsx";
 import EyeImg from "@/assets/icons/eye.svg?react";
 import EyeClosedImg from "@/assets/icons/eye-closed.svg?react";
+import CrossImg from "@/assets/icons/cross.svg?react";
 import { InputProps } from "./input.props";
 import {useState, useEffect, ChangeEvent} from "react";
 
 const Input = ({ extraClass, ...rest }: InputProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [phoneValue, setPhoneValue] = useState(rest.value || '');
+    const [inputValue, setInputValue] = useState(rest.value || '');
 
     useEffect(() => {
         if (rest.type === "phone") {
-            let formattedValue: string = phoneValue as string;
+            let formattedValue: string = inputValue as string;
             if (formattedValue.startsWith('7')) {
                 formattedValue = '+7' + formattedValue.slice(1);
             }
-            setPhoneValue(formattedValue);
+            setInputValue(formattedValue);
         }
     }, [rest.type]);
 
@@ -25,9 +26,23 @@ const Input = ({ extraClass, ...rest }: InputProps) => {
         } else if (!value.startsWith('9')) {
             value = '';
         }
-        setPhoneValue(value);
+        setInputValue(value);
         if (rest.onChange) {
             rest.onChange({ ...e, target: { ...e.target, value } });
+        }
+    };
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+        if(rest.onChange){
+            rest.onChange(e);
+        }
+    }
+
+    const handleClear = () => {
+        setInputValue("");
+        if (rest.onChange) {
+            rest.onChange({ target: { value: "" } } as ChangeEvent<HTMLInputElement>);
         }
     };
 
@@ -53,15 +68,23 @@ const Input = ({ extraClass, ...rest }: InputProps) => {
             className={clsx("bg-secondary rounded-primary text-sm py-2 px-2.5", extraClass)}
             {...rest}
             type="text"
-            value={phoneValue}
+            value={inputValue}
             onChange={handlePhoneChange}
         />
     ) : (
-        <input
-            className={clsx("bg-secondary rounded-primary text-sm py-2 px-2.5", extraClass)}
-            type={rest.type || "text"}
-            {...rest}
-        />
+        <div className={"relative"}>
+            <input
+                className={clsx("bg-secondary rounded-primary text-sm py-2 px-2.5 w-full", extraClass)}
+                type={rest.type || "text"}
+                {...rest}
+                onChange={handleChange}
+            />
+            {inputValue ? (
+                <button onClick={handleClear} className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <CrossImg className={"black-fill"}/>
+                </button>
+            ) : null}
+        </div>
     );
 };
 

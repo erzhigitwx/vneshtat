@@ -1,0 +1,1 @@
+export { TransferContent } from "./UI/transfer-content";

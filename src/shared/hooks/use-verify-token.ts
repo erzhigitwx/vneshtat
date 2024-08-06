@@ -1,56 +1,76 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { refreshAccessToken, decodeJWT } from "@/shared/utils/methods";
-import {getAccessToken} from "@/shared/utils";
+import { getAccessToken, getRefreshToken } from "@/shared/utils";
 
 export const useVerifyToken = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthorized, setIsAuthorized] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
+        let refreshTokenTimeout: any = null;
+
         const verifyToken = async () => {
             const token = getAccessToken();
             if (token) {
-                const { exp } = decodeJWT(token) as {exp: number};
+                const { exp } = decodeJWT(token) as { exp: number };
                 const currentTime = Math.floor(Date.now() / 1000);
                 const isTokenExpired = exp < currentTime;
 
                 if (isTokenExpired) {
                     const isTokenRefreshed = await refreshAccessToken();
                     if (!isTokenRefreshed) {
+                        setIsAuthorized(false);
                         navigate("/promo");
                     } else {
                         setIsAuthorized(true);
                     }
                 } else {
                     setIsAuthorized(true);
+                    scheduleTokenRefresh();
                 }
             } else {
-                navigate("/promo");
+                if (getRefreshToken()) {
+                    const isTokenRefreshed = await refreshAccessToken();
+                    if (isTokenRefreshed) {
+                        setIsAuthorized(true);
+                        scheduleTokenRefresh();
+                    } else {
+                        setIsAuthorized(false);
+                        navigate("/promo");
+                    }
+                } else {
+                    setIsAuthorized(false);
+                    navigate("/promo");
+                }
             }
             setIsLoading(false);
         };
 
-        verifyToken();
-
-        const refreshTokenPeriodically = async () => {
-            const token = getAccessToken();
-            if (token) {
-                const { exp } = decodeJWT(token) as {exp: number};
-                const currentTime = Math.floor(Date.now() / 1000);
-                const refreshTime = (exp - currentTime) * 1000 - 300000;
-
-                setTimeout(async () => {
-                    await refreshAccessToken();
-                    refreshTokenPeriodically();
-                }, refreshTime);
+        const scheduleTokenRefresh = () => {
+            if (refreshTokenTimeout) {
+                clearTimeout(refreshTokenTimeout);
             }
+
+            const refreshInterval = 273000;
+
+            refreshTokenTimeout = setTimeout(async () => {
+                const isTokenRefreshed = await refreshAccessToken();
+                if (isTokenRefreshed) {
+                    scheduleTokenRefresh();
+                }
+            }, refreshInterval);
         };
 
-        refreshTokenPeriodically();
-    }, [navigate, location.pathname]);
+        verifyToken();
+
+        return () => {
+            if (refreshTokenTimeout) {
+                clearTimeout(refreshTokenTimeout);
+            }
+        };
+    }, []);
 
     return { isLoading, isAuthorized };
 };

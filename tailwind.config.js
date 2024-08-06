@@ -27,10 +27,20 @@ export default {
           '0%': { opacity: 1, transform: 'translateX(0)' },
           '100%': { opacity: 0, transform: 'translateX(-30px)' },
         },
+        slideUp: {
+          '0%': { maxHeight: '0', opacity: '0', transform: 'scaleY(0.9)' },
+          '100%': { maxHeight: '200px', opacity: '1', transform: 'scaleY(1)' },
+        },
+        slideDown: {
+          '0%': { maxHeight: '200px', opacity: '1', transform: 'scaleY(1)' },
+          '100%': { maxHeight: '0', opacity: '0', transform: 'scaleY(0.9)' },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease',
         fadeOut: 'fadeOut 0.3s ease',
+        'slide-up': 'slideUp 300ms ease-out',
+        'slide-down': 'slideDown 300ms ease-out',
       },
     },
     colors: {

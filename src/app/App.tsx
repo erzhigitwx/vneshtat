@@ -25,21 +25,20 @@ function App() {
             dispatch(setIsOnline(isOnline));
         }
         setUserOnline();
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             setUserOnline();
-        }, 60 * 1000)
+        }, 60 * 1000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    if (["/promo", "/sign-up", "/sign-in", "/try"].includes(location) && isAuthorized) {
-        return null;
-    }
-
     if (["/promo", "/sign-up", "/sign-in", "/try"].includes(location)) {
-        return <Layout/>;
+        if(isAuthorized) return null;
+        else return <Layout/>;
     }
 
     return <BasicLayout component={<Layout/>}/>;
