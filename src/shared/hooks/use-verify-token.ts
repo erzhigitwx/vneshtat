@@ -76,7 +76,7 @@ export const useVerifyToken = () => {
                 clearTimeout(refreshTokenTimeout);
             }
         };
-    }, [navigate]);
+    }, []);
 
     return { isLoading, isAuthorized };
 };
