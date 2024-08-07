@@ -14,29 +14,31 @@ function App() {
     const {isLoading, isAuthorized} = useVerifyToken();
 
     useEffect(() => {
-        const setUserData = async () => {
-            const user = await getUser();
-            dispatch(setUser(user));
-        }
-        setUserData()
+        if (!isLoading && isAuthorized) {
+            const setUserData = async () => {
+                const user = await getUser();
+                dispatch(setUser(user));
+            }
+            setUserData()
 
-        const setUserOnline = async () => {
-            const isOnline = await getUserOnline();
-            dispatch(setIsOnline(isOnline));
-        }
-        setUserOnline();
-
-        const setUserCompanies = async () => {
-            const companiesData = await getUserCompanies();
-            dispatch(setCompanies(companiesData))
-        }
-        setUserCompanies();
-        const intervalId = setInterval(() => {
+            const setUserOnline = async () => {
+                const isOnline = await getUserOnline();
+                dispatch(setIsOnline(isOnline));
+            }
             setUserOnline();
-        }, 60 * 1000);
 
-        return () => clearInterval(intervalId);
-    }, []);
+            const setUserCompanies = async () => {
+                const companiesData = await getUserCompanies();
+                dispatch(setCompanies(companiesData))
+            }
+            setUserCompanies();
+            const intervalId = setInterval(() => {
+                setUserOnline();
+            }, 60 * 1000);
+
+            return () => clearInterval(intervalId);
+        }
+    }, [isLoading, isAuthorized]);
 
     if (isLoading) {
         return <div>Loading...</div>;
