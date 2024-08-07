@@ -8,10 +8,10 @@ import SuccessImg from "@/assets/icons/success-filled.svg?react";
 import ArrowImg from "@/assets/icons/arrow-long.svg?react";
 import {useState} from "react";
 import {updateLoginState, updateRestoreState} from "../model/login.store";
-import {getAccessToken, setAccessToken, setRefreshToken} from "@/shared/utils";
+import {setAccessToken, setRefreshToken} from "@/shared/utils";
 import {useNavigate} from "react-router-dom";
 import {setCompanies, setUser} from "@/app/model/user.store";
-import {getUser} from "@/shared/utils/methods";
+import {getUser, getUserCompanies} from "@/shared/utils/methods";
 
 const LoginUser = () => {
     const {
@@ -44,7 +44,7 @@ const LoginUser = () => {
         formdata.append("Password", password);
         const parser = new UAParser();
         const result = parser.getResult();
-        const deviceName = result.device.model || result.device.vendor || result.os.name || "Unknown";
+        const deviceName = result.device.model || result.os.name || "Unknown";
         const browserName = result.browser.name || "Unknown";
         formdata.append("DeviceName", deviceName);
         formdata.append("Browser", browserName);
@@ -64,14 +64,9 @@ const LoginUser = () => {
                 dispatch(setUser(user));
 
                 // get companies
-                const res = await fetch("https://vneshtat.com/api/user/main_info/get_user_companies", {
-                    headers: {
-                        Authorization: `Bearer ${getAccessToken()}`
-                    }
-                });
-                const companiesData = await res.json();
-                if (!companiesData.data.length) navigate("/")
-                else dispatch(setCompanies(companiesData.data));
+                const companiesData = await getUserCompanies();
+                if (!companiesData.length) navigate("/")
+                else dispatch(setCompanies(companiesData));
             }
         } catch (error) {
             console.error("Error fetching tokens:", error);

@@ -4,9 +4,9 @@ import BasicLayout from "@/app/layouts/basic-layout";
 import {useLocation} from "react-router-dom";
 import {useVerifyToken} from "@/shared/hooks/use-verify-token";
 import {useEffect} from "react";
-import {getUser, getUserOnline} from "@/shared/utils/methods";
+import {getUser, getUserCompanies, getUserOnline} from "@/shared/utils/methods";
 import {useDispatch} from "react-redux";
-import {setIsOnline, setUser} from "@/app/model/user.store";
+import {setCompanies, setIsOnline, setUser} from "@/app/model/user.store";
 
 function App() {
     const location = useLocation().pathname;
@@ -25,6 +25,12 @@ function App() {
             dispatch(setIsOnline(isOnline));
         }
         setUserOnline();
+
+        const setUserCompanies = async () => {
+            const companiesData = await getUserCompanies();
+            dispatch(setCompanies(companiesData))
+        }
+        setUserCompanies();
         const intervalId = setInterval(() => {
             setUserOnline();
         }, 60 * 1000);
@@ -37,7 +43,7 @@ function App() {
     }
 
     if (["/promo", "/sign-up", "/sign-in", "/try"].includes(location)) {
-        if(isAuthorized) return null;
+        if (isAuthorized) return null;
         else return <Layout/>;
     }
 

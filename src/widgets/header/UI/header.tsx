@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import {Link, useLocation} from "react-router-dom";
-import {useState} from "react";
 import PlaneImg from "@/assets/icons/plane.svg?react";
 import TrainImg from "@/assets/icons/train.svg?react";
 import BusImg from "@/assets/icons/bus.svg?react";
@@ -10,56 +9,61 @@ import CarImg from "@/assets/icons/car.svg?react";
 import YandexTaxiImg from "@/assets/icons/yandex-taxi.svg?react";
 import RestaurantImg from "@/assets/icons/restaurant.svg?react";
 import BurgerImg from "@/assets/icons/burger.svg?react";
+import LockImg from "@/assets/icons/lock.svg?react";
+import {useSelector} from "react-redux";
+import {RootState} from "@/app/config/store";
 
 const Header = () => {
     const location = useLocation().pathname;
-    const [activeHover, setActiveHover] = useState<string | null>(null);
-    const [isJourneysHovered, setIsJourneysHovered] = useState(false)
+    const {companies} = useSelector((state: RootState) => state.user)
+    const selectedCompany = companies?.find(item => item.EmployeeId.toString() === localStorage.getItem("EmployeeId"))
 
     const links = [
-        {to: "/flight", img: PlaneImg},
-        {to: "/journey", img: TrainImg},
-        {to: "/bus", img: BusImg},
-        {to: "/hotel", img: BedImg},
-        {to: "/aero", img: WebImg},
-        {to: "/transfer", img: CarImg},
-        {to: "/yandex-taxi", img: YandexTaxiImg},
-        {to: "/restaurant", img: RestaurantImg},
+        {to: "/flight", img: PlaneImg, label: "Самолёт"},
+        {to: "/journey", img: TrainImg, label: "Поезд"},
+        {to: "/bus", img: BusImg, label: "Автобусы"},
+        {to: "/hotel", img: BedImg, label: "Отели"},
+        {to: "/aero", img: WebImg, label: "Аэроэкспресс"},
+        {to: "/transfer", img: CarImg, label: "Автомобили"},
+        {to: "/yandex-taxi", img: YandexTaxiImg, label: "Такси"},
+        {to: "/restaurant", img: RestaurantImg, label: "Места"},
     ];
 
     return (
-        <div className="flex justify-between items-center py-[10px]">
-            <div className={"flex items-center gap-5"}>
-                <button className="flex items-center bg-primary py-2.5 px-4 rounded-primary gap-2.5"
-                        onMouseEnter={() => setIsJourneysHovered(true)}
-                        onMouseLeave={() => setIsJourneysHovered(false)}>
-                    <BurgerImg className={`transition w-6 h-6 ${isJourneysHovered && "blue-fill"}`}/>
-                    <p className={`transition text-base ${isJourneysHovered && "text-blue"}`}>Все поездки</p>
+        <div className="flex flex-row justify-between items-center py-2.5">
+            <div className={"flex items-center gap-2.5"}>
+                <button className="flex items-center bg-primary py-2.5 px-4 rounded-primary gap-1 h-[45px]">
+                    <p className={"text-base leading-none font-medium"}>{selectedCompany?.CompanyName}</p>
+                    <LockImg className={"min-h-[18px] min-w-[18px]"}/>
                 </button>
-                <div
-                    className="flex items-center bg-primary py-2.5 px-4 gap-6 rounded-primary transition-all"
-                >
-                    {links.map(({to, img: Img}) => (
-                        <Link
-                            key={to}
-                            to={to}
-                            className="flex items-center"
-                            onMouseEnter={() => setActiveHover(to)}
-                            onMouseLeave={() => setActiveHover(null)}
-                        >
-                            <Img className={clsx(
-                                "blue-fill-hover transition",
-                                (location === to || activeHover === to) && "blue-fill"
-                            )}/>
+                <button className="flex items-center bg-primary p-2.5 rounded-primary h-[45px]">
+                    <BurgerImg className={`transition w-6 h-6 blue-fill-hover`}/>
+                </button>
+                <button className="flex items-center gap-3 bg-primary px-5 py-3 rounded-primary h-[45px]">
+                    <p className={"text-base leading-none text-blue"}>Инспекция в Самару</p>
+                    <span className={"w-0.5 h-4 rounded-[3px] bg-secondary"}/>
+                    <p className={"text-base leading-none font-medium"}>18 924,40 ₽</p>
+                </button>
+            </div>
+            <div className={"flex items-center gap-2.5"}>
+                <div className="flex flex-row items-center bg-primary py-2.5 px-4 rounded-primary gap-6">
+                    {links.map(({to, img: Icon, label}) => (
+                        <Link to={to} className="flex items-center" key={to}>
+                            <div className="bg-primary relative z-10">
+                                <Icon className={clsx("blue-fill-hover transition", location === to && "blue-fill")}/>
+                            </div>
+                            {location === to && (
+                                <p className="animate-fadeIn ml-1 text-base text-blue max-w-full">{label}</p>
+                            )}
                         </Link>
                     ))}
                 </div>
-            </div>
-            <div className="flex items-center gap-5">
-                <button
-                    className="bg-primary border rounded-primary px-9 h-[45px] flex justify-center items-center transition">
-                    <p className="hover:text-blue text-base">Создать поездку</p>
-                </button>
+                {location === "/" || location === "/all-journeys" ? (
+                    <button
+                        className="bg-primary border rounded-primary px-9 h-[45px] flex justify-center items-center transition hover:bg-[#DCE0E5]">
+                        <p className="text-blue text-base">Создать поездку</p>
+                    </button>
+                ) : null}
             </div>
         </div>
     );

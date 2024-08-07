@@ -86,3 +86,16 @@ export async function getUserOnline() {
 
     return token ? makeRequest() : false;
 }
+
+export async function getUserCompanies() {
+    if(getAccessToken()){
+        const res = await fetch("https://vneshtat.com/api/user/main_info/get_user_companies", {
+            headers: {
+                Authorization: `Bearer ${getAccessToken()}`
+            }
+        });
+        const companiesData = await res.json();
+        return companiesData.data.length ? companiesData.data : []
+    }
+    return []
+}

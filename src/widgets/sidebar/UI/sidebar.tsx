@@ -56,7 +56,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`flex flex-col gap-5 items-center mt-4 min-w-fit ultra:w-full w-fit max-w-[100px] ${isOpen ? "min-w-[240px]" : "min-w-[100px]"}`}>
+            className={`flex flex-col gap-5 items-center mt-4 min-w-fit ultra:w-full w-fit max-w-[100px] ${isOpen ? "min-w-[240px] max-h-[240px]" : "min-w-[100px]"}`}>
             <Link to={"/"}
                   className={`flex items-center ${isOpen ? "w-full" : ""} logo-animation-container`}
                   ref={containerRef}

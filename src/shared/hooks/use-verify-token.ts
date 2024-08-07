@@ -16,7 +16,7 @@ export const useVerifyToken = () => {
             if (token) {
                 const { exp } = decodeJWT(token) as { exp: number };
                 const currentTime = Math.floor(Date.now() / 1000);
-                const isTokenExpired = exp < currentTime;
+                const isTokenExpired = exp - 10 < currentTime;
 
                 if (isTokenExpired) {
                     const isTokenRefreshed = await refreshAccessToken();
@@ -25,17 +25,20 @@ export const useVerifyToken = () => {
                         navigate("/promo");
                     } else {
                         setIsAuthorized(true);
+                        scheduleTokenRefresh(exp, currentTime);
                     }
                 } else {
                     setIsAuthorized(true);
-                    scheduleTokenRefresh();
+                    scheduleTokenRefresh(exp, currentTime);
                 }
             } else {
                 if (getRefreshToken()) {
                     const isTokenRefreshed = await refreshAccessToken();
                     if (isTokenRefreshed) {
                         setIsAuthorized(true);
-                        scheduleTokenRefresh();
+                        const { exp } = decodeJWT(getAccessToken() as string) as { exp: number };
+                        const currentTime = Math.floor(Date.now() / 1000);
+                        scheduleTokenRefresh(exp, currentTime);
                     } else {
                         setIsAuthorized(false);
                         navigate("/promo");
@@ -48,17 +51,20 @@ export const useVerifyToken = () => {
             setIsLoading(false);
         };
 
-        const scheduleTokenRefresh = () => {
+        const scheduleTokenRefresh = (exp: number, currentTime: number) => {
             if (refreshTokenTimeout) {
                 clearTimeout(refreshTokenTimeout);
             }
 
-            const refreshInterval = 273000;
+            const timeToExpiration = exp - currentTime;
+            const refreshInterval = Math.max(timeToExpiration - 10, 0) * 1000;
 
             refreshTokenTimeout = setTimeout(async () => {
                 const isTokenRefreshed = await refreshAccessToken();
                 if (isTokenRefreshed) {
-                    scheduleTokenRefresh();
+                    const newExp = decodeJWT(getAccessToken() as string).exp;
+                    const newCurrentTime = Math.floor(Date.now() / 1000);
+                    scheduleTokenRefresh(newExp as number, newCurrentTime);
                 }
             }, refreshInterval);
         };
@@ -70,7 +76,7 @@ export const useVerifyToken = () => {
                 clearTimeout(refreshTokenTimeout);
             }
         };
-    }, []);
+    }, [navigate]);
 
     return { isLoading, isAuthorized };
 };

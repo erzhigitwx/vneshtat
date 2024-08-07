@@ -11,7 +11,7 @@ interface UserStore {
         surname: string
     }
     isOnline: boolean
-    companies: Company[] | null
+    companies: Company[]
 }
 
 const initialState: UserStore = {
@@ -20,7 +20,7 @@ const initialState: UserStore = {
         surname: ""
     },
     isOnline: false,
-    companies: null
+    companies: []
 }
 
 export const userStore = createSlice({
