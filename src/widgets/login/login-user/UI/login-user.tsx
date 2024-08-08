@@ -78,7 +78,7 @@ const LoginUser = () => {
             {isLoginClicked ? (
                 <div className={"flex flex-col gap-6"}>
                     <h1 className={"text-[30px] text-center"}>В какую компанию войти?</h1>
-                    <div className={"flex items-center justify-center w-full gap-4 relative"}>
+                    <form className={"flex items-center justify-center w-full gap-4 relative"} autoComplete={"on"}>
                         <button className={"absolute right-[calc(100%+14px)] top-2.5"}
                                 onClick={() => setIsLoginClicked(false)}>
                             <ArrowImg/>
@@ -104,7 +104,7 @@ const LoginUser = () => {
                                 </button>
                             </div>
                         ))}
-                    </div>
+                    </form>
                     <p className={"text-base text-center font-medium text-[#9B9FAD]"}>Вы всегда можете переключить
                         компанию в
                         Личном кабинете</p>
@@ -117,7 +117,7 @@ const LoginUser = () => {
                             <div className={"flex justify-center"}>
                                 <h2 className={"text-[25px] text-center leading-7"}>Восстановление</h2>
                             </div>
-                            <div className={"flex flex-col gap-2.5"}>
+                            <form className={"flex flex-col gap-2.5"} autoComplete={"on"}>
                                 {isSubmitted ? (
                                     <>
                                         <button className={"absolute -left-12 top-6"}
@@ -306,14 +306,14 @@ const LoginUser = () => {
                                         )}
                                     </>
                                 )}
-                            </div>
+                            </form>
                         </div>
                     ) : (
                         <div className={"flex flex-col bg-primary gap-5 p-6 rounded-[35px] h-[520px] relative"}>
                             <div className={"flex justify-center"}>
                                 <LogoIdImg/>
                             </div>
-                            <div className={"flex flex-col gap-2.5"}>
+                            <form className={"flex flex-col gap-2.5"} autoComplete={"on"}>
                                 <Switch
                                     extraClass={"w-full h-[50px] !bg-[#FAFAFA] border border-solid border-[#E5E7EA]"}
                                     extraChildClass={"py-2.5 h-full w-[50%]"}
@@ -444,7 +444,7 @@ const LoginUser = () => {
                                         </button>
                                     </>
                                 )}
-                            </div>
+                            </form>
                         </div>
                     )}
                 </div>

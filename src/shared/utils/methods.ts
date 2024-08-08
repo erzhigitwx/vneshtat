@@ -20,9 +20,13 @@ export const refreshAccessToken = async () => {
     });
     const data = await res.json();
 
-    if (data.status === "success") {
+    if (data.message === "token_has_been_refreshed") {
         setAccessToken(data.data.access_token);
         return true;
+    } else if (data.message === "error_while_refreshing_token") {
+        console.log(data)
+        localStorage.clear();
+        return false;
     } else {
         return false;
     }
@@ -30,7 +34,7 @@ export const refreshAccessToken = async () => {
 
 export async function getUser() {
     const token = getAccessToken();
-    if(token){
+    if (token) {
         const res = await fetch("https://vneshtat.com/api/user/main_info/get_user", {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -88,7 +92,7 @@ export async function getUserOnline() {
 }
 
 export async function getUserCompanies() {
-    if(getAccessToken()){
+    if (getAccessToken()) {
         const res = await fetch("https://vneshtat.com/api/user/main_info/get_user_companies", {
             headers: {
                 Authorization: `Bearer ${getAccessToken()}`
